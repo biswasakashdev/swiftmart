@@ -1,0 +1,125 @@
+# --- Core Types ---
+
+type Product {
+    id: ID!
+    title: String!
+    description: String
+    slug: String!
+    status: ProductStatus!
+    variants: [ProductVariant!]!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type ProductVariant {
+    id: ID!
+    sku: String!
+    price: Float!
+    inventoryQuantity: Int!
+    weight: Float
+    title: String!
+}
+
+enum ProductStatus {
+    DRAFT
+    ACTIVE
+    ARCHIVED
+}
+
+type Customer {
+    id: ID!
+    email: String!
+    firstName: String
+    lastName: String
+    orders(limit: Int): [Order!]!
+    createdAt: String!
+}
+
+type Order {
+    id: ID!
+    customer: Customer!
+    lineItems: [LineItem!]!
+    totalPrice: Float!
+    financialStatus: OrderFinancialStatus!
+    fulfillmentStatus: OrderFulfillmentStatus!
+    createdAt: String!
+}
+
+type LineItem {
+    id: ID!
+    variantId: ID!
+    title: String!
+    quantity: Int!
+    price: Float!
+}
+
+enum OrderFinancialStatus {
+    PENDING
+    PAID
+    REFUNDED
+}
+
+enum OrderFulfillmentStatus {
+    UNFULFILLED
+    PARTIALLY_FULFILLED
+    FULFILLED
+}
+
+# --- Input Types for Mutations ---
+
+input CreateProductInput {
+    title: String!
+    description: String
+    slug: String!
+    variants: [CreateVariantInput!]!
+}
+
+input CreateVariantInput {
+    sku: String!
+    price: Float!
+    inventoryQuantity: Int!
+    title: String!
+}
+
+input CreateOrderInput {
+    customerId: ID!
+    items: [LineItemInput!]!
+}
+
+input LineItemInput {
+    variantId: ID!
+    quantity: Int!
+}
+
+input CreateCustomerInput {
+    email: String!
+    firstName: String
+    lastName: String
+}
+
+# --- Root Queries and Mutations ---
+
+type Query {
+    # Catalog
+    product(id: ID!): Product
+    products(limit: Int, offset: Int): [Product!]!
+
+    # Orders
+    order(id: ID!): Order
+    orders(limit: Int, offset: Int): [Order!]!
+
+    # Customers
+    customer(id: ID!): Customer
+}
+
+type Mutation {
+    # Catalog Management
+    createProduct(input: CreateProductInput!): Product!
+    updateInventory(variantId: ID!, quantityDelta: Int!): ProductVariant!
+
+    # Checkout / Orders
+    createOrder(input: CreateOrderInput!): Order!
+
+    # Customer Management
+    createCustomer(input: CreateCustomerInput!): Customer!
+}

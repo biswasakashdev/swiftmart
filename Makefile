@@ -1,3 +1,6 @@
+gpql-gateway-proto-gen:
+	buf generate --template services/gpql-gateway/buf.gen.yaml
 
-run-gpql-gateway:
-	go run ./services/gpql-gateway/cmd/gpql_gateway/main.go
+users-proto-gen:
+	buf generate --template services/users/buf.gen.yaml
+

@@ -1,0 +1,18 @@
+version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: java_package_prefix
+      value: com.biswasakashdev.switftmart.protogen
+inputs:
+  - directory: .
+    paths:
+      - proto/users
+
+plugins:
+  - remote: buf.build/grpc/java:v1.82.1
+    out: services/users/src/main/java
+# grpc/java depends on protocolbuffers/java
+  - remote: buf.build/protocolbuffers/java:v35.1
+    out: services/users/src/main/java
+

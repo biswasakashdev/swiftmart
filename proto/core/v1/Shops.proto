@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package core.v1;
+
+import "google/protobuf/empty.proto";
+
+
+service ShopsService{
+
+  rpc CreateShop(CreateShopRequest) returns (CreateShopResponse);
+
+  rpc GetAllShops(GetAllShopsRequest) returns (GetAllShopsResponse);
+
+
+  rpc GetShop(GetShopRequest) returns (GetShopResponse);
+}
+
+// Create Shop
+message CreateShopRequest{
+
+}
+
+message CreateShopResponse{
+
+}
+
+
+// GetAllShops
+message GetAllShopsRequest{
+
+}
+
+message GetAllShopsResponse{
+
+}
+
+// GetShop
+
+message GetShopRequest{
+
+}
+
+
+message GetShopResponse{
+
+}
+
+
+

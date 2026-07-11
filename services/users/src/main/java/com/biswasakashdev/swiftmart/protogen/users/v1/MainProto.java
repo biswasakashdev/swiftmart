@@ -47,10 +47,15 @@ public final class MainProto extends com.google.protobuf.GeneratedFile {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_users_v1_AuthorizeResponse_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_users_v1_AuthorizeResponse_User_descriptor;
+    internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor;
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_users_v1_AuthorizeResponse_User_fieldAccessorTable;
+      internal_static_users_v1_AuthorizeResponse_UserResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_users_v1_AuthorizeResponse_Authorization_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_users_v1_AuthorizeResponse_Authorization_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -61,28 +66,32 @@ public final class MainProto extends com.google.protobuf.GeneratedFile {
   static {
     java.lang.String[] descriptorData = {
       "\n\023users/v1/main.proto\022\010users.v1\032\033google/" +
-      "protobuf/empty.proto\"\262\001\n\024CreateAccountRe" +
+      "protobuf/empty.proto\"\316\001\n\024CreateAccountRe" +
       "quest\022\035\n\nfirst_name\030\001 \001(\tR\tfirstName\022\033\n\t" +
       "last_name\030\002 \001(\tR\010lastName\022\024\n\005email\030\003 \001(\t" +
-      "R\005email\022!\n\014country_code\030\004 \001(\tR\013countryCo" +
-      "de\022%\n\016contact_number\030\005 \001(\tR\rcontactNumbe" +
-      "r\"A\n\025CreateAccountResponse\022(\n\003res\030\001 \001(\0132" +
-      "\026.google.protobuf.EmptyR\003res\"D\n\020Authoriz" +
-      "eRequest\022\024\n\005email\030\001 \001(\tR\005email\022\032\n\010passwo" +
-      "rd\030\002 \001(\tR\010password\"\350\001\n\021AuthorizeResponse" +
-      "\0224\n\004user\030\001 \001(\0132 .users.v1.AuthorizeRespo" +
-      "nse.UserR\004user\022$\n\rauthorization\030\002 \001(\tR\ra" +
-      "uthorization\032w\n\004User\022\035\n\nfirst_name\030\001 \001(\t" +
-      "R\tfirstName\022\033\n\tlast_name\030\002 \001(\tR\010lastName" +
-      "\022\024\n\005email\030\003 \001(\tR\005email\022\035\n\nshop_image\030\004 \001" +
-      "(\tR\tshopImage2\246\001\n\014UsersService\022P\n\rCreate" +
-      "Account\022\036.users.v1.CreateAccountRequest\032" +
-      "\037.users.v1.CreateAccountResponse\022D\n\tAuth" +
-      "orize\022\032.users.v1.AuthorizeRequest\032\033.user" +
-      "s.v1.AuthorizeResponseB|\n.com.biswasakas" +
-      "hdev.swiftmart.protogen.users.v1B\tMainPr" +
-      "otoP\001\242\002\003UXX\252\002\010Users.V1\312\002\010Users\\V1\342\002\024User" +
-      "s\\V1\\GPBMetadata\352\002\tUsers::V1b\006proto3"
+      "R\005email\022\032\n\010password\030\004 \001(\tR\010password\022!\n\014c" +
+      "ountry_code\030\005 \001(\tR\013countryCode\022%\n\016contac" +
+      "t_number\030\006 \001(\tR\rcontactNumber\"A\n\025CreateA" +
+      "ccountResponse\022(\n\003res\030\001 \001(\0132\026.google.pro" +
+      "tobuf.EmptyR\003res\"D\n\020AuthorizeRequest\022\024\n\005" +
+      "email\030\001 \001(\tR\005email\022\032\n\010password\030\002 \001(\tR\010pa" +
+      "ssword\"\335\002\n\021AuthorizeResponse\022Q\n\rauthoriz" +
+      "ation\030\001 \001(\0132).users.v1.AuthorizeResponse" +
+      ".AuthorizationH\000R\rauthorization\022\026\n\005error" +
+      "\030\002 \001(\tH\000R\005error\032`\n\014UserResponse\022\035\n\nfirst" +
+      "_name\030\001 \001(\tR\tfirstName\022\033\n\tlast_name\030\002 \001(" +
+      "\tR\010lastName\022\024\n\005email\030\003 \001(\tR\005email\032t\n\rAut" +
+      "horization\022M\n\ruser_response\030\001 \001(\0132(.user" +
+      "s.v1.AuthorizeResponse.UserResponseR\014use" +
+      "rResponse\022\024\n\005token\030\002 \001(\tR\005tokenB\005\n\003res2\246" +
+      "\001\n\014UsersService\022P\n\rCreateAccount\022\036.users" +
+      ".v1.CreateAccountRequest\032\037.users.v1.Crea" +
+      "teAccountResponse\022D\n\tAuthorize\022\032.users.v" +
+      "1.AuthorizeRequest\032\033.users.v1.AuthorizeR" +
+      "esponseB|\n.com.biswasakashdev.swiftmart." +
+      "protogen.users.v1B\tMainProtoP\001\242\002\003UXX\252\002\010U" +
+      "sers.V1\312\002\010Users\\V1\342\002\024Users\\V1\\GPBMetadat" +
+      "a\352\002\tUsers::V1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -94,7 +103,7 @@ public final class MainProto extends com.google.protobuf.GeneratedFile {
     internal_static_users_v1_CreateAccountRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_users_v1_CreateAccountRequest_descriptor,
-        new java.lang.String[] { "FirstName", "LastName", "Email", "CountryCode", "ContactNumber", });
+        new java.lang.String[] { "FirstName", "LastName", "Email", "Password", "CountryCode", "ContactNumber", });
     internal_static_users_v1_CreateAccountResponse_descriptor =
       getDescriptor().getMessageType(1);
     internal_static_users_v1_CreateAccountResponse_fieldAccessorTable = new
@@ -112,13 +121,19 @@ public final class MainProto extends com.google.protobuf.GeneratedFile {
     internal_static_users_v1_AuthorizeResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_users_v1_AuthorizeResponse_descriptor,
-        new java.lang.String[] { "User", "Authorization", });
-    internal_static_users_v1_AuthorizeResponse_User_descriptor =
+        new java.lang.String[] { "Authorization", "Error", "Res", });
+    internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor =
       internal_static_users_v1_AuthorizeResponse_descriptor.getNestedType(0);
-    internal_static_users_v1_AuthorizeResponse_User_fieldAccessorTable = new
+    internal_static_users_v1_AuthorizeResponse_UserResponse_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_users_v1_AuthorizeResponse_User_descriptor,
-        new java.lang.String[] { "FirstName", "LastName", "Email", "ShopImage", });
+        internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor,
+        new java.lang.String[] { "FirstName", "LastName", "Email", });
+    internal_static_users_v1_AuthorizeResponse_Authorization_descriptor =
+      internal_static_users_v1_AuthorizeResponse_descriptor.getNestedType(1);
+    internal_static_users_v1_AuthorizeResponse_Authorization_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_users_v1_AuthorizeResponse_Authorization_descriptor,
+        new java.lang.String[] { "UserResponse", "Token", });
     descriptor.resolveAllFeaturesImmutable();
     com.google.protobuf.EmptyProto.getDescriptor();
   }

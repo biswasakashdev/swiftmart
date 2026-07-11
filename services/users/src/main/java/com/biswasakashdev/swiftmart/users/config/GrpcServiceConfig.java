@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.biswasakashdev.swiftmart.users.controller.grpc.UsersGrpcSeviceImpl;
+import com.biswasakashdev.swiftmart.users.controller.grpc.UsersGrpcServiceImpl;
 
 import io.grpc.Server;
 import lombok.RequiredArgsConstructor;
@@ -14,15 +14,19 @@ import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder;
 @RequiredArgsConstructor
 public class GrpcServiceConfig {
 
-    private final UsersGrpcSeviceImpl usersGrpcSeviceImpl;
+    private final UsersGrpcServiceImpl usersGrpcServiceImpl;
 
     @Bean
     Server grpcServer(Environment environment) {
-        int grpcPort = environment.getProperty("grpc.server.port", Integer.class);
+        String grpcPort = environment.getProperty("grpc.server.port");
+
+        if (grpcPort == null || grpcPort.isBlank()) {
+            throw new IllegalArgumentException("Invalid gRPC port found");
+        }
 
         return NettyServerBuilder
-                .forPort(grpcPort)
-                .addService(usersGrpcSeviceImpl)
+                .forPort(Integer.parseInt(grpcPort))
+                .addService(usersGrpcServiceImpl)
                 .build();
     }
 

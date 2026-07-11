@@ -29,7 +29,6 @@ class UserRepositoryTest extends AbstractRepositoryTest{
             .password("password")
             .firstName("John")
             .lastName("Smith")
-            .gender("Male")
             .accountLocked(false)
             .createdOn(LocalDate.now())
             .build();

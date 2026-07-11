@@ -47,24 +47,36 @@ public interface CreateAccountRequestOrBuilder extends
       getEmailBytes();
 
   /**
-   * <code>string country_code = 4 [json_name = "countryCode"];</code>
+   * <code>string password = 4 [json_name = "password"];</code>
+   * @return The password.
+   */
+  java.lang.String getPassword();
+  /**
+   * <code>string password = 4 [json_name = "password"];</code>
+   * @return The bytes for password.
+   */
+  com.google.protobuf.ByteString
+      getPasswordBytes();
+
+  /**
+   * <code>string country_code = 5 [json_name = "countryCode"];</code>
    * @return The countryCode.
    */
   java.lang.String getCountryCode();
   /**
-   * <code>string country_code = 4 [json_name = "countryCode"];</code>
+   * <code>string country_code = 5 [json_name = "countryCode"];</code>
    * @return The bytes for countryCode.
    */
   com.google.protobuf.ByteString
       getCountryCodeBytes();
 
   /**
-   * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+   * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
    * @return The contactNumber.
    */
   java.lang.String getContactNumber();
   /**
-   * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+   * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
    * @return The bytes for contactNumber.
    */
   com.google.protobuf.ByteString

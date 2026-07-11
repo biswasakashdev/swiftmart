@@ -11,29 +11,36 @@ public interface AuthorizeResponseOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-   * @return Whether the user field is set.
+   * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+   * @return Whether the authorization field is set.
    */
-  boolean hasUser();
+  boolean hasAuthorization();
   /**
-   * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-   * @return The user.
-   */
-  com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User getUser();
-  /**
-   * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-   */
-  com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder getUserOrBuilder();
-
-  /**
-   * <code>string authorization = 2 [json_name = "authorization"];</code>
+   * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
    * @return The authorization.
    */
-  java.lang.String getAuthorization();
+  com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization getAuthorization();
   /**
-   * <code>string authorization = 2 [json_name = "authorization"];</code>
-   * @return The bytes for authorization.
+   * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+   */
+  com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder getAuthorizationOrBuilder();
+
+  /**
+   * <code>string error = 2 [json_name = "error"];</code>
+   * @return Whether the error field is set.
+   */
+  boolean hasError();
+  /**
+   * <code>string error = 2 [json_name = "error"];</code>
+   * @return The error.
+   */
+  java.lang.String getError();
+  /**
+   * <code>string error = 2 [json_name = "error"];</code>
+   * @return The bytes for error.
    */
   com.google.protobuf.ByteString
-      getAuthorizationBytes();
+      getErrorBytes();
+
+  com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.ResCase getResCase();
 }

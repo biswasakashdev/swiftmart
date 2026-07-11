@@ -4,7 +4,7 @@
 services:
 
   postgres:
-    container_name: nexus-postgres
+    container_name: swiftmart-postgres
     image: postgres:18.3-bookworm
     environment:
       POSTGRES_USER: docker
@@ -22,6 +22,8 @@ services:
     image: adminer
     ports:
       - 8080:8080
+    networks:
+      - postgres-network
 
 networks:
   postgres-network:

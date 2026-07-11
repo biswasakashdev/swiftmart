@@ -31,6 +31,7 @@ private static final long serialVersionUID = 0L;
     firstName_ = "";
     lastName_ = "";
     email_ = "";
+    password_ = "";
     countryCode_ = "";
     contactNumber_ = "";
   }
@@ -170,11 +171,50 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int COUNTRY_CODE_FIELD_NUMBER = 4;
+  public static final int PASSWORD_FIELD_NUMBER = 4;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object password_ = "";
+  /**
+   * <code>string password = 4 [json_name = "password"];</code>
+   * @return The password.
+   */
+  @java.lang.Override
+  public java.lang.String getPassword() {
+    java.lang.Object ref = password_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      password_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string password = 4 [json_name = "password"];</code>
+   * @return The bytes for password.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getPasswordBytes() {
+    java.lang.Object ref = password_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      password_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int COUNTRY_CODE_FIELD_NUMBER = 5;
   @SuppressWarnings("serial")
   private volatile java.lang.Object countryCode_ = "";
   /**
-   * <code>string country_code = 4 [json_name = "countryCode"];</code>
+   * <code>string country_code = 5 [json_name = "countryCode"];</code>
    * @return The countryCode.
    */
   @java.lang.Override
@@ -191,7 +231,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string country_code = 4 [json_name = "countryCode"];</code>
+   * <code>string country_code = 5 [json_name = "countryCode"];</code>
    * @return The bytes for countryCode.
    */
   @java.lang.Override
@@ -209,11 +249,11 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int CONTACT_NUMBER_FIELD_NUMBER = 5;
+  public static final int CONTACT_NUMBER_FIELD_NUMBER = 6;
   @SuppressWarnings("serial")
   private volatile java.lang.Object contactNumber_ = "";
   /**
-   * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+   * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
    * @return The contactNumber.
    */
   @java.lang.Override
@@ -230,7 +270,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+   * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
    * @return The bytes for contactNumber.
    */
   @java.lang.Override
@@ -271,11 +311,14 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(email_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 3, email_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(password_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 4, password_);
+    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(countryCode_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 4, countryCode_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 5, countryCode_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(contactNumber_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 5, contactNumber_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 6, contactNumber_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -290,11 +333,14 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(email_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(3, email_);
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(password_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(4, password_);
+    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(countryCode_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(4, countryCode_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(5, countryCode_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(contactNumber_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(5, contactNumber_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(6, contactNumber_);
     }
     return size;
   }
@@ -326,6 +372,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getLastName())) return false;
     if (!getEmail()
         .equals(other.getEmail())) return false;
+    if (!getPassword()
+        .equals(other.getPassword())) return false;
     if (!getCountryCode()
         .equals(other.getCountryCode())) return false;
     if (!getContactNumber()
@@ -347,6 +395,8 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getLastName().hashCode();
     hash = (37 * hash) + EMAIL_FIELD_NUMBER;
     hash = (53 * hash) + getEmail().hashCode();
+    hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
+    hash = (53 * hash) + getPassword().hashCode();
     hash = (37 * hash) + COUNTRY_CODE_FIELD_NUMBER;
     hash = (53 * hash) + getCountryCode().hashCode();
     hash = (37 * hash) + CONTACT_NUMBER_FIELD_NUMBER;
@@ -485,6 +535,7 @@ private static final long serialVersionUID = 0L;
       firstName_ = "";
       lastName_ = "";
       email_ = "";
+      password_ = "";
       countryCode_ = "";
       contactNumber_ = "";
       return this;
@@ -530,9 +581,12 @@ private static final long serialVersionUID = 0L;
         result.email_ = email_;
       }
       if (((from_bitField0_ & 0x00000008) != 0)) {
-        result.countryCode_ = countryCode_;
+        result.password_ = password_;
       }
       if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.countryCode_ = countryCode_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
         result.contactNumber_ = contactNumber_;
       }
     }
@@ -564,14 +618,19 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000004;
         onChanged();
       }
+      if (!other.getPassword().isEmpty()) {
+        password_ = other.password_;
+        bitField0_ |= 0x00000008;
+        onChanged();
+      }
       if (!other.getCountryCode().isEmpty()) {
         countryCode_ = other.countryCode_;
-        bitField0_ |= 0x00000008;
+        bitField0_ |= 0x00000010;
         onChanged();
       }
       if (!other.getContactNumber().isEmpty()) {
         contactNumber_ = other.contactNumber_;
-        bitField0_ |= 0x00000010;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -616,15 +675,20 @@ private static final long serialVersionUID = 0L;
               break;
             } // case 26
             case 34: {
-              countryCode_ = input.readStringRequireUtf8();
+              password_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000008;
               break;
             } // case 34
             case 42: {
-              contactNumber_ = input.readStringRequireUtf8();
+              countryCode_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000010;
               break;
             } // case 42
+            case 50: {
+              contactNumber_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000020;
+              break;
+            } // case 50
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -858,9 +922,81 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private java.lang.Object password_ = "";
+    /**
+     * <code>string password = 4 [json_name = "password"];</code>
+     * @return The password.
+     */
+    public java.lang.String getPassword() {
+      java.lang.Object ref = password_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        password_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string password = 4 [json_name = "password"];</code>
+     * @return The bytes for password.
+     */
+    public com.google.protobuf.ByteString
+        getPasswordBytes() {
+      java.lang.Object ref = password_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        password_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string password = 4 [json_name = "password"];</code>
+     * @param value The password to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPassword(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      password_ = value;
+      bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string password = 4 [json_name = "password"];</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearPassword() {
+      password_ = getDefaultInstance().getPassword();
+      bitField0_ = (bitField0_ & ~0x00000008);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string password = 4 [json_name = "password"];</code>
+     * @param value The bytes for password to set.
+     * @return This builder for chaining.
+     */
+    public Builder setPasswordBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      password_ = value;
+      bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object countryCode_ = "";
     /**
-     * <code>string country_code = 4 [json_name = "countryCode"];</code>
+     * <code>string country_code = 5 [json_name = "countryCode"];</code>
      * @return The countryCode.
      */
     public java.lang.String getCountryCode() {
@@ -876,7 +1012,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string country_code = 4 [json_name = "countryCode"];</code>
+     * <code>string country_code = 5 [json_name = "countryCode"];</code>
      * @return The bytes for countryCode.
      */
     public com.google.protobuf.ByteString
@@ -893,7 +1029,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string country_code = 4 [json_name = "countryCode"];</code>
+     * <code>string country_code = 5 [json_name = "countryCode"];</code>
      * @param value The countryCode to set.
      * @return This builder for chaining.
      */
@@ -901,22 +1037,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       countryCode_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
     /**
-     * <code>string country_code = 4 [json_name = "countryCode"];</code>
+     * <code>string country_code = 5 [json_name = "countryCode"];</code>
      * @return This builder for chaining.
      */
     public Builder clearCountryCode() {
       countryCode_ = getDefaultInstance().getCountryCode();
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
     /**
-     * <code>string country_code = 4 [json_name = "countryCode"];</code>
+     * <code>string country_code = 5 [json_name = "countryCode"];</code>
      * @param value The bytes for countryCode to set.
      * @return This builder for chaining.
      */
@@ -925,14 +1061,14 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       countryCode_ = value;
-      bitField0_ |= 0x00000008;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
 
     private java.lang.Object contactNumber_ = "";
     /**
-     * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+     * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
      * @return The contactNumber.
      */
     public java.lang.String getContactNumber() {
@@ -948,7 +1084,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+     * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
      * @return The bytes for contactNumber.
      */
     public com.google.protobuf.ByteString
@@ -965,7 +1101,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+     * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
      * @param value The contactNumber to set.
      * @return This builder for chaining.
      */
@@ -973,22 +1109,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       contactNumber_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
     /**
-     * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+     * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
      * @return This builder for chaining.
      */
     public Builder clearContactNumber() {
       contactNumber_ = getDefaultInstance().getContactNumber();
-      bitField0_ = (bitField0_ & ~0x00000010);
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
     /**
-     * <code>string contact_number = 5 [json_name = "contactNumber"];</code>
+     * <code>string contact_number = 6 [json_name = "contactNumber"];</code>
      * @param value The bytes for contactNumber to set.
      * @return This builder for chaining.
      */
@@ -997,7 +1133,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       contactNumber_ = value;
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }

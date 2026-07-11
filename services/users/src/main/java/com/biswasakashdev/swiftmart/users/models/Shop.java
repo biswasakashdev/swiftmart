@@ -1,6 +1,5 @@
 package com.biswasakashdev.swiftmart.users.models;
 
-
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -13,22 +12,16 @@ import java.time.LocalDate;
 @Builder
 @Getter
 @Setter
-@Table("users")
-public class User {
+@Table("shops")
+public class Shop {
+
     @Id
     private String id;
-    private String email;
-    @Column("country_code")
-    private String countryCode;
-    @Column("contact_number")
-    private String contactNumber;
-    private String password;
-    @Column("first_name")
-    private String firstName;
-    @Column("last_name")
-    private String lastName;
+    @Column("shop_name")
+    private String name;
+    @Column("owner_id")
+    private String ownerId;
     @Column("created_on")
     private LocalDate createdOn;
-    @Column("account_locked")
-    private Boolean accountLocked;
+
 }

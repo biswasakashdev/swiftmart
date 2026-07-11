@@ -18,7 +18,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PostgresUserRepositoryImpl implements UsersRepository {
 
-    private final DatabaseClient databaseClient;
     private final UsersR2DBCRepository usersR2DBCRepository;
     private final R2dbcEntityTemplate r2dbcEntityTemplate;
 

@@ -28,7 +28,6 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private AuthorizeResponse() {
-    authorization_ = "";
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
@@ -49,8 +48,8 @@ private static final long serialVersionUID = 0L;
             com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Builder.class);
   }
 
-  public interface UserOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:users.v1.AuthorizeResponse.User)
+  public interface UserResponseOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:users.v1.AuthorizeResponse.UserResponse)
       com.google.protobuf.MessageOrBuilder {
 
     /**
@@ -88,26 +87,14 @@ private static final long serialVersionUID = 0L;
      */
     com.google.protobuf.ByteString
         getEmailBytes();
-
-    /**
-     * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-     * @return The shopImage.
-     */
-    java.lang.String getShopImage();
-    /**
-     * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-     * @return The bytes for shopImage.
-     */
-    com.google.protobuf.ByteString
-        getShopImageBytes();
   }
   /**
-   * Protobuf type {@code users.v1.AuthorizeResponse.User}
+   * Protobuf type {@code users.v1.AuthorizeResponse.UserResponse}
    */
-  public static final class User extends
+  public static final class UserResponse extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:users.v1.AuthorizeResponse.User)
-      UserOrBuilder {
+      // @@protoc_insertion_point(message_implements:users.v1.AuthorizeResponse.UserResponse)
+      UserResponseOrBuilder {
   private static final long serialVersionUID = 0L;
     static {
       com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
@@ -116,35 +103,34 @@ private static final long serialVersionUID = 0L;
         /* minor= */ 35,
         /* patch= */ 1,
         /* suffix= */ "",
-        "User");
+        "UserResponse");
     }
-    // Use User.newBuilder() to construct.
-    private User(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+    // Use UserResponse.newBuilder() to construct.
+    private UserResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
     }
-    private User() {
+    private UserResponse() {
       firstName_ = "";
       lastName_ = "";
       email_ = "";
-      shopImage_ = "";
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_User_descriptor;
+      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
-      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_User_descriptor;
+      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_User_fieldAccessorTable
+      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_UserResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder.class);
+              com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder.class);
     }
 
     public static final int FIRST_NAME_FIELD_NUMBER = 1;
@@ -264,45 +250,6 @@ private static final long serialVersionUID = 0L;
       }
     }
 
-    public static final int SHOP_IMAGE_FIELD_NUMBER = 4;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object shopImage_ = "";
-    /**
-     * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-     * @return The shopImage.
-     */
-    @java.lang.Override
-    public java.lang.String getShopImage() {
-      java.lang.Object ref = shopImage_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        shopImage_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-     * @return The bytes for shopImage.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getShopImageBytes() {
-      java.lang.Object ref = shopImage_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        shopImage_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -326,9 +273,6 @@ private static final long serialVersionUID = 0L;
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(email_)) {
         com.google.protobuf.GeneratedMessage.writeString(output, 3, email_);
       }
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(shopImage_)) {
-        com.google.protobuf.GeneratedMessage.writeString(output, 4, shopImage_);
-      }
       getUnknownFields().writeTo(output);
     }
     private int computeSerializedSize_0() {
@@ -341,9 +285,6 @@ private static final long serialVersionUID = 0L;
       }
       if (!com.google.protobuf.GeneratedMessage.isStringEmpty(email_)) {
         size += com.google.protobuf.GeneratedMessage.computeStringSize(3, email_);
-      }
-      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(shopImage_)) {
-        size += com.google.protobuf.GeneratedMessage.computeStringSize(4, shopImage_);
       }
       return size;
     }
@@ -364,10 +305,10 @@ private static final long serialVersionUID = 0L;
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User)) {
+      if (!(obj instanceof com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse)) {
         return super.equals(obj);
       }
-      com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User other = (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User) obj;
+      com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse other = (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse) obj;
 
       if (!getFirstName()
           .equals(other.getFirstName())) return false;
@@ -375,8 +316,6 @@ private static final long serialVersionUID = 0L;
           .equals(other.getLastName())) return false;
       if (!getEmail()
           .equals(other.getEmail())) return false;
-      if (!getShopImage()
-          .equals(other.getShopImage())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -394,51 +333,49 @@ private static final long serialVersionUID = 0L;
       hash = (53 * hash) + getLastName().hashCode();
       hash = (37 * hash) + EMAIL_FIELD_NUMBER;
       hash = (53 * hash) + getEmail().hashCode();
-      hash = (37 * hash) + SHOP_IMAGE_FIELD_NUMBER;
-      hash = (53 * hash) + getShopImage().hashCode();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(byte[] data)
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(java.io.InputStream input)
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -446,26 +383,26 @@ private static final long serialVersionUID = 0L;
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseDelimitedFrom(java.io.InputStream input)
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseDelimitedFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User parseFrom(
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -478,7 +415,7 @@ private static final long serialVersionUID = 0L;
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User prototype) {
+    public static Builder newBuilder(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -494,26 +431,26 @@ private static final long serialVersionUID = 0L;
       return builder;
     }
     /**
-     * Protobuf type {@code users.v1.AuthorizeResponse.User}
+     * Protobuf type {@code users.v1.AuthorizeResponse.UserResponse}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:users.v1.AuthorizeResponse.User)
-        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder {
+        // @@protoc_insertion_point(builder_implements:users.v1.AuthorizeResponse.UserResponse)
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_User_descriptor;
+        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_User_fieldAccessorTable
+        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_UserResponse_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder.class);
+                com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder.class);
       }
 
-      // Construct using com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.newBuilder()
+      // Construct using com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.newBuilder()
       private Builder() {
 
       }
@@ -530,24 +467,23 @@ private static final long serialVersionUID = 0L;
         firstName_ = "";
         lastName_ = "";
         email_ = "";
-        shopImage_ = "";
         return this;
       }
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_User_descriptor;
+        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_UserResponse_descriptor;
       }
 
       @java.lang.Override
-      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User getDefaultInstanceForType() {
-        return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance();
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse getDefaultInstanceForType() {
+        return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance();
       }
 
       @java.lang.Override
-      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User build() {
-        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User result = buildPartial();
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse build() {
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -555,14 +491,14 @@ private static final long serialVersionUID = 0L;
       }
 
       @java.lang.Override
-      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User buildPartial() {
-        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User result = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User(this);
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse buildPartial() {
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse result = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User result) {
+      private void buildPartial0(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.firstName_ = firstName_;
@@ -573,23 +509,20 @@ private static final long serialVersionUID = 0L;
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.email_ = email_;
         }
-        if (((from_bitField0_ & 0x00000008) != 0)) {
-          result.shopImage_ = shopImage_;
-        }
       }
 
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User) {
-          return mergeFrom((com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User)other);
+        if (other instanceof com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse) {
+          return mergeFrom((com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User other) {
-        if (other == com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance()) return this;
+      public Builder mergeFrom(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse other) {
+        if (other == com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance()) return this;
         if (!other.getFirstName().isEmpty()) {
           firstName_ = other.firstName_;
           bitField0_ |= 0x00000001;
@@ -603,11 +536,6 @@ private static final long serialVersionUID = 0L;
         if (!other.getEmail().isEmpty()) {
           email_ = other.email_;
           bitField0_ |= 0x00000004;
-          onChanged();
-        }
-        if (!other.getShopImage().isEmpty()) {
-          shopImage_ = other.shopImage_;
-          bitField0_ |= 0x00000008;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -651,11 +579,6 @@ private static final long serialVersionUID = 0L;
                 bitField0_ |= 0x00000004;
                 break;
               } // case 26
-              case 34: {
-                shopImage_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000008;
-                break;
-              } // case 34
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -889,95 +812,23 @@ private static final long serialVersionUID = 0L;
         return this;
       }
 
-      private java.lang.Object shopImage_ = "";
-      /**
-       * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-       * @return The shopImage.
-       */
-      public java.lang.String getShopImage() {
-        java.lang.Object ref = shopImage_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          shopImage_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-       * @return The bytes for shopImage.
-       */
-      public com.google.protobuf.ByteString
-          getShopImageBytes() {
-        java.lang.Object ref = shopImage_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          shopImage_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-       * @param value The shopImage to set.
-       * @return This builder for chaining.
-       */
-      public Builder setShopImage(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        shopImage_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearShopImage() {
-        shopImage_ = getDefaultInstance().getShopImage();
-        bitField0_ = (bitField0_ & ~0x00000008);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string shop_image = 4 [json_name = "shopImage"];</code>
-       * @param value The bytes for shopImage to set.
-       * @return This builder for chaining.
-       */
-      public Builder setShopImageBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        shopImage_ = value;
-        bitField0_ |= 0x00000008;
-        onChanged();
-        return this;
-      }
-
-      // @@protoc_insertion_point(builder_scope:users.v1.AuthorizeResponse.User)
+      // @@protoc_insertion_point(builder_scope:users.v1.AuthorizeResponse.UserResponse)
     }
 
-    // @@protoc_insertion_point(class_scope:users.v1.AuthorizeResponse.User)
-    private static final com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:users.v1.AuthorizeResponse.UserResponse)
+    private static final com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User();
+      DEFAULT_INSTANCE = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse();
     }
 
-    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User getDefaultInstance() {
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<User>
-        PARSER = new com.google.protobuf.AbstractParser<User>() {
+    private static final com.google.protobuf.Parser<UserResponse>
+        PARSER = new com.google.protobuf.AbstractParser<UserResponse>() {
       @java.lang.Override
-      public User parsePartialFrom(
+      public UserResponse parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -996,82 +847,864 @@ private static final long serialVersionUID = 0L;
       }
     };
 
-    public static com.google.protobuf.Parser<User> parser() {
+    public static com.google.protobuf.Parser<UserResponse> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<User> getParserForType() {
+    public com.google.protobuf.Parser<UserResponse> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User getDefaultInstanceForType() {
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
-  private int bitField0_;
-  public static final int USER_FIELD_NUMBER = 1;
-  private com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User user_;
-  /**
-   * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-   * @return Whether the user field is set.
-   */
-  @java.lang.Override
-  public boolean hasUser() {
-    return ((bitField0_ & 0x00000001) != 0);
+  public interface AuthorizationOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:users.v1.AuthorizeResponse.Authorization)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+     * @return Whether the userResponse field is set.
+     */
+    boolean hasUserResponse();
+    /**
+     * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+     * @return The userResponse.
+     */
+    com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse getUserResponse();
+    /**
+     * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+     */
+    com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder getUserResponseOrBuilder();
+
+    /**
+     * <code>string token = 2 [json_name = "token"];</code>
+     * @return The token.
+     */
+    java.lang.String getToken();
+    /**
+     * <code>string token = 2 [json_name = "token"];</code>
+     * @return The bytes for token.
+     */
+    com.google.protobuf.ByteString
+        getTokenBytes();
   }
   /**
-   * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-   * @return The user.
+   * Protobuf type {@code users.v1.AuthorizeResponse.Authorization}
    */
-  @java.lang.Override
-  public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User getUser() {
-    return user_ == null ? com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance() : user_;
-  }
-  /**
-   * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-   */
-  @java.lang.Override
-  public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder getUserOrBuilder() {
-    return user_ == null ? com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance() : user_;
+  public static final class Authorization extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:users.v1.AuthorizeResponse.Authorization)
+      AuthorizationOrBuilder {
+  private static final long serialVersionUID = 0L;
+    static {
+      com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
+        com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
+        /* major= */ 4,
+        /* minor= */ 35,
+        /* patch= */ 1,
+        /* suffix= */ "",
+        "Authorization");
+    }
+    // Use Authorization.newBuilder() to construct.
+    private Authorization(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+    }
+    private Authorization() {
+      token_ = "";
+    }
+
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_Authorization_descriptor;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.Descriptor getDescriptorForType() {
+      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_Authorization_descriptor;
+    }
+
+    @java.lang.Override
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_Authorization_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder.class);
+    }
+
+    private int bitField0_;
+    public static final int USER_RESPONSE_FIELD_NUMBER = 1;
+    private com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse userResponse_;
+    /**
+     * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+     * @return Whether the userResponse field is set.
+     */
+    @java.lang.Override
+    public boolean hasUserResponse() {
+      return ((bitField0_ & 0x00000001) != 0);
+    }
+    /**
+     * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+     * @return The userResponse.
+     */
+    @java.lang.Override
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse getUserResponse() {
+      return userResponse_ == null ? com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance() : userResponse_;
+    }
+    /**
+     * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+     */
+    @java.lang.Override
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder getUserResponseOrBuilder() {
+      return userResponse_ == null ? com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance() : userResponse_;
+    }
+
+    public static final int TOKEN_FIELD_NUMBER = 2;
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object token_ = "";
+    /**
+     * <code>string token = 2 [json_name = "token"];</code>
+     * @return The token.
+     */
+    @java.lang.Override
+    public java.lang.String getToken() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        token_ = s;
+        return s;
+      }
+    }
+    /**
+     * <code>string token = 2 [json_name = "token"];</code>
+     * @return The bytes for token.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString
+        getTokenBytes() {
+      java.lang.Object ref = token_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        token_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    private byte memoizedIsInitialized = -1;
+    @java.lang.Override
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    @java.lang.Override
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        output.writeMessage(1, getUserResponse());
+      }
+      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(token_)) {
+        com.google.protobuf.GeneratedMessage.writeString(output, 2, token_);
+      }
+      getUnknownFields().writeTo(output);
+    }
+    private int computeSerializedSize_0() {
+      int size = 0;
+      if (((bitField0_ & 0x00000001) != 0)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, getUserResponse());
+      }
+      if (!com.google.protobuf.GeneratedMessage.isStringEmpty(token_)) {
+        size += com.google.protobuf.GeneratedMessage.computeStringSize(2, token_);
+      }
+      return size;
+    }
+    @java.lang.Override
+    public int getSerializedSize() {
+      int size = memoizedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      size += computeSerializedSize_0();
+      size += getUnknownFields().getSerializedSize();
+      memoizedSize = size;
+      return size;
+    }
+
+    @java.lang.Override
+    public boolean equals(final java.lang.Object obj) {
+      if (obj == this) {
+       return true;
+      }
+      if (!(obj instanceof com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization)) {
+        return super.equals(obj);
+      }
+      com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization other = (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) obj;
+
+      if (hasUserResponse() != other.hasUserResponse()) return false;
+      if (hasUserResponse()) {
+        if (!getUserResponse()
+            .equals(other.getUserResponse())) return false;
+      }
+      if (!getToken()
+          .equals(other.getToken())) return false;
+      if (!getUnknownFields().equals(other.getUnknownFields())) return false;
+      return true;
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+      if (memoizedHashCode != 0) {
+        return memoizedHashCode;
+      }
+      int hash = 41;
+      hash = (19 * hash) + getDescriptor().hashCode();
+      if (hasUserResponse()) {
+        hash = (37 * hash) + USER_RESPONSE_FIELD_NUMBER;
+        hash = (53 * hash) + getUserResponse().hashCode();
+      }
+      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
+      hash = (53 * hash) + getToken().hashCode();
+      hash = (29 * hash) + getUnknownFields().hashCode();
+      memoizedHashCode = hash;
+      return hash;
+    }
+
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        java.nio.ByteBuffer data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        java.nio.ByteBuffer data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessage
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessage
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessage
+          .parseDelimitedWithIOException(PARSER, input);
+    }
+
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessage
+          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessage
+          .parseWithIOException(PARSER, input);
+    }
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return com.google.protobuf.GeneratedMessage
+          .parseWithIOException(PARSER, input, extensionRegistry);
+    }
+
+    @java.lang.Override
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder() {
+      return DEFAULT_INSTANCE.toBuilder();
+    }
+    public static Builder newBuilder(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization prototype) {
+      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
+    }
+    @java.lang.Override
+    public Builder toBuilder() {
+      return this == DEFAULT_INSTANCE
+          ? new Builder() : new Builder().mergeFrom(this);
+    }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code users.v1.AuthorizeResponse.Authorization}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:users.v1.AuthorizeResponse.Authorization)
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_Authorization_descriptor;
+      }
+
+      @java.lang.Override
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_Authorization_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.class, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder.class);
+      }
+
+      // Construct using com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage
+                .alwaysUseFieldBuilders) {
+          internalGetUserResponseFieldBuilder();
+        }
+      }
+      @java.lang.Override
+      public Builder clear() {
+        super.clear();
+        bitField0_ = 0;
+        userResponse_ = null;
+        if (userResponseBuilder_ != null) {
+          userResponseBuilder_.dispose();
+          userResponseBuilder_ = null;
+        }
+        token_ = "";
+        return this;
+      }
+
+      @java.lang.Override
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return com.biswasakashdev.swiftmart.protogen.users.v1.MainProto.internal_static_users_v1_AuthorizeResponse_Authorization_descriptor;
+      }
+
+      @java.lang.Override
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization getDefaultInstanceForType() {
+        return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
+      }
+
+      @java.lang.Override
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization build() {
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      @java.lang.Override
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization buildPartial() {
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization result = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization(this);
+        if (bitField0_ != 0) { buildPartial0(result); }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartial0(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization result) {
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.userResponse_ = userResponseBuilder_ == null
+              ? userResponse_
+              : userResponseBuilder_.build();
+          to_bitField0_ |= 0x00000001;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.token_ = token_;
+        }
+        result.bitField0_ |= to_bitField0_;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) {
+          return mergeFrom((com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization other) {
+        if (other == com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance()) return this;
+        if (other.hasUserResponse()) {
+          mergeUserResponse(other.getUserResponse());
+        }
+        if (!other.getToken().isEmpty()) {
+          token_ = other.token_;
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        onChanged();
+        return this;
+      }
+
+      @java.lang.Override
+      public final boolean isInitialized() {
+        return true;
+      }
+
+      @java.lang.Override
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        if (extensionRegistry == null) {
+          throw new java.lang.NullPointerException();
+        }
+        try {
+          boolean done = false;
+          while (!done) {
+            int tag = input.readTag();
+            switch (tag) {
+              case 0:
+                done = true;
+                break;
+              case 10: {
+                input.readMessage(
+                    internalGetUserResponseFieldBuilder().getBuilder(),
+                    extensionRegistry);
+                bitField0_ |= 0x00000001;
+                break;
+              } // case 10
+              case 18: {
+                token_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+              default: {
+                if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                  done = true; // was an endgroup tag
+                }
+                break;
+              } // default:
+            } // switch (tag)
+          } // while (!done)
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.unwrapIOException();
+        } finally {
+          onChanged();
+        } // finally
+        return this;
+      }
+      private int bitField0_;
+
+      private com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse userResponse_;
+      private com.google.protobuf.SingleFieldBuilder<
+          com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder> userResponseBuilder_;
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       * @return Whether the userResponse field is set.
+       */
+      public boolean hasUserResponse() {
+        return ((bitField0_ & 0x00000001) != 0);
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       * @return The userResponse.
+       */
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse getUserResponse() {
+        if (userResponseBuilder_ == null) {
+          return userResponse_ == null ? com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance() : userResponse_;
+        } else {
+          return userResponseBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      public Builder setUserResponse(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse value) {
+        if (userResponseBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          userResponse_ = value;
+        } else {
+          userResponseBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      public Builder setUserResponse(
+          com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder builderForValue) {
+        if (userResponseBuilder_ == null) {
+          userResponse_ = builderForValue.build();
+        } else {
+          userResponseBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      public Builder mergeUserResponse(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse value) {
+        if (userResponseBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) != 0) &&
+            userResponse_ != null &&
+            userResponse_ != com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance()) {
+            getUserResponseBuilder().mergeFrom(value);
+          } else {
+            userResponse_ = value;
+          }
+        } else {
+          userResponseBuilder_.mergeFrom(value);
+        }
+        if (userResponse_ != null) {
+          bitField0_ |= 0x00000001;
+          onChanged();
+        }
+        return this;
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      public Builder clearUserResponse() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        userResponse_ = null;
+        if (userResponseBuilder_ != null) {
+          userResponseBuilder_.dispose();
+          userResponseBuilder_ = null;
+        }
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder getUserResponseBuilder() {
+        bitField0_ |= 0x00000001;
+        onChanged();
+        return internalGetUserResponseFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder getUserResponseOrBuilder() {
+        if (userResponseBuilder_ != null) {
+          return userResponseBuilder_.getMessageOrBuilder();
+        } else {
+          return userResponse_ == null ?
+              com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.getDefaultInstance() : userResponse_;
+        }
+      }
+      /**
+       * <code>.users.v1.AuthorizeResponse.UserResponse user_response = 1 [json_name = "userResponse"];</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder> 
+          internalGetUserResponseFieldBuilder() {
+        if (userResponseBuilder_ == null) {
+          userResponseBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponse.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserResponseOrBuilder>(
+                  getUserResponse(),
+                  getParentForChildren(),
+                  isClean());
+          userResponse_ = null;
+        }
+        return userResponseBuilder_;
+      }
+
+      private java.lang.Object token_ = "";
+      /**
+       * <code>string token = 2 [json_name = "token"];</code>
+       * @return The token.
+       */
+      public java.lang.String getToken() {
+        java.lang.Object ref = token_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          token_ = s;
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>string token = 2 [json_name = "token"];</code>
+       * @return The bytes for token.
+       */
+      public com.google.protobuf.ByteString
+          getTokenBytes() {
+        java.lang.Object ref = token_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          token_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>string token = 2 [json_name = "token"];</code>
+       * @param value The token to set.
+       * @return This builder for chaining.
+       */
+      public Builder setToken(
+          java.lang.String value) {
+        if (value == null) { throw new NullPointerException(); }
+        token_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string token = 2 [json_name = "token"];</code>
+       * @return This builder for chaining.
+       */
+      public Builder clearToken() {
+        token_ = getDefaultInstance().getToken();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>string token = 2 [json_name = "token"];</code>
+       * @param value The bytes for token to set.
+       * @return This builder for chaining.
+       */
+      public Builder setTokenBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) { throw new NullPointerException(); }
+        checkByteStringIsUtf8(value);
+        token_ = value;
+        bitField0_ |= 0x00000002;
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:users.v1.AuthorizeResponse.Authorization)
+    }
+
+    // @@protoc_insertion_point(class_scope:users.v1.AuthorizeResponse.Authorization)
+    private static final com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization DEFAULT_INSTANCE;
+    static {
+      DEFAULT_INSTANCE = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization();
+    }
+
+    public static com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization getDefaultInstance() {
+      return DEFAULT_INSTANCE;
+    }
+
+    private static final com.google.protobuf.Parser<Authorization>
+        PARSER = new com.google.protobuf.AbstractParser<Authorization>() {
+      @java.lang.Override
+      public Authorization parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        Builder builder = newBuilder();
+        try {
+          builder.mergeFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          throw e.setUnfinishedMessage(builder.buildPartial());
+        } catch (com.google.protobuf.UninitializedMessageException e) {
+          throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+        } catch (java.io.IOException e) {
+          throw new com.google.protobuf.InvalidProtocolBufferException(e)
+              .setUnfinishedMessage(builder.buildPartial());
+        }
+        return builder.buildPartial();
+      }
+    };
+
+    public static com.google.protobuf.Parser<Authorization> parser() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<Authorization> getParserForType() {
+      return PARSER;
+    }
+
+    @java.lang.Override
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization getDefaultInstanceForType() {
+      return DEFAULT_INSTANCE;
+    }
+
   }
 
-  public static final int AUTHORIZATION_FIELD_NUMBER = 2;
+  private int resCase_ = 0;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object authorization_ = "";
+  private java.lang.Object res_;
+  public enum ResCase
+      implements com.google.protobuf.Internal.EnumLite,
+          com.google.protobuf.AbstractMessage.InternalOneOfEnum {
+    AUTHORIZATION(1),
+    ERROR(2),
+    RES_NOT_SET(0);
+    private final int value;
+    private ResCase(int value) {
+      this.value = value;
+    }
+    /**
+     * @param value The number of the enum to look for.
+     * @return The enum associated with the given number.
+     * @deprecated Use {@link #forNumber(int)} instead.
+     */
+    @java.lang.Deprecated
+    public static ResCase valueOf(int value) {
+      return forNumber(value);
+    }
+
+    public static ResCase forNumber(int value) {
+      switch (value) {
+        case 1: return AUTHORIZATION;
+        case 2: return ERROR;
+        case 0: return RES_NOT_SET;
+        default: return null;
+      }
+    }
+    public int getNumber() {
+      return this.value;
+    }
+  };
+
+  public ResCase
+  getResCase() {
+    return ResCase.forNumber(
+        resCase_);
+  }
+
+  public static final int AUTHORIZATION_FIELD_NUMBER = 1;
   /**
-   * <code>string authorization = 2 [json_name = "authorization"];</code>
+   * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+   * @return Whether the authorization field is set.
+   */
+  @java.lang.Override
+  public boolean hasAuthorization() {
+    return resCase_ == 1;
+  }
+  /**
+   * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
    * @return The authorization.
    */
   @java.lang.Override
-  public java.lang.String getAuthorization() {
-    java.lang.Object ref = authorization_;
+  public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization getAuthorization() {
+    if (resCase_ == 1) {
+       return (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_;
+    }
+    return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
+  }
+  /**
+   * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+   */
+  @java.lang.Override
+  public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder getAuthorizationOrBuilder() {
+    if (resCase_ == 1) {
+       return (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_;
+    }
+    return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
+  }
+
+  public static final int ERROR_FIELD_NUMBER = 2;
+  /**
+   * <code>string error = 2 [json_name = "error"];</code>
+   * @return Whether the error field is set.
+   */
+  public boolean hasError() {
+    return resCase_ == 2;
+  }
+  /**
+   * <code>string error = 2 [json_name = "error"];</code>
+   * @return The error.
+   */
+  public java.lang.String getError() {
+    if (resCase_ != 2) {
+      return "";
+    }
+    java.lang.Object ref = res_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      authorization_ = s;
+      res_ = s;
       return s;
     }
   }
   /**
-   * <code>string authorization = 2 [json_name = "authorization"];</code>
-   * @return The bytes for authorization.
+   * <code>string error = 2 [json_name = "error"];</code>
+   * @return The bytes for error.
    */
-  @java.lang.Override
   public com.google.protobuf.ByteString
-      getAuthorizationBytes() {
-    java.lang.Object ref = authorization_;
+      getErrorBytes() {
+    if (resCase_ != 2) {
+      return com.google.protobuf.ByteString.copyFromUtf8("");
+    }
+    java.lang.Object ref = res_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      authorization_ = b;
+      res_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
@@ -1092,22 +1725,22 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (((bitField0_ & 0x00000001) != 0)) {
-      output.writeMessage(1, getUser());
+    if (resCase_ == 1) {
+      output.writeMessage(1, (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(authorization_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 2, authorization_);
+    if (resCase_ == 2) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 2, res_);
     }
     getUnknownFields().writeTo(output);
   }
   private int computeSerializedSize_0() {
     int size = 0;
-    if (((bitField0_ & 0x00000001) != 0)) {
+    if (resCase_ == 1) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(1, getUser());
+        .computeMessageSize(1, (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(authorization_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(2, authorization_);
+    if (resCase_ == 2) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(2, res_);
     }
     return size;
   }
@@ -1133,13 +1766,19 @@ private static final long serialVersionUID = 0L;
     }
     com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse other = (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse) obj;
 
-    if (hasUser() != other.hasUser()) return false;
-    if (hasUser()) {
-      if (!getUser()
-          .equals(other.getUser())) return false;
+    if (!getResCase().equals(other.getResCase())) return false;
+    switch (resCase_) {
+      case 1:
+        if (!getAuthorization()
+            .equals(other.getAuthorization())) return false;
+        break;
+      case 2:
+        if (!getError()
+            .equals(other.getError())) return false;
+        break;
+      case 0:
+      default:
     }
-    if (!getAuthorization()
-        .equals(other.getAuthorization())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -1151,12 +1790,18 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    if (hasUser()) {
-      hash = (37 * hash) + USER_FIELD_NUMBER;
-      hash = (53 * hash) + getUser().hashCode();
+    switch (resCase_) {
+      case 1:
+        hash = (37 * hash) + AUTHORIZATION_FIELD_NUMBER;
+        hash = (53 * hash) + getAuthorization().hashCode();
+        break;
+      case 2:
+        hash = (37 * hash) + ERROR_FIELD_NUMBER;
+        hash = (53 * hash) + getError().hashCode();
+        break;
+      case 0:
+      default:
     }
-    hash = (37 * hash) + AUTHORIZATION_FIELD_NUMBER;
-    hash = (53 * hash) + getAuthorization().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -1276,30 +1921,23 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessage
-              .alwaysUseFieldBuilders) {
-        internalGetUserFieldBuilder();
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      user_ = null;
-      if (userBuilder_ != null) {
-        userBuilder_.dispose();
-        userBuilder_ = null;
+      if (authorizationBuilder_ != null) {
+        authorizationBuilder_.clear();
       }
-      authorization_ = "";
+      resCase_ = 0;
+      res_ = null;
       return this;
     }
 
@@ -1327,23 +1965,22 @@ private static final long serialVersionUID = 0L;
     public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse buildPartial() {
       com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse result = new com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse(this);
       if (bitField0_ != 0) { buildPartial0(result); }
+      buildPartialOneofs(result);
       onBuilt();
       return result;
     }
 
     private void buildPartial0(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse result) {
       int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.user_ = userBuilder_ == null
-            ? user_
-            : userBuilder_.build();
-        to_bitField0_ |= 0x00000001;
+    }
+
+    private void buildPartialOneofs(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse result) {
+      result.resCase_ = resCase_;
+      result.res_ = this.res_;
+      if (resCase_ == 1 &&
+          authorizationBuilder_ != null) {
+        result.res_ = authorizationBuilder_.build();
       }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.authorization_ = authorization_;
-      }
-      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -1358,13 +1995,20 @@ private static final long serialVersionUID = 0L;
 
     public Builder mergeFrom(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse other) {
       if (other == com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.getDefaultInstance()) return this;
-      if (other.hasUser()) {
-        mergeUser(other.getUser());
-      }
-      if (!other.getAuthorization().isEmpty()) {
-        authorization_ = other.authorization_;
-        bitField0_ |= 0x00000002;
-        onChanged();
+      switch (other.getResCase()) {
+        case AUTHORIZATION: {
+          mergeAuthorization(other.getAuthorization());
+          break;
+        }
+        case ERROR: {
+          resCase_ = 2;
+          res_ = other.res_;
+          onChanged();
+          break;
+        }
+        case RES_NOT_SET: {
+          break;
+        }
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -1394,14 +2038,14 @@ private static final long serialVersionUID = 0L;
               break;
             case 10: {
               input.readMessage(
-                  internalGetUserFieldBuilder().getBuilder(),
+                  internalGetAuthorizationFieldBuilder().getBuilder(),
                   extensionRegistry);
-              bitField0_ |= 0x00000001;
+              resCase_ = 1;
               break;
             } // case 10
             case 18: {
-              authorization_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000002;
+              resCase_ = 2;
+              res_ = input.readStringRequireUtf8();
               break;
             } // case 18
             default: {
@@ -1419,197 +2063,250 @@ private static final long serialVersionUID = 0L;
       } // finally
       return this;
     }
+    private int resCase_ = 0;
+    private java.lang.Object res_;
+    public ResCase
+        getResCase() {
+      return ResCase.forNumber(
+          resCase_);
+    }
+
+    public Builder clearRes() {
+      resCase_ = 0;
+      res_ = null;
+      onChanged();
+      return this;
+    }
+
     private int bitField0_;
 
-    private com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User user_;
     private com.google.protobuf.SingleFieldBuilder<
-        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder> userBuilder_;
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder> authorizationBuilder_;
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-     * @return Whether the user field is set.
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+     * @return Whether the authorization field is set.
      */
-    public boolean hasUser() {
-      return ((bitField0_ & 0x00000001) != 0);
+    @java.lang.Override
+    public boolean hasAuthorization() {
+      return resCase_ == 1;
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-     * @return The user.
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+     * @return The authorization.
      */
-    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User getUser() {
-      if (userBuilder_ == null) {
-        return user_ == null ? com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance() : user_;
+    @java.lang.Override
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization getAuthorization() {
+      if (authorizationBuilder_ == null) {
+        if (resCase_ == 1) {
+          return (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_;
+        }
+        return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
       } else {
-        return userBuilder_.getMessage();
+        if (resCase_ == 1) {
+          return authorizationBuilder_.getMessage();
+        }
+        return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
       }
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
      */
-    public Builder setUser(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User value) {
-      if (userBuilder_ == null) {
+    public Builder setAuthorization(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization value) {
+      if (authorizationBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        user_ = value;
+        res_ = value;
+        onChanged();
       } else {
-        userBuilder_.setMessage(value);
+        authorizationBuilder_.setMessage(value);
       }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      resCase_ = 1;
       return this;
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
      */
-    public Builder setUser(
-        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder builderForValue) {
-      if (userBuilder_ == null) {
-        user_ = builderForValue.build();
+    public Builder setAuthorization(
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder builderForValue) {
+      if (authorizationBuilder_ == null) {
+        res_ = builderForValue.build();
+        onChanged();
       } else {
-        userBuilder_.setMessage(builderForValue.build());
+        authorizationBuilder_.setMessage(builderForValue.build());
       }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      resCase_ = 1;
       return this;
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
      */
-    public Builder mergeUser(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User value) {
-      if (userBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0) &&
-          user_ != null &&
-          user_ != com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance()) {
-          getUserBuilder().mergeFrom(value);
+    public Builder mergeAuthorization(com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization value) {
+      if (authorizationBuilder_ == null) {
+        if (resCase_ == 1 &&
+            res_ != com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance()) {
+          res_ = com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.newBuilder((com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_)
+              .mergeFrom(value).buildPartial();
         } else {
-          user_ = value;
+          res_ = value;
+        }
+        onChanged();
+      } else {
+        if (resCase_ == 1) {
+          authorizationBuilder_.mergeFrom(value);
+        } else {
+          authorizationBuilder_.setMessage(value);
+        }
+      }
+      resCase_ = 1;
+      return this;
+    }
+    /**
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
+     */
+    public Builder clearAuthorization() {
+      if (authorizationBuilder_ == null) {
+        if (resCase_ == 1) {
+          resCase_ = 0;
+          res_ = null;
+          onChanged();
         }
       } else {
-        userBuilder_.mergeFrom(value);
-      }
-      if (user_ != null) {
-        bitField0_ |= 0x00000001;
-        onChanged();
+        if (resCase_ == 1) {
+          resCase_ = 0;
+          res_ = null;
+        }
+        authorizationBuilder_.clear();
       }
       return this;
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
      */
-    public Builder clearUser() {
-      bitField0_ = (bitField0_ & ~0x00000001);
-      user_ = null;
-      if (userBuilder_ != null) {
-        userBuilder_.dispose();
-        userBuilder_ = null;
-      }
-      onChanged();
-      return this;
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder getAuthorizationBuilder() {
+      return internalGetAuthorizationFieldBuilder().getBuilder();
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
      */
-    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder getUserBuilder() {
-      bitField0_ |= 0x00000001;
-      onChanged();
-      return internalGetUserFieldBuilder().getBuilder();
-    }
-    /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
-     */
-    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder getUserOrBuilder() {
-      if (userBuilder_ != null) {
-        return userBuilder_.getMessageOrBuilder();
+    @java.lang.Override
+    public com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder getAuthorizationOrBuilder() {
+      if ((resCase_ == 1) && (authorizationBuilder_ != null)) {
+        return authorizationBuilder_.getMessageOrBuilder();
       } else {
-        return user_ == null ?
-            com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.getDefaultInstance() : user_;
+        if (resCase_ == 1) {
+          return (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_;
+        }
+        return com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
       }
     }
     /**
-     * <code>.users.v1.AuthorizeResponse.User user = 1 [json_name = "user"];</code>
+     * <code>.users.v1.AuthorizeResponse.Authorization authorization = 1 [json_name = "authorization"];</code>
      */
     private com.google.protobuf.SingleFieldBuilder<
-        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder> 
-        internalGetUserFieldBuilder() {
-      if (userBuilder_ == null) {
-        userBuilder_ = new com.google.protobuf.SingleFieldBuilder<
-            com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.User.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.UserOrBuilder>(
-                getUser(),
+        com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder> 
+        internalGetAuthorizationFieldBuilder() {
+      if (authorizationBuilder_ == null) {
+        if (!(resCase_ == 1)) {
+          res_ = com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.getDefaultInstance();
+        }
+        authorizationBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+            com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization.Builder, com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.AuthorizationOrBuilder>(
+                (com.biswasakashdev.swiftmart.protogen.users.v1.AuthorizeResponse.Authorization) res_,
                 getParentForChildren(),
                 isClean());
-        user_ = null;
+        res_ = null;
       }
-      return userBuilder_;
+      resCase_ = 1;
+      onChanged();
+      return authorizationBuilder_;
     }
 
-    private java.lang.Object authorization_ = "";
     /**
-     * <code>string authorization = 2 [json_name = "authorization"];</code>
-     * @return The authorization.
+     * <code>string error = 2 [json_name = "error"];</code>
+     * @return Whether the error field is set.
      */
-    public java.lang.String getAuthorization() {
-      java.lang.Object ref = authorization_;
+    @java.lang.Override
+    public boolean hasError() {
+      return resCase_ == 2;
+    }
+    /**
+     * <code>string error = 2 [json_name = "error"];</code>
+     * @return The error.
+     */
+    @java.lang.Override
+    public java.lang.String getError() {
+      if (resCase_ != 2) {
+        return "";
+      }
+      java.lang.Object ref = res_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        authorization_ = s;
+          res_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string authorization = 2 [json_name = "authorization"];</code>
-     * @return The bytes for authorization.
+     * <code>string error = 2 [json_name = "error"];</code>
+     * @return The bytes for error.
      */
+    @java.lang.Override
     public com.google.protobuf.ByteString
-        getAuthorizationBytes() {
-      java.lang.Object ref = authorization_;
+        getErrorBytes() {
+      if (resCase_ != 2) {
+        return com.google.protobuf.ByteString.copyFromUtf8(        "");
+      }
+      java.lang.Object ref = res_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        authorization_ = b;
+        res_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string authorization = 2 [json_name = "authorization"];</code>
-     * @param value The authorization to set.
+     * <code>string error = 2 [json_name = "error"];</code>
+     * @param value The error to set.
      * @return This builder for chaining.
      */
-    public Builder setAuthorization(
+    public Builder setError(
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
-      authorization_ = value;
-      bitField0_ |= 0x00000002;
+      resCase_ = 2;
+      res_ = value;
       onChanged();
       return this;
     }
     /**
-     * <code>string authorization = 2 [json_name = "authorization"];</code>
+     * <code>string error = 2 [json_name = "error"];</code>
      * @return This builder for chaining.
      */
-    public Builder clearAuthorization() {
-      authorization_ = getDefaultInstance().getAuthorization();
-      bitField0_ = (bitField0_ & ~0x00000002);
-      onChanged();
+    public Builder clearError() {
+      if (resCase_ == 2) {
+        resCase_ = 0;
+        res_ = null;
+        onChanged();
+      }
       return this;
     }
     /**
-     * <code>string authorization = 2 [json_name = "authorization"];</code>
-     * @param value The bytes for authorization to set.
+     * <code>string error = 2 [json_name = "error"];</code>
+     * @param value The bytes for error to set.
      * @return This builder for chaining.
      */
-    public Builder setAuthorizationBytes(
+    public Builder setErrorBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
-      authorization_ = value;
-      bitField0_ |= 0x00000002;
+      resCase_ = 2;
+      res_ = value;
       onChanged();
       return this;
     }

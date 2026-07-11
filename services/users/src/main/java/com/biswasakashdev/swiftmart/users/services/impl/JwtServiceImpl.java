@@ -26,7 +26,8 @@ public class JwtServiceImpl implements JwtService {
 
     public JwtServiceImpl(
             String secret,
-            String issuer) {
+            String issuer
+        ) {
         this.secret = secret;
         this.issuer = issuer;
         this.expiry = Duration.ofMinutes(DEFAULT_EXPIRY_IN_MINUTES);

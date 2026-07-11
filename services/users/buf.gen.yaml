@@ -3,7 +3,7 @@ managed:
   enabled: true
   override:
     - file_option: java_package_prefix
-      value: com.biswasakashdev.switftmart.protogen
+      value: com.biswasakashdev.swiftmart.protogen
 inputs:
   - directory: .
     paths:
@@ -12,7 +12,9 @@ inputs:
 plugins:
   - remote: buf.build/grpc/java:v1.82.1
     out: services/users/src/main/java
-# grpc/java depends on protocolbuffers/java
+  # grpc/java depends on protocolbuffers/java
   - remote: buf.build/protocolbuffers/java:v35.1
     out: services/users/src/main/java
-
+  # Project reactor-grpc-java plugin for generating reactive gRPC stubs 
+  - remote: buf.build/community/salesforce-reactive-grpc:v1.2.4
+    out: services/users/src/main/java

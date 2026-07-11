@@ -1,7 +1,10 @@
 spring:
   application:
-    name: core
+    name: users
   profiles:
     active: dev
 server:
   port: 8501
+grpc:
+  server:
+    port: 50001

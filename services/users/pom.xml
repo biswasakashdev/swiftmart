@@ -133,6 +133,19 @@
 			<version>${protobuf.version}</version>
 		</dependency>
 
+		<!-- Reactor gRPC dependency. -->
+		<dependency>
+			<groupId>com.salesforce.servicelibs</groupId>
+			<artifactId>reactor-grpc-stub</artifactId>
+			<version>1.2.4</version>
+		</dependency>
+
+		<!-- Grpc server dependency. -->
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty-shaded</artifactId>
+			<version>${grpc.version}</version>
+		</dependency>
 
 	</dependencies>
 

@@ -7,4 +7,7 @@ core-proto-gen:
 orders-proto-gen:
 	buf generate --template services/orders/buf.gen.yaml
 
+catelogues-proto-gen:
+	buf generate --template services/catelogues/buf.gen.yaml
+
 

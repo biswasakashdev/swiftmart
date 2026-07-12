@@ -21,7 +21,7 @@ message CreateShopRequest{
 }
 
 message CreateShopResponse{
-
+  google.protobuf.Empty res =1;
 }
 
 

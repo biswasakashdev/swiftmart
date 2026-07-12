@@ -4,3 +4,7 @@ gpql-gateway-proto-gen:
 core-proto-gen:
 	buf generate --template services/core/buf.gen.yaml
 
+orders-proto-gen:
+	buf generate --template services/orders/buf.gen.yaml
+
+

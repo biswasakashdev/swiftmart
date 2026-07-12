@@ -1,6 +1,6 @@
 spring:
   r2dbc:
-    url: r2dbc:postgres://localhost:5432/dev_db
+    url: r2dbc:postgres://localhost:5432/swiftmart_core_dev_db
     username: dev
     password: devpassword
   sql:

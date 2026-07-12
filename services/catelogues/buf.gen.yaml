@@ -1,9 +1,4 @@
 version: v2
-managed:
-  enabled: true
-  override:
-    - file_option: go_package
-      value: github.com/biswasakashdev/swiftmart/services/catelogues;cateloguesv1
 plugins:
   - remote: buf.build/grpc/go:v1.6.2
     out: services/catelogues/proto_gen
@@ -17,4 +12,5 @@ plugins:
 inputs:
   - directory: .
     paths:
-      - catelogues
+      - proto/catelogues
+      - proto/common

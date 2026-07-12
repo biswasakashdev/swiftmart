@@ -5,7 +5,10 @@ package catelogues.v1;
 import "google/protobuf/empty.proto";
 import "common/v1/main.proto";
 
-option go_package = "productspb";
+
+
+option go_package = "github.com/biswasakashdev/swiftmart/catelogues/proto;commonpbv1";
+
 
 message VariantMessage {
   string id = 1;

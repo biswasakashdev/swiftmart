@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package common.v1;
 
+option go_package = "github.com/biswasakashdev/swiftmart/common/proto;commonpbv1";
+
 
 message PageInfo{
   int32 limit = 1;

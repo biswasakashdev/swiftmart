@@ -2,9 +2,9 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.2
 // - protoc             (unknown)
-// source: products/v1/main.proto
+// source: catelogues/v1/products.proto
 
-package productsv1
+package cateloguesv1
 
 import (
 	context "context"
@@ -19,18 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	ProductsService_GetProduct_FullMethodName    = "/products.v1.ProductsService/GetProduct"
-	ProductsService_ListProducts_FullMethodName  = "/products.v1.ProductsService/ListProducts"
-	ProductsService_CreateProduct_FullMethodName = "/products.v1.ProductsService/CreateProduct"
-	ProductsService_UpdateVariant_FullMethodName = "/products.v1.ProductsService/UpdateVariant"
-	ProductsService_AddVariant_FullMethodName    = "/products.v1.ProductsService/AddVariant"
+	ProductsService_GetProductById_FullMethodName = "/catelogues.v1.ProductsService/GetProductById"
+	ProductsService_ListProducts_FullMethodName   = "/catelogues.v1.ProductsService/ListProducts"
+	ProductsService_CreateProduct_FullMethodName  = "/catelogues.v1.ProductsService/CreateProduct"
+	ProductsService_UpdateVariant_FullMethodName  = "/catelogues.v1.ProductsService/UpdateVariant"
+	ProductsService_AddVariant_FullMethodName     = "/catelogues.v1.ProductsService/AddVariant"
 )
 
 // ProductsServiceClient is the client API for ProductsService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ProductsServiceClient interface {
-	GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*GetProductResponse, error)
+	GetProductById(ctx context.Context, in *GetProductByIdRequest, opts ...grpc.CallOption) (*GetProductByIdResponse, error)
 	ListProducts(ctx context.Context, in *ListProductsRequest, opts ...grpc.CallOption) (*ListProductsResponse, error)
 	CreateProduct(ctx context.Context, in *CreateProductRequest, opts ...grpc.CallOption) (*CreateProductResponse, error)
 	UpdateVariant(ctx context.Context, in *UpdateVariantRequest, opts ...grpc.CallOption) (*UpdateVariantResponse, error)
@@ -45,10 +45,10 @@ func NewProductsServiceClient(cc grpc.ClientConnInterface) ProductsServiceClient
 	return &productsServiceClient{cc}
 }
 
-func (c *productsServiceClient) GetProduct(ctx context.Context, in *GetProductRequest, opts ...grpc.CallOption) (*GetProductResponse, error) {
+func (c *productsServiceClient) GetProductById(ctx context.Context, in *GetProductByIdRequest, opts ...grpc.CallOption) (*GetProductByIdResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetProductResponse)
-	err := c.cc.Invoke(ctx, ProductsService_GetProduct_FullMethodName, in, out, cOpts...)
+	out := new(GetProductByIdResponse)
+	err := c.cc.Invoke(ctx, ProductsService_GetProductById_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (c *productsServiceClient) AddVariant(ctx context.Context, in *AddVariantRe
 // All implementations must embed UnimplementedProductsServiceServer
 // for forward compatibility.
 type ProductsServiceServer interface {
-	GetProduct(context.Context, *GetProductRequest) (*GetProductResponse, error)
+	GetProductById(context.Context, *GetProductByIdRequest) (*GetProductByIdResponse, error)
 	ListProducts(context.Context, *ListProductsRequest) (*ListProductsResponse, error)
 	CreateProduct(context.Context, *CreateProductRequest) (*CreateProductResponse, error)
 	UpdateVariant(context.Context, *UpdateVariantRequest) (*UpdateVariantResponse, error)
@@ -114,8 +114,8 @@ type ProductsServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedProductsServiceServer struct{}
 
-func (UnimplementedProductsServiceServer) GetProduct(context.Context, *GetProductRequest) (*GetProductResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetProduct not implemented")
+func (UnimplementedProductsServiceServer) GetProductById(context.Context, *GetProductByIdRequest) (*GetProductByIdResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetProductById not implemented")
 }
 func (UnimplementedProductsServiceServer) ListProducts(context.Context, *ListProductsRequest) (*ListProductsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListProducts not implemented")
@@ -150,20 +150,20 @@ func RegisterProductsServiceServer(s grpc.ServiceRegistrar, srv ProductsServiceS
 	s.RegisterService(&ProductsService_ServiceDesc, srv)
 }
 
-func _ProductsService_GetProduct_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetProductRequest)
+func _ProductsService_GetProductById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProductByIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ProductsServiceServer).GetProduct(ctx, in)
+		return srv.(ProductsServiceServer).GetProductById(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ProductsService_GetProduct_FullMethodName,
+		FullMethod: ProductsService_GetProductById_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ProductsServiceServer).GetProduct(ctx, req.(*GetProductRequest))
+		return srv.(ProductsServiceServer).GetProductById(ctx, req.(*GetProductByIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -244,12 +244,12 @@ func _ProductsService_AddVariant_Handler(srv interface{}, ctx context.Context, d
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ProductsService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "products.v1.ProductsService",
+	ServiceName: "catelogues.v1.ProductsService",
 	HandlerType: (*ProductsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetProduct",
-			Handler:    _ProductsService_GetProduct_Handler,
+			MethodName: "GetProductById",
+			Handler:    _ProductsService_GetProductById_Handler,
 		},
 		{
 			MethodName: "ListProducts",
@@ -269,5 +269,5 @@ var ProductsService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "products/v1/main.proto",
+	Metadata: "catelogues/v1/products.proto",
 }

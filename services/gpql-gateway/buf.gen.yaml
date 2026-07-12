@@ -2,8 +2,9 @@ version: v2
 managed:
   enabled: true
   override:
-    - file_option: go_package
-      value: github.com/biswasakashdev/swiftmart/services/gpql-gateway;productsv1
+    - file_option: go_package_prefix
+      value: github.com/biswasakashdev/swiftmart/services/gpql-gateway/proto_gen
+
 plugins:
   - remote: buf.build/grpc/go:v1.6.2
     out: services/gpql-gateway/proto_gen

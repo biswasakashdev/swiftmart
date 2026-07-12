@@ -1,4 +1,9 @@
 version: v2
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: github.com/biswasakashdev/swiftmart/services/catelogues/proto_gen
 plugins:
   - remote: buf.build/grpc/go:v1.6.2
     out: services/catelogues/proto_gen

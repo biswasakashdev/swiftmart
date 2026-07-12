@@ -2,11 +2,14 @@ syntax = "proto3";
 
 package orders.v1;
 
+
+option go_package = "github.com/biswasakashdev/swiftmart/orders/proto;orderspbv1";
+
 service OrderService {
   rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
 
   rpc GetAllOrders(GetAllOrdersRequest) returns (GetAllOrdersResponse);
-  
+
   rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
 }
 // Create Order
@@ -29,12 +32,10 @@ message GetAllOrdersResponse{
 
 // GetOrder
 message GetOrderRequest{
-  
+
 }
 
 
 message GetOrderResponse{
-  
+
 }
-
-

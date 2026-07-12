@@ -13,11 +13,11 @@ func Load() (*Config, error) {
 	_ = godotenv.Load()
 
 	cfg := &Config{
-		Port:               getEnv("PORT", "8080"),
-		UserServiceAddr:    getRequiredEnv("USER_SERVICE_ADDR"),
-		ProductServiceAddr: getRequiredEnv("PRODUCT_SERVICE_ADDR"),
-		OrderServiceAddr:   getRequiredEnv("ORDER_SERVICE_ADDR"),
-		JWTSecret:          getRequiredEnv("JWT_SECRET"),
+		Port:                 getEnv("PORT", "8080"),
+		CoreServiceAddr:      getRequiredEnv("USER_SERVICE_ADDR"),
+		CatelogueServiceAddr: getRequiredEnv("PRODUCT_SERVICE_ADDR"),
+		OrderServiceAddr:     getRequiredEnv("ORDER_SERVICE_ADDR"),
+		JWTSecret:            getRequiredEnv("JWT_SECRET"),
 	}
 
 	return cfg, nil

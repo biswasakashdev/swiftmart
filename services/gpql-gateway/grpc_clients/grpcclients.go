@@ -2,22 +2,23 @@ package grpclients
 
 import (
 	cfg "github.com/biswasakashdev/swiftmart/services/gpql-gateway/config"
+	cateloguespb "github.com/biswasakashdev/swiftmart/services/gpql-gateway/proto_gen/catelogues/v1"
+	corepb "github.com/biswasakashdev/swiftmart/services/gpql-gateway/proto_gen/core/v1"
 	orderspb "github.com/biswasakashdev/swiftmart/services/gpql-gateway/proto_gen/orders/v1"
-	productspb "github.com/biswasakashdev/swiftmart/services/gpql-gateway/proto_gen/products/v1"
-	userspb "github.com/biswasakashdev/swiftmart/services/gpql-gateway/proto_gen/users/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 type GrpcClients struct {
-	ProductClient productspb.ProductsServiceClient
+	ProductClient cateloguespb.ProductsServiceClient
 	OrdersClient  orderspb.OrderServiceClient
-	UserClient    userspb.UsersServiceClient
+	UsersClient   corepb.UsersServiceClient
+	ShopClient    corepb.ShopsServiceClient
 }
 
 func NewGrpcClient(config *cfg.Config) (*GrpcClients, error) {
-	usersConn, err := grpc.NewClient(
-		"localhost:50051",
+	coreConn, err := grpc.NewClient(
+		config.CoreServiceAddr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
@@ -25,23 +26,24 @@ func NewGrpcClient(config *cfg.Config) (*GrpcClients, error) {
 	}
 
 	ordersConn, err := grpc.NewClient(
-		"localhost:50052",
+		config.OrderServiceAddr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		return nil, err
 	}
 
-	productsConn, err := grpc.NewClient(
-		"localhost:50053",
+	cateloguesConn, err := grpc.NewClient(
+		config.CatelogueServiceAddr,
 		grpc.WithTransportCredentials(insecure.NewCredentials()),
 	)
 	if err != nil {
 		return nil, err
 	}
 	return &GrpcClients{
-		UserClient:    userspb.NewUsersServiceClient(usersConn),
-		ProductClient: productspb.NewProductsServiceClient(productsConn),
+		UsersClient:   corepb.NewUsersServiceClient(coreConn),
+		ProductClient: cateloguespb.NewProductsServiceClient(cateloguesConn),
 		OrdersClient:  orderspb.NewOrderServiceClient(ordersConn),
+		ShopClient:    corepb.NewShopsServiceClient(coreConn),
 	}, nil
 }

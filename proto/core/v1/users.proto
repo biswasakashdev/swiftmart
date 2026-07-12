@@ -4,6 +4,8 @@ package core.v1;
 
 import "google/protobuf/empty.proto";
 
+option go_package = "github.com/biswasakashdev/swiftmart/core/proto;corepbv1";
+
 service UsersService {
   rpc CreateAccount(CreateAccountRequest) returns (CreateAccountResponse);
 
@@ -46,4 +48,3 @@ message AuthorizeResponse {
   }
 
 }
-

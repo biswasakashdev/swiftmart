@@ -5,6 +5,9 @@ package core.v1;
 import "google/protobuf/empty.proto";
 
 
+option go_package = "github.com/biswasakashdev/swiftmart/core/proto;corepbv1";
+
+
 service ShopsService{
 
   rpc CreateShop(CreateShopRequest) returns (CreateShopResponse);
@@ -44,6 +47,3 @@ message GetShopRequest{
 message GetShopResponse{
 
 }
-
-
-

@@ -16,6 +16,17 @@ services:
     networks:
       - postgres-network
 
+  mongo:
+    container_name: swiftmart-mongo
+    image: mongo:8.0
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dev
+      MONGO_INITDB_ROOT_PASSWORD: devpassword
+    networks:
+      - mongo-network
+
 networks:
   postgres-network:
+    driver: bridge
+  mongo-network:
     driver: bridge

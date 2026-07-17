@@ -2,72 +2,23 @@ package templateengine
 
 import (
 	"bytes"
-	"context"
 	"fmt"
 	"html/template"
 	"strings"
-	"sync"
 
-	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/db/repository"
-	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/types"
+	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/models"
 )
 
-// TemplateBuilder compiles layout trees to HTML using templates from the registry
-type TemplateBuilder struct {
-	mu           sync.RWMutex
-	registry     map[string]string
-	templateRepo *repository.TemplateRepository
+// TemplateContext holds the structural data processed specifically for the engine compiler pass
+type TemplateContext struct {
+	ID           string
+	Props        map[string]interface{}
+	InlineStyles template.CSS
+	ChildrenHTML template.HTML
 }
 
-// NewTemplateBuilder creates a new template builder
-func NewTemplateBuilder(templateRepo *repository.TemplateRepository) *TemplateBuilder {
-	tb := &TemplateBuilder{
-		registry:     make(map[string]string),
-		templateRepo: templateRepo,
-	}
-
-	// Initialize with built-in templates as fallback
-	for k, v := range ComponentTemplateRegistry {
-		tb.registry[k] = v
-	}
-
-	return tb
-}
-
-// LoadTemplatesFromDB loads templates from the database into the registry
-func (tb *TemplateBuilder) LoadTemplatesFromDB(ctx context.Context) error {
-	blueprints, err := tb.templateRepo.FetchAllComponentBlueprintsFromDb(ctx)
-	if err != nil {
-		return err
-	}
-
-	tb.mu.Lock()
-	defer tb.mu.Unlock()
-
-	for _, bp := range blueprints {
-		tb.registry[bp.Name] = bp.Template
-	}
-
-	return nil
-}
-
-// GetTemplate retrieves a template from the registry
-func (tb *TemplateBuilder) GetTemplate(componentType string) (string, bool) {
-	tb.mu.RLock()
-	defer tb.mu.RUnlock()
-	tmpl, exists := tb.registry[componentType]
-	return tmpl, exists
-}
-
-// UpdateTemplate updates a template in the registry (for runtime updates)
-func (tb *TemplateBuilder) UpdateTemplate(componentType string, newTemplate string) {
-	tb.mu.Lock()
-	defer tb.mu.Unlock()
-	tb.registry[componentType] = newTemplate
-}
-
-// CompileStyleString converts a map into standard valid CSS syntax strings
-func CompileStyleString(styles map[string]string) template.CSS {
+// compileStyleString converts a map into standard valid CSS syntax strings
+func compileStyleString(styles map[string]string) template.CSS {
 	if len(styles) == 0 {
 		return ""
 	}
@@ -79,42 +30,35 @@ func CompileStyleString(styles map[string]string) template.CSS {
 }
 
 // CompileTreeToHTML processes the abstract node configuration and transforms it into raw target HTML layout output
-func (tb *TemplateBuilder) CompileTreeToHTML(node *types.LayoutNode) (template.HTML, error) {
-	if node == nil {
-		return "", nil
-	}
+func (tb *TemplateEngine) compileTreeToHTML(node *models.LayoutNode) (template.HTML, error) {
 
 	// 1. RECURSION: Evaluate all nested children layers first
 	var childrenBuilder strings.Builder
 	for _, child := range node.Children {
-		childHTML, err := tb.CompileTreeToHTML(child)
+		childHTML, err := tb.compileTreeToHTML(&child)
 		if err != nil {
 			return "", err
 		}
 		childrenBuilder.WriteString(string(childHTML))
 	}
 
-	// 2. Lookup the component's HTML blueprint text string from the registry map
-	tb.mu.RLock()
-	rawHTMLTemplate, exists := tb.registry[node.Type]
-	tb.mu.RUnlock()
-
+	rawHTMLTemplate, exists := tb.Registry.Get(node.Type)
 	if !exists {
 		// Fallback layout wrapper for unrecognized nodes so the compiler doesn't throw a fatal panic
 		rawHTMLTemplate = `<div id="{{.ID}}" style="{{.InlineStyles}}">{{.ChildrenHTML}}</div>`
 	}
 
 	// 3. Initialize Go's parsing engine targeting the component layout string
-	tmpl, err := template.New(node.ID).Parse(rawHTMLTemplate)
+	tmpl, err := template.New(node.ElementID).Parse(rawHTMLTemplate)
 	if err != nil {
 		return "", err
 	}
 
 	// 4. Populate compilation context fields
 	contextData := TemplateContext{
-		ID:           node.ID,
+		ID:           node.ElementID,
 		Props:        node.Props,
-		InlineStyles: CompileStyleString(node.Styles),
+		InlineStyles: compileStyleString(node.Styles),
 		ChildrenHTML: template.HTML(childrenBuilder.String()),
 	}
 

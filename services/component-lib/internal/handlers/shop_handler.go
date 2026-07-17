@@ -1,36 +1,43 @@
 package handlers
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
+	componentregistry "github.com/biswasakashdev/swiftmart/services/component-lib/internal/component_registry"
 	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/db/repository"
 	templateengine "github.com/biswasakashdev/swiftmart/services/component-lib/internal/template_engine"
 )
 
 type ShopHandler struct {
 	LayoutRepository *repository.LayoutRepository
-	TemplateBuilder  *templateengine.TemplateBuilder
+	TemplateEngine   *templateengine.TemplateEngine
 }
 
 func NewShopHandler(
 	layoutRepo *repository.LayoutRepository,
-	templateBuilder *templateengine.TemplateBuilder,
-) (*ShopHandler, error) {
+	componentRepo *repository.ComponentRepository,
+) *ShopHandler {
+
+	// Initialize the component registry
+	componentRegistry, err := componentregistry.NewComponentRegistry(componentRepo)
+
+	if err != nil {
+		log.Fatal("Failed to fetch the components", err.Error())
+	}
+
+	// Create template engine
+	templateEngine := templateengine.NewTemplateEngine(componentRegistry)
 
 	return &ShopHandler{
 		LayoutRepository: layoutRepo,
-		TemplateBuilder:  templateBuilder,
-	}, nil
+		TemplateEngine:   templateEngine,
+	}
 }
 
 func (sh *ShopHandler) ShopHandler(w http.ResponseWriter, r *http.Request) {
 	shopId := r.PathValue("shopId")
-
-	fmt.Println("The shop id:", shopId)
-
 	ctx := r.Context()
-
 	// Fetch layout tree for the shop from database
 	layoutNode, err := sh.LayoutRepository.FetchLayoutTreeForShop(ctx, shopId)
 	if err != nil {
@@ -45,7 +52,7 @@ func (sh *ShopHandler) ShopHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Compile the layout tree to HTML
-	compiledTemplate, err := sh.TemplateBuilder.CompileTreeToHTML(layoutNode)
+	compiledTemplate, err := sh.TemplateEngine.BuildPage(layoutNode)
 	if err != nil {
 		http.Error(w, "Failed to compile template: "+err.Error(), http.StatusInternalServerError)
 		return

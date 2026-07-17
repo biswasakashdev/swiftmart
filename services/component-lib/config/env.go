@@ -8,8 +8,7 @@ import (
 )
 
 func Load() (*Config, error) {
-
-	// Ignore error if .env doesn't exist
+	// Load .env file if it exists
 	_ = godotenv.Load()
 
 	cfg := &Config{

@@ -7,11 +7,9 @@ import (
 	"net/http"
 
 	"github.com/biswasakashdev/swiftmart/services/component-lib/config"
-	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/component_registry"
 	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/db"
 	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/db/repository"
 	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/handlers"
-	templateengine "github.com/biswasakashdev/swiftmart/services/component-lib/internal/template_engine"
 )
 
 func main() {
@@ -27,29 +25,12 @@ func main() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 
-	// Initialize template repository
-	templateRepository := repository.NewTemplateRepository(dbClient)
-
-	// Initialize template builder
-	templateBuilder := templateengine.NewTemplateBuilder(templateRepository)
-
-	// Load templates from DB
-	ctx := context.Background()
-	if err := templateBuilder.LoadTemplatesFromDB(ctx); err != nil {
-		log.Fatal("Failed to load templates from DB:", err)
-	}
-
-	// Initialize layout repository
-	layoutRepository := repository.NewLayoutRepository(templateRepository)
-
-	// Initialize component registry
-	componentRegistry, err := componentregistry.NewComponentRegistry(dbClient)
-	if err != nil {
-		log.Fatal("Failed to initialize the component registry:", err)
-	}
+	// Initialize the repositories
+	componentRepository := repository.NewComponetRepository(dbClient)
+	layoutRepository := repository.NewLayoutRepository(dbClient)
 
 	// Initialize shop handler
-	shopHandler := handlers.NewShopHandler(layoutRepository, templateBuilder)
+	shopHandler := handlers.NewShopHandler(layoutRepository, componentRepository)
 
 	// Setup routes
 	mux := http.NewServeMux()

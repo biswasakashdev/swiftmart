@@ -3,42 +3,54 @@ package componentregistry
 import (
 	"context"
 	"sync"
+	"time"
 
 	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/db/repository"
-	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/template_engine"
-	"go.mongodb.org/mongo-driver/v2/mongo"
 )
 
 // ComponentRegistry manages component templates in memory for fast access
 type ComponentRegistry struct {
-	mu          sync.RWMutex
-	templateBuilder *template_engine.TemplateBuilder
+	mu         sync.RWMutex
+	components map[string]string
+}
+
+func NewComponentRegistry(componentRepo *repository.ComponentRepository) (*ComponentRegistry, error) {
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	componentList, err := componentRepo.FetchAllComponentBlueprintsFromDb(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	componentMap := make(map[string]string)
+
+	for _, components := range componentList {
+		componentMap[components.Type] = components.Template
+	}
+
+	return &ComponentRegistry{
+		components: componentMap,
+	}, nil
 }
 
 // Get fetches an HTML template string directly from RAM instantly
 func (cr *ComponentRegistry) Get(componentType string) (string, bool) {
-	return cr.templateBuilder.GetTemplate(componentType)
+	cr.mu.RLock()
+	// Using defer ensures the RUnlock runs even if you add more logic later
+	defer cr.mu.RUnlock()
+
+	component, exists := cr.components[componentType]
+	return component, exists
 }
 
-// Update runtime re-hydration (called at boot OR via webhook/cache invalidation event)
-func (cr *ComponentRegistry) Update(componentType string, newComponent repository.ComponentBluePrint) {
-	cr.templateBuilder.UpdateTemplate(componentType, newComponent.Template)
-}
+// Update adds a new component template or updates an existing one.
+// It uses a full write lock to ensure thread safety during modification.
+func (cr *ComponentRegistry) Update(componentType, template string) {
+	cr.mu.Lock()
+	defer cr.mu.Unlock() // Guarantees the lock is released when the function finishes
 
-func NewComponentRegistry(client *mongo.Client) (*ComponentRegistry, error) {
-	templateRepository := repository.NewTemplateRepository(client)
-
-	templateBuilder := template_engine.NewTemplateBuilder(templateRepository)
-
-	// Load templates from DB
-	ctx := context.Background()
-	if err := templateBuilder.LoadTemplatesFromDB(ctx); err != nil {
-		return nil, err
-	}
-
-	newComponentRegistry := ComponentRegistry{
-		templateBuilder: templateBuilder,
-	}
-
-	return &newComponentRegistry, nil
+	cr.components[componentType] = template
 }

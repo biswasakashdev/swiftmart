@@ -3,7 +3,7 @@ package repository
 import (
 	"context"
 
-	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/types"
+	"github.com/biswasakashdev/swiftmart/services/component-lib/internal/models"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.mongodb.org/mongo-driver/v2/mongo"
 )
@@ -19,11 +19,11 @@ func NewLayoutRepository(dbClient *mongo.Client) *LayoutRepository {
 }
 
 // FetchLayoutTreeForShop fetches the complete layout tree for a given shop ID
-func (lr *LayoutRepository) FetchLayoutTreeForShop(ctx context.Context, shopID string) (*types.LayoutNode, error) {
-	var layoutNode types.LayoutNode
+func (lr *LayoutRepository) FetchLayoutTreeForShop(ctx context.Context, shopID string) (*models.RootLayout, error) {
+	var layout models.RootLayout
 
 	filter := bson.M{"shop_id": shopID}
-	err := lr.collection.FindOne(ctx, filter).Decode(&layoutNode)
+	err := lr.collection.FindOne(ctx, filter).Decode(&layout)
 	if err != nil {
 		if err == mongo.ErrNoDocuments {
 			return nil, nil // No layout found for this shop
@@ -31,5 +31,5 @@ func (lr *LayoutRepository) FetchLayoutTreeForShop(ctx context.Context, shopID s
 		return nil, err
 	}
 
-	return &layoutNode, nil
+	return &layout, nil
 }

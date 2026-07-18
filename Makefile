@@ -1,5 +1,5 @@
 gpql-gateway-proto-gen:
-	buf generate --template services/gpql-gateway/buf.gen.yaml
+	buf generate --template gpql-gateway/buf.gen.yaml
 
 core-proto-gen:
 	buf generate --template services/core/buf.gen.yaml
@@ -9,5 +9,3 @@ orders-proto-gen:
 
 catelogues-proto-gen:
 	buf generate --template services/catelogues/buf.gen.yaml
-
-

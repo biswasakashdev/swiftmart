@@ -55,6 +55,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
+		CancelOrder     func(childComplexity int, orderID string) int
 		CreateCustomer  func(childComplexity int, input model.CreateCustomerInput) int
 		CreateOrder     func(childComplexity int, input model.CreateOrderInput) int
 		CreateProduct   func(childComplexity int, input model.CreateProductInput) int
@@ -96,7 +97,7 @@ type ComplexityRoot struct {
 		Order    func(childComplexity int, id string) int
 		Orders   func(childComplexity int, limit *int32, offset *int32) int
 		Product  func(childComplexity int, id string) int
-		Products func(childComplexity int, limit *int32, offset *int32) int
+		Products func(childComplexity int, limit *int32, offset *int32, query *string) int
 	}
 }
 
@@ -108,11 +109,12 @@ type MutationResolver interface {
 	CreateProduct(ctx context.Context, input model.CreateProductInput) (*model.Product, error)
 	UpdateInventory(ctx context.Context, variantID string, quantityDelta int32) (*model.ProductVariant, error)
 	CreateOrder(ctx context.Context, input model.CreateOrderInput) (*model.Order, error)
+	CancelOrder(ctx context.Context, orderID string) (*model.Order, error)
 	CreateCustomer(ctx context.Context, input model.CreateCustomerInput) (*model.Customer, error)
 }
 type QueryResolver interface {
 	Product(ctx context.Context, id string) (*model.Product, error)
-	Products(ctx context.Context, limit *int32, offset *int32) ([]*model.Product, error)
+	Products(ctx context.Context, limit *int32, offset *int32, query *string) ([]*model.Product, error)
 	Order(ctx context.Context, id string) (*model.Order, error)
 	Orders(ctx context.Context, limit *int32, offset *int32) ([]*model.Order, error)
 	Customer(ctx context.Context, id string) (*model.Customer, error)
@@ -209,6 +211,17 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 
 		return e.ComplexityRoot.LineItem.VariantID(childComplexity), true
 
+	case "Mutation.cancelOrder":
+		if e.ComplexityRoot.Mutation.CancelOrder == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_cancelOrder_args(ctx, rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.ComplexityRoot.Mutation.CancelOrder(childComplexity, args["orderId"].(string)), true
 	case "Mutation.createCustomer":
 		if e.ComplexityRoot.Mutation.CreateCustomer == nil {
 			break
@@ -438,7 +451,7 @@ func (e *executableSchema) Complexity(ctx context.Context, typeName, field strin
 			return 0, false
 		}
 
-		return e.ComplexityRoot.Query.Products(childComplexity, args["limit"].(*int32), args["offset"].(*int32)), true
+		return e.ComplexityRoot.Query.Products(childComplexity, args["limit"].(*int32), args["offset"].(*int32), args["query"].(*string)), true
 
 	}
 	return 0, false
@@ -771,12 +784,26 @@ func (ec *executionContext) field_Customer_orders_args(ctx context.Context, rawA
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_cancelOrder_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
+	var err error
+	args := map[string]any{}
+	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "orderId",
+		func(ctx context.Context, v any) (string, error) {
+			return ec.unmarshalNID2string(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["orderId"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_createCustomer_args(ctx context.Context, rawArgs map[string]any) (map[string]any, error) {
 	var err error
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (model.CreateCustomerInput, error) {
-			return ec.unmarshalNCreateCustomerInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateCustomerInput(ctx, v)
+			return ec.unmarshalNCreateCustomerInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateCustomerInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -790,7 +817,7 @@ func (ec *executionContext) field_Mutation_createOrder_args(ctx context.Context,
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (model.CreateOrderInput, error) {
-			return ec.unmarshalNCreateOrderInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateOrderInput(ctx, v)
+			return ec.unmarshalNCreateOrderInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateOrderInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -804,7 +831,7 @@ func (ec *executionContext) field_Mutation_createProduct_args(ctx context.Contex
 	args := map[string]any{}
 	arg0, err := graphql.ProcessArgField(ctx, rawArgs, "input",
 		func(ctx context.Context, v any) (model.CreateProductInput, error) {
-			return ec.unmarshalNCreateProductInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateProductInput(ctx, v)
+			return ec.unmarshalNCreateProductInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateProductInput(ctx, v)
 		})
 	if err != nil {
 		return nil, err
@@ -932,6 +959,14 @@ func (ec *executionContext) field_Query_products_args(ctx context.Context, rawAr
 		return nil, err
 	}
 	args["offset"] = arg1
+	arg2, err := graphql.ProcessArgField(ctx, rawArgs, "query",
+		func(ctx context.Context, v any) (*string, error) {
+			return ec.unmarshalOString2ᚖstring(ctx, v)
+		})
+	if err != nil {
+		return nil, err
+	}
+	args["query"] = arg2
 	return args, nil
 }
 
@@ -1100,7 +1135,7 @@ func (ec *executionContext) _Customer_orders(ctx context.Context, field graphql.
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v []*model.Order) graphql.Marshaler {
-			return ec.marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderᚄ(ctx, selections, v)
+			return ec.marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderᚄ(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1282,7 +1317,7 @@ func (ec *executionContext) _Mutation_createProduct(ctx context.Context, field g
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Product) graphql.Marshaler {
-			return ec.marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProduct(ctx, selections, v)
+			return ec.marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProduct(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1326,7 +1361,7 @@ func (ec *executionContext) _Mutation_updateInventory(ctx context.Context, field
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.ProductVariant) graphql.Marshaler {
-			return ec.marshalNProductVariant2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductVariant(ctx, selections, v)
+			return ec.marshalNProductVariant2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductVariant(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1370,7 +1405,7 @@ func (ec *executionContext) _Mutation_createOrder(ctx context.Context, field gra
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Order) graphql.Marshaler {
-			return ec.marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrder(ctx, selections, v)
+			return ec.marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1400,6 +1435,50 @@ func (ec *executionContext) fieldContext_Mutation_createOrder(ctx context.Contex
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_cancelOrder(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	return graphql.ResolveField(
+		ctx,
+		ec.OperationContext,
+		field,
+		func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.fieldContext_Mutation_cancelOrder(ctx, field)
+		},
+		func(ctx context.Context) (any, error) {
+			fc := graphql.GetFieldContext(ctx)
+			return ec.Resolvers.Mutation().CancelOrder(ctx, fc.Args["orderId"].(string))
+		},
+		nil,
+		func(ctx context.Context, selections ast.SelectionSet, v *model.Order) graphql.Marshaler {
+			return ec.marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx, selections, v)
+		},
+		true,
+		true,
+	)
+}
+func (ec *executionContext) fieldContext_Mutation_cancelOrder(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return ec.childFields_Order(ctx, field)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_cancelOrder_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return fc, err
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_createCustomer(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	return graphql.ResolveField(
 		ctx,
@@ -1414,7 +1493,7 @@ func (ec *executionContext) _Mutation_createCustomer(ctx context.Context, field 
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Customer) graphql.Marshaler {
-			return ec.marshalNCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCustomer(ctx, selections, v)
+			return ec.marshalNCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCustomer(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1480,7 +1559,7 @@ func (ec *executionContext) _Order_customer(ctx context.Context, field graphql.C
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Customer) graphql.Marshaler {
-			return ec.marshalNCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCustomer(ctx, selections, v)
+			return ec.marshalNCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCustomer(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1512,7 +1591,7 @@ func (ec *executionContext) _Order_lineItems(ctx context.Context, field graphql.
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v []*model.LineItem) graphql.Marshaler {
-			return ec.marshalNLineItem2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItemᚄ(ctx, selections, v)
+			return ec.marshalNLineItem2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItemᚄ(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1567,7 +1646,7 @@ func (ec *executionContext) _Order_financialStatus(ctx context.Context, field gr
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v model.OrderFinancialStatus) graphql.Marshaler {
-			return ec.marshalNOrderFinancialStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderFinancialStatus(ctx, selections, v)
+			return ec.marshalNOrderFinancialStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderFinancialStatus(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1590,7 +1669,7 @@ func (ec *executionContext) _Order_fulfillmentStatus(ctx context.Context, field 
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v model.OrderFulfillmentStatus) graphql.Marshaler {
-			return ec.marshalNOrderFulfillmentStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderFulfillmentStatus(ctx, selections, v)
+			return ec.marshalNOrderFulfillmentStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderFulfillmentStatus(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1728,7 +1807,7 @@ func (ec *executionContext) _Product_status(ctx context.Context, field graphql.C
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v model.ProductStatus) graphql.Marshaler {
-			return ec.marshalNProductStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductStatus(ctx, selections, v)
+			return ec.marshalNProductStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductStatus(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1751,7 +1830,7 @@ func (ec *executionContext) _Product_variants(ctx context.Context, field graphql
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v []*model.ProductVariant) graphql.Marshaler {
-			return ec.marshalNProductVariant2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductVariantᚄ(ctx, selections, v)
+			return ec.marshalNProductVariant2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductVariantᚄ(ctx, selections, v)
 		},
 		true,
 		true,
@@ -1968,7 +2047,7 @@ func (ec *executionContext) _Query_product(ctx context.Context, field graphql.Co
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Product) graphql.Marshaler {
-			return ec.marshalOProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProduct(ctx, selections, v)
+			return ec.marshalOProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProduct(ctx, selections, v)
 		},
 		true,
 		false,
@@ -2008,11 +2087,11 @@ func (ec *executionContext) _Query_products(ctx context.Context, field graphql.C
 		},
 		func(ctx context.Context) (any, error) {
 			fc := graphql.GetFieldContext(ctx)
-			return ec.Resolvers.Query().Products(ctx, fc.Args["limit"].(*int32), fc.Args["offset"].(*int32))
+			return ec.Resolvers.Query().Products(ctx, fc.Args["limit"].(*int32), fc.Args["offset"].(*int32), fc.Args["query"].(*string))
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v []*model.Product) graphql.Marshaler {
-			return ec.marshalNProduct2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductᚄ(ctx, selections, v)
+			return ec.marshalNProduct2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductᚄ(ctx, selections, v)
 		},
 		true,
 		true,
@@ -2056,7 +2135,7 @@ func (ec *executionContext) _Query_order(ctx context.Context, field graphql.Coll
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Order) graphql.Marshaler {
-			return ec.marshalOOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrder(ctx, selections, v)
+			return ec.marshalOOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx, selections, v)
 		},
 		true,
 		false,
@@ -2100,7 +2179,7 @@ func (ec *executionContext) _Query_orders(ctx context.Context, field graphql.Col
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v []*model.Order) graphql.Marshaler {
-			return ec.marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderᚄ(ctx, selections, v)
+			return ec.marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderᚄ(ctx, selections, v)
 		},
 		true,
 		true,
@@ -2144,7 +2223,7 @@ func (ec *executionContext) _Query_customer(ctx context.Context, field graphql.C
 		},
 		nil,
 		func(ctx context.Context, selections ast.SelectionSet, v *model.Customer) graphql.Marshaler {
-			return ec.marshalOCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCustomer(ctx, selections, v)
+			return ec.marshalOCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCustomer(ctx, selections, v)
 		},
 		true,
 		false,
@@ -3380,7 +3459,7 @@ func (ec *executionContext) unmarshalInputCreateOrderInput(ctx context.Context, 
 			it.CustomerID = data
 		case "items":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("items"))
-			data, err := ec.unmarshalNLineItemInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItemInputᚄ(ctx, v)
+			data, err := ec.unmarshalNLineItemInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItemInputᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3431,7 +3510,7 @@ func (ec *executionContext) unmarshalInputCreateProductInput(ctx context.Context
 			it.Slug = data
 		case "variants":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("variants"))
-			data, err := ec.unmarshalNCreateVariantInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateVariantInputᚄ(ctx, v)
+			data, err := ec.unmarshalNCreateVariantInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateVariantInputᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3695,6 +3774,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "createOrder":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createOrder(ctx, field)
+			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "cancelOrder":
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_cancelOrder(ctx, field)
 			})
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
@@ -4504,29 +4590,28 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNCreateCustomerInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateCustomerInput(ctx context.Context, v any) (model.CreateCustomerInput, error) {
+func (ec *executionContext) unmarshalNCreateCustomerInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateCustomerInput(ctx context.Context, v any) (model.CreateCustomerInput, error) {
 	res, err := ec.unmarshalInputCreateCustomerInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNCreateOrderInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateOrderInput(ctx context.Context, v any) (model.CreateOrderInput, error) {
+func (ec *executionContext) unmarshalNCreateOrderInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateOrderInput(ctx context.Context, v any) (model.CreateOrderInput, error) {
 	res, err := ec.unmarshalInputCreateOrderInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNCreateProductInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateProductInput(ctx context.Context, v any) (model.CreateProductInput, error) {
+func (ec *executionContext) unmarshalNCreateProductInput2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateProductInput(ctx context.Context, v any) (model.CreateProductInput, error) {
 	res, err := ec.unmarshalInputCreateProductInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNCreateVariantInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateVariantInputᚄ(ctx context.Context, v any) ([]*model.CreateVariantInput, error) {
-	var vSlice []any
-	vSlice = graphql.CoerceList(v)
+func (ec *executionContext) unmarshalNCreateVariantInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateVariantInputᚄ(ctx context.Context, v any) ([]*model.CreateVariantInput, error) {
+	vSlice := graphql.CoerceList(v)
 	var err error
 	res := make([]*model.CreateVariantInput, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCreateVariantInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateVariantInput(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCreateVariantInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateVariantInput(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -4534,16 +4619,16 @@ func (ec *executionContext) unmarshalNCreateVariantInput2ᚕᚖgithubᚗcomᚋbi
 	return res, nil
 }
 
-func (ec *executionContext) unmarshalNCreateVariantInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCreateVariantInput(ctx context.Context, v any) (*model.CreateVariantInput, error) {
+func (ec *executionContext) unmarshalNCreateVariantInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCreateVariantInput(ctx context.Context, v any) (*model.CreateVariantInput, error) {
 	res, err := ec.unmarshalInputCreateVariantInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCustomer2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCustomer(ctx context.Context, sel ast.SelectionSet, v model.Customer) graphql.Marshaler {
+func (ec *executionContext) marshalNCustomer2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCustomer(ctx context.Context, sel ast.SelectionSet, v model.Customer) graphql.Marshaler {
 	return ec._Customer(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCustomer(ctx context.Context, sel ast.SelectionSet, v *model.Customer) graphql.Marshaler {
+func (ec *executionContext) marshalNCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCustomer(ctx context.Context, sel ast.SelectionSet, v *model.Customer) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
@@ -4601,11 +4686,11 @@ func (ec *executionContext) marshalNInt2int32(ctx context.Context, sel ast.Selec
 	return res
 }
 
-func (ec *executionContext) marshalNLineItem2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItemᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.LineItem) graphql.Marshaler {
+func (ec *executionContext) marshalNLineItem2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItemᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.LineItem) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
 		fc.Result = &v[i]
-		return ec.marshalNLineItem2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItem(ctx, sel, v[i])
+		return ec.marshalNLineItem2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItem(ctx, sel, v[i])
 	})
 
 	for _, e := range ret {
@@ -4617,7 +4702,7 @@ func (ec *executionContext) marshalNLineItem2ᚕᚖgithubᚗcomᚋbiswasakashdev
 	return ret
 }
 
-func (ec *executionContext) marshalNLineItem2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItem(ctx context.Context, sel ast.SelectionSet, v *model.LineItem) graphql.Marshaler {
+func (ec *executionContext) marshalNLineItem2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItem(ctx context.Context, sel ast.SelectionSet, v *model.LineItem) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
@@ -4627,14 +4712,13 @@ func (ec *executionContext) marshalNLineItem2ᚖgithubᚗcomᚋbiswasakashdevᚋ
 	return ec._LineItem(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNLineItemInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItemInputᚄ(ctx context.Context, v any) ([]*model.LineItemInput, error) {
-	var vSlice []any
-	vSlice = graphql.CoerceList(v)
+func (ec *executionContext) unmarshalNLineItemInput2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItemInputᚄ(ctx context.Context, v any) ([]*model.LineItemInput, error) {
+	vSlice := graphql.CoerceList(v)
 	var err error
 	res := make([]*model.LineItemInput, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNLineItemInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItemInput(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNLineItemInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItemInput(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -4642,20 +4726,20 @@ func (ec *executionContext) unmarshalNLineItemInput2ᚕᚖgithubᚗcomᚋbiswasa
 	return res, nil
 }
 
-func (ec *executionContext) unmarshalNLineItemInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐLineItemInput(ctx context.Context, v any) (*model.LineItemInput, error) {
+func (ec *executionContext) unmarshalNLineItemInput2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐLineItemInput(ctx context.Context, v any) (*model.LineItemInput, error) {
 	res, err := ec.unmarshalInputLineItemInput(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNOrder2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v model.Order) graphql.Marshaler {
+func (ec *executionContext) marshalNOrder2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v model.Order) graphql.Marshaler {
 	return ec._Order(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Order) graphql.Marshaler {
+func (ec *executionContext) marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Order) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
 		fc.Result = &v[i]
-		return ec.marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrder(ctx, sel, v[i])
+		return ec.marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx, sel, v[i])
 	})
 
 	for _, e := range ret {
@@ -4667,7 +4751,7 @@ func (ec *executionContext) marshalNOrder2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋ
 	return ret
 }
 
-func (ec *executionContext) marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
+func (ec *executionContext) marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
@@ -4677,35 +4761,35 @@ func (ec *executionContext) marshalNOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswi
 	return ec._Order(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNOrderFinancialStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderFinancialStatus(ctx context.Context, v any) (model.OrderFinancialStatus, error) {
+func (ec *executionContext) unmarshalNOrderFinancialStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderFinancialStatus(ctx context.Context, v any) (model.OrderFinancialStatus, error) {
 	var res model.OrderFinancialStatus
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNOrderFinancialStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderFinancialStatus(ctx context.Context, sel ast.SelectionSet, v model.OrderFinancialStatus) graphql.Marshaler {
+func (ec *executionContext) marshalNOrderFinancialStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderFinancialStatus(ctx context.Context, sel ast.SelectionSet, v model.OrderFinancialStatus) graphql.Marshaler {
 	return v
 }
 
-func (ec *executionContext) unmarshalNOrderFulfillmentStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderFulfillmentStatus(ctx context.Context, v any) (model.OrderFulfillmentStatus, error) {
+func (ec *executionContext) unmarshalNOrderFulfillmentStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderFulfillmentStatus(ctx context.Context, v any) (model.OrderFulfillmentStatus, error) {
 	var res model.OrderFulfillmentStatus
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNOrderFulfillmentStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrderFulfillmentStatus(ctx context.Context, sel ast.SelectionSet, v model.OrderFulfillmentStatus) graphql.Marshaler {
+func (ec *executionContext) marshalNOrderFulfillmentStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrderFulfillmentStatus(ctx context.Context, sel ast.SelectionSet, v model.OrderFulfillmentStatus) graphql.Marshaler {
 	return v
 }
 
-func (ec *executionContext) marshalNProduct2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v model.Product) graphql.Marshaler {
+func (ec *executionContext) marshalNProduct2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v model.Product) graphql.Marshaler {
 	return ec._Product(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Product) graphql.Marshaler {
+func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Product) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
 		fc.Result = &v[i]
-		return ec.marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProduct(ctx, sel, v[i])
+		return ec.marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProduct(ctx, sel, v[i])
 	})
 
 	for _, e := range ret {
@@ -4717,7 +4801,7 @@ func (ec *executionContext) marshalNProduct2ᚕᚖgithubᚗcomᚋbiswasakashdev�
 	return ret
 }
 
-func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
+func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
@@ -4727,25 +4811,25 @@ func (ec *executionContext) marshalNProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋs
 	return ec._Product(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNProductStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductStatus(ctx context.Context, v any) (model.ProductStatus, error) {
+func (ec *executionContext) unmarshalNProductStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductStatus(ctx context.Context, v any) (model.ProductStatus, error) {
 	var res model.ProductStatus
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNProductStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductStatus(ctx context.Context, sel ast.SelectionSet, v model.ProductStatus) graphql.Marshaler {
+func (ec *executionContext) marshalNProductStatus2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductStatus(ctx context.Context, sel ast.SelectionSet, v model.ProductStatus) graphql.Marshaler {
 	return v
 }
 
-func (ec *executionContext) marshalNProductVariant2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductVariant(ctx context.Context, sel ast.SelectionSet, v model.ProductVariant) graphql.Marshaler {
+func (ec *executionContext) marshalNProductVariant2githubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductVariant(ctx context.Context, sel ast.SelectionSet, v model.ProductVariant) graphql.Marshaler {
 	return ec._ProductVariant(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNProductVariant2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductVariantᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.ProductVariant) graphql.Marshaler {
+func (ec *executionContext) marshalNProductVariant2ᚕᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductVariantᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.ProductVariant) graphql.Marshaler {
 	ret := graphql.MarshalSliceConcurrently(ctx, len(v), 0, false, func(ctx context.Context, i int) graphql.Marshaler {
 		fc := graphql.GetFieldContext(ctx)
 		fc.Result = &v[i]
-		return ec.marshalNProductVariant2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductVariant(ctx, sel, v[i])
+		return ec.marshalNProductVariant2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductVariant(ctx, sel, v[i])
 	})
 
 	for _, e := range ret {
@@ -4757,7 +4841,7 @@ func (ec *executionContext) marshalNProductVariant2ᚕᚖgithubᚗcomᚋbiswasak
 	return ret
 }
 
-func (ec *executionContext) marshalNProductVariant2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProductVariant(ctx context.Context, sel ast.SelectionSet, v *model.ProductVariant) graphql.Marshaler {
+func (ec *executionContext) marshalNProductVariant2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProductVariant(ctx context.Context, sel ast.SelectionSet, v *model.ProductVariant) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			graphql.AddErrorf(ctx, "the requested element is null which the schema does not allow")
@@ -4820,8 +4904,7 @@ func (ec *executionContext) marshalN__DirectiveLocation2string(ctx context.Conte
 }
 
 func (ec *executionContext) unmarshalN__DirectiveLocation2ᚕstringᚄ(ctx context.Context, v any) ([]string, error) {
-	var vSlice []any
-	vSlice = graphql.CoerceList(v)
+	vSlice := graphql.CoerceList(v)
 	var err error
 	res := make([]string, len(vSlice))
 	for i := range vSlice {
@@ -4954,7 +5037,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐCustomer(ctx context.Context, sel ast.SelectionSet, v *model.Customer) graphql.Marshaler {
+func (ec *executionContext) marshalOCustomer2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐCustomer(ctx context.Context, sel ast.SelectionSet, v *model.Customer) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -4996,14 +5079,14 @@ func (ec *executionContext) marshalOInt2ᚖint32(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalOOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
+func (ec *executionContext) marshalOOrder2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐOrder(ctx context.Context, sel ast.SelectionSet, v *model.Order) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Order(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋservicesᚋgpqlᚑgatewayᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
+func (ec *executionContext) marshalOProduct2ᚖgithubᚗcomᚋbiswasakashdevᚋswiftmartᚋinternalᚋgpql_gatewayᚋgraphᚋmodelᚐProduct(ctx context.Context, sel ast.SelectionSet, v *model.Product) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

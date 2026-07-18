@@ -1,4 +1,4 @@
-# --- Core Types ---
+# -- Core Types ---
 
 type Product {
     id: ID!
@@ -65,7 +65,7 @@ enum OrderFulfillmentStatus {
     FULFILLED
 }
 
-# --- Input Types for Mutations ---
+# Input Types for Mutations
 
 input CreateProductInput {
     title: String!
@@ -97,14 +97,14 @@ input CreateCustomerInput {
     lastName: String
 }
 
-# --- Root Queries and Mutations ---
+# -- Root Queries and Mutations ---
 
+# Queries
 type Query {
     # Catalog
     product(id: ID!): Product
-    products(limit: Int, offset: Int): [Product!]!
+    products(limit: Int, offset: Int, query: String): [Product!]!
 
-    # Orders
     order(id: ID!): Order
     orders(limit: Int, offset: Int): [Order!]!
 
@@ -112,14 +112,14 @@ type Query {
     customer(id: ID!): Customer
 }
 
+# Mutations
 type Mutation {
     # Catalog Management
     createProduct(input: CreateProductInput!): Product!
     updateInventory(variantId: ID!, quantityDelta: Int!): ProductVariant!
 
-    # Checkout / Orders
     createOrder(input: CreateOrderInput!): Order!
+    cancelOrder(orderId: ID!): Order!
 
-    # Customer Management
     createCustomer(input: CreateCustomerInput!): Customer!
 }

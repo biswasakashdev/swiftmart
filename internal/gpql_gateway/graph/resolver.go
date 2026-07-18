@@ -6,6 +6,7 @@ import grpclients "github.com/biswasakashdev/swiftmart/internal/gpql_gateway/grp
 //
 // It serves as dependency injection for your app, add any dependencies you require
 // here.
+//
 
 type Resolver struct {
 	Clients *grpclients.GrpcClients

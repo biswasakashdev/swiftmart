@@ -1,5 +1,0 @@
-spring:
-  r2dbc:
-    url: r2dbc:postgres://localhost:5432/swiftmart_orders_dev_db
-    username: dev
-    password: devpassword

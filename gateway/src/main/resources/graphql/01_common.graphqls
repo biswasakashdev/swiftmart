@@ -1,0 +1,23 @@
+
+
+input PageInfo {
+    page: Int!
+    size: Int!
+}
+
+type PageDetails{
+    page:Int!,
+    size:Int!,
+    totalElements: Int!,
+    isLast: Boolean!
+}
+
+
+
+type Query{
+
+}
+
+type Mutation{
+
+}

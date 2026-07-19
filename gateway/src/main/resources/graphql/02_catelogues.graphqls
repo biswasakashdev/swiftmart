@@ -1,0 +1,69 @@
+
+# -- Core Types ---
+
+type Product {
+    id: ID!
+    title: String!
+    description: String
+    slug: String!
+    status: ProductStatus!
+    variants: [ProductVariant!]!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type ProductVariant {
+    id: ID!
+    sku: String!
+    price: Float!
+    inventoryQuantity: Int!
+    weight: Float
+    title: String!
+}
+
+type ProductList{
+    pageDetails: PageDetails!
+    content: [Product!]!
+}
+
+enum ProductStatus {
+    DRAFT
+    ACTIVE
+    ARCHIVED
+}
+
+
+# Input Types for Mutations
+
+input CreateProductInput {
+    title: String!
+    description: String
+    slug: String!
+    variants: [CreateVariantInput!]!
+}
+
+input CreateVariantInput {
+    sku: String!
+    price: Float!
+    inventoryQuantity: Int!
+    title: String!
+}
+
+extend type Query {
+    # Catalog
+    getProduct(shopId:ID!, id: ID!): Product
+
+    getProducts(shopId:ID!, pageInfo: PageInfo!, query: String): ProductList!
+
+}
+
+# Catalog Management
+extend type Mutation{
+
+    createProduct(input: CreateProductInput!): Product!
+
+    updateInventory(shopId:ID! ,variantId: ID!, quantityDelta: Int!): ProductVariant!
+
+
+}
+

@@ -1,0 +1,16 @@
+package com.biswasakashdev.swiftmart.gateway.dtos.models;
+
+
+import com.biswasakashdev.swiftmart.gateway.dtos.models.orders.Order;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public record Customer(
+        String id,
+        String email,
+        String firstName,
+        String lastName,
+        List<Order> orders,
+        LocalDateTime createdAt
+) {}

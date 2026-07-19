@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: users
+  profiles:
+    active: dev
+server:
+  port: 8501
+grpc:
+  server:
+    port: 50051

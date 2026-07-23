@@ -1,0 +1,25 @@
+
+# Types
+
+
+# Mutations
+
+input CreateClientInput{
+    email: String!
+    countryCode: String!
+    phone: String!
+    password: String!
+    name: String!
+}
+
+extend type Mutation{
+    verify(inp: CredentialsInput!) :Authorization!
+
+    createClient(inp: CreateClientInput!): Boolean!
+
+}
+
+
+
+
+

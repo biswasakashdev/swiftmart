@@ -1,0 +1,40 @@
+# Types
+
+type User {
+    id: ID!
+    email: String!
+    name: String!
+}
+
+type Authorization{
+    token: String!
+    user: User!
+}
+
+type PageDetails{
+    page:Int!,
+    size:Int!,
+    totalElements: Int!,
+    isLast: Boolean!
+}
+
+# Mutations
+
+input PageInfo {
+    page: Int!
+    size: Int!
+}
+
+
+input CredentialsInput{
+    emailOrPhone : String!
+    password : String!
+}
+
+type Query{
+
+}
+
+type Mutation{
+
+}

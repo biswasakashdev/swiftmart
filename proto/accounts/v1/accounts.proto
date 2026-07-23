@@ -1,0 +1,27 @@
+syntax="proto3";
+
+package accounts.v1;
+
+
+service AccountService{
+ rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+
+ rpc Authorize(AuthorizeRequest) returns (AuthorizeResponse);
+
+}
+
+message CreateUserRequest{
+
+}
+
+message CreateUserResponse{
+
+}
+
+message AuthorizeRequest{
+
+}
+
+message AuthorizeResponse{
+
+}

@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SwiftmartCoreMain {
+public class AccountsMain {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SwiftmartCoreMain.class, args);
+		SpringApplication.run(AccountsMain.class, args);
 	}
 
 }

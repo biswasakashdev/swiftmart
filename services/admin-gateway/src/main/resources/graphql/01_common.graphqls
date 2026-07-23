@@ -1,16 +1,5 @@
 # Types
 
-type User {
-    id: ID!
-    email: String!
-    name: String!
-}
-
-type Authorization{
-    token: String!
-    user: User!
-}
-
 type PageDetails{
     page:Int!,
     size:Int!,
@@ -23,12 +12,6 @@ type PageDetails{
 input PageInfo {
     page: Int!
     size: Int!
-}
-
-
-input CredentialsInput{
-    emailOrPhone : String!
-    password : String!
 }
 
 type Query{

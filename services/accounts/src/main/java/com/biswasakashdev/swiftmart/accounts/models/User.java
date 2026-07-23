@@ -23,10 +23,7 @@ public class User {
     @Column("contact_number")
     private String contactNumber;
     private String password;
-    @Column("first_name")
-    private String firstName;
-    @Column("last_name")
-    private String lastName;
+    private String name;
     @Column("created_on")
     private LocalDate createdOn;
     @Column("account_locked")

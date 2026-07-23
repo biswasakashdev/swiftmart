@@ -1,3 +1,7 @@
 grpc:
   server:
-    accounts: localhost:8501
+    accounts: localhost:50051
+spring:
+  graphql:
+    graphiql:
+      enabled: true

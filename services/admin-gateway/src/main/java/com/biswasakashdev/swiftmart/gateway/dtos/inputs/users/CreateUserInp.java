@@ -1,6 +1,6 @@
-package com.biswasakashdev.swiftmart.gateway.dtos.inputs.client;
+package com.biswasakashdev.swiftmart.gateway.dtos.inputs.users;
 
-public record CreateClientInp(
+public record CreateUserInp(
         String email,
         String countryCode,
         String phone,

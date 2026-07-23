@@ -1,10 +1,11 @@
 package com.biswasakashdev.swiftmart.accounts.config;
 
+import com.biswasakashdev.swiftmart.accounts.controller.grpc.UserGrpcServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.biswasakashdev.swiftmart.accounts.controller.grpc.UsersGrpcServiceImpl;
+import com.biswasakashdev.swiftmart.accounts.controller.grpc.AuthGrpcServiceImpl;
 
 import io.grpc.Server;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,8 @@ import io.grpc.netty.shaded.io.grpc.netty.NettyServerBuilder;
 @RequiredArgsConstructor
 public class GrpcServiceConfig {
 
-    private final UsersGrpcServiceImpl usersGrpcServiceImpl;
+    private final AuthGrpcServiceImpl authGrpcServiceImpl;
+    private final UserGrpcServiceImpl userGrpcServiceImpl;
 
     @Bean
     Server grpcServer(Environment environment) {
@@ -26,7 +28,8 @@ public class GrpcServiceConfig {
 
         return NettyServerBuilder
                 .forPort(Integer.parseInt(grpcPort))
-                .addService(usersGrpcServiceImpl)
+                .addService(authGrpcServiceImpl)
+                .addService(userGrpcServiceImpl)
                 .build();
     }
 

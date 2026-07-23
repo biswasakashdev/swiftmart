@@ -1,5 +1,11 @@
 spring:
   application:
     name: gateway
+  profiles:
+    active: dev
+  graphql:
+    http:
+      path: /api/v1/graphql
 server:
-  port: 8501
+  port: 9000
+

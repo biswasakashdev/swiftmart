@@ -10,7 +10,7 @@ inputs:
       - proto/accounts
 
 plugins:
-  - remote: buf.build/grpc/java:v1.82.1
+  - remote: buf.build/grpc/java:v1.82.2
     out: services/accounts/src/main/java
   # grpc/java depends on protocolbuffers/java
   - remote: buf.build/protocolbuffers/java:v35.1

@@ -8,11 +8,10 @@ inputs:
   - directory: proto
 
 plugins:
-  - remote: buf.build/grpc/java:v1.82.2
-    out: services/admin-gateway/src/main/java
-  # grpc/java depends on protocolbuffers/java
-  - remote: buf.build/protocolbuffers/java:v35.1
-    out: services/admin-gateway/src/main/java
+  - remote: buf.build/grpc/java:v1.82.1
+    out: shared/proto-gen-java/src/main/java
+  - remote: buf.build/protocolbuffers/java:v34.1
+    out: shared/proto-gen-java/src/main/java
   # Project reactor-grpc-java plugin for generating reactive gRPC stubs
   - remote: buf.build/community/salesforce-reactive-grpc:v1.2.4
-    out: services/admin-gateway/src/main/java
+    out: shared/proto-gen-java/src/main/java

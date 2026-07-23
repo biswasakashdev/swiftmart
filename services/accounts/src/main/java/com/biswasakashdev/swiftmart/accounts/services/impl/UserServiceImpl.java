@@ -1,16 +1,13 @@
 package com.biswasakashdev.swiftmart.accounts.services.impl;
 
-import com.biswasakashdev.swiftmart.protogen.core.v1.CreateAccountRequest;
-import com.biswasakashdev.swiftmart.protogen.core.v1.CreateAccountResponse;
+import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.repository.UsersRepository;
 import com.biswasakashdev.swiftmart.accounts.repository.r2dbc.UsersR2DBCRepository;
+import com.biswasakashdev.swiftmart.accounts.services.UserService;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.biswasakashdev.swiftmart.accounts.models.User;
-import com.biswasakashdev.swiftmart.accounts.services.UserService;
-
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
@@ -35,19 +32,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<CreateAccountResponse> createAccount(CreateAccountRequest createAccountRequest) {
+    public Mono<Void> createAccount(CreateUserRequest createAccountRequest) {
         User user = User.builder()
-                .firstName(createAccountRequest.getFirstName())
-                .lastName(createAccountRequest.getLastName())
+                .name(createAccountRequest.getName())
                 .email(createAccountRequest.getEmail())
                 .password(passwordEncoder.encode(createAccountRequest.getPassword()))
                 .countryCode(createAccountRequest.getCountryCode())
-                .contactNumber(createAccountRequest.getContactNumber())
+                .contactNumber(createAccountRequest.getPhone())
                 .accountLocked(false)
                 .createdOn(LocalDate.now())
                 .build();
-        return usersRepository.saveUser(user)
-                .then(Mono.just(CreateAccountResponse.newBuilder().build()));
+        return usersRepository.saveUser(user).then();
     }
 
 }

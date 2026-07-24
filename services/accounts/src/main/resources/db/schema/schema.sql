@@ -5,8 +5,7 @@ CREATE TABLE users
 (
     id             VARCHAR(50) PRIMARY KEY,
     email          VARCHAR(100) NOT NULL UNIQUE,
-    first_name     VARCHAR(50)  NOT NULL,
-    last_name      VARCHAR(50)  NOT NULL,
+    full_name      VARCHAR(100)  NOT NULL,
     password       VARCHAR(100) NOT NULL,
     contact_number VARCHAR(30)  NOT NULL,
     country_code   VARCHAR(30)  NOT NULL,

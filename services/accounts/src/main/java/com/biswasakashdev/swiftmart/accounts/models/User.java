@@ -23,6 +23,7 @@ public class User {
     @Column("contact_number")
     private String contactNumber;
     private String password;
+    @Column("full_name")
     private String name;
     @Column("created_on")
     private LocalDate createdOn;

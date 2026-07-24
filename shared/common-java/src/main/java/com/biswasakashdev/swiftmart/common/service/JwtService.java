@@ -1,5 +1,6 @@
-package com.biswasakashdev.swiftmart.accounts.services;
+package com.biswasakashdev.swiftmart.common.service;
 
+import com.biswasakashdev.swiftmart.common.TokenType;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -9,7 +10,7 @@ import java.util.Map;
 
 public interface JwtService {
 
-    String buildToken(String userId, Duration expiry, Map<String,Object> extraClaims);
+    String buildToken(String userId, Duration expiry, TokenType tokenType, Map<String,Object> extraClaims);
 
     String getUserId(String token) throws ExpiredJwtException, MalformedJwtException;
 

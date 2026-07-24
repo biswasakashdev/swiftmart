@@ -1,6 +1,6 @@
 spring:
   r2dbc:
-    url: r2dbc:postgres://localhost:5432/test_db
+    url: r2dbc:postgres://localhost:5432/swiftmart_accounts_test
     username: test
     password: testpassword
   sql:

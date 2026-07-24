@@ -59,7 +59,7 @@ services:
 
 
   postgres:
-    container_name: nexus-postgres
+    container_name: swiftmart-postgres
     image: postgres:alpine3.24
     environment:
       POSTGRES_USER: docker
@@ -73,7 +73,7 @@ services:
       - postgres-network
 
   mongo:
-    container_name: nexus-mongo
+    container_name: swiftmart-mongo
     image: mongo:8
     environment:
       - MONGO_INITDB_ROOT_USERNAME=dev

@@ -6,21 +6,8 @@ import "google/protobuf/empty.proto";
 
 service UserService{
   
- rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
 
 }
 
-message CreateUserRequest{
 
-  string name = 1;
-  string email = 2;
-  string country_code = 3;
-  string phone = 4;
-  string password = 5;
-
-}
-
-message CreateUserResponse{
-  google.protobuf.Empty res = 1;
-}
 

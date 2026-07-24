@@ -6,6 +6,9 @@ spring:
   graphql:
     http:
       path: /api/v1/graphql
+  cloud:
+    gateway:
+
 server:
   port: 9000
 

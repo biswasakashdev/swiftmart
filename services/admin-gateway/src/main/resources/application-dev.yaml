@@ -1,3 +1,5 @@
+accounts:
+  url: http://localhost:8501
 grpc:
   server:
     accounts: localhost:50051

@@ -1,6 +1,6 @@
 spring:
   r2dbc:
-    url: r2dbc:postgres://localhost:5432/swiftmart_core_dev_db
+    url: r2dbc:postgres://localhost:5432/swiftmart_accounts_dev
     username: dev
     password: devpassword
   sql:
@@ -8,6 +8,5 @@ spring:
       mode: always
       schema-locations:
        -  classpath:db/schema/schema.sql
-jwt:
-  secret: 1A50EF4F7AB1F6069BC04EEABFA52D66257D47E7FBBE0D7C1C20D2D88E9489C5
-  issuer: https://nexussphere.com
+
+

@@ -1,13 +1,13 @@
 package com.biswasakashdev.swiftmart.accounts.config;
 
 
+import com.biswasakashdev.swiftmart.common.service.JwtService;
+import com.biswasakashdev.swiftmart.common.service.impl.JwtServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.biswasakashdev.swiftmart.accounts.services.JwtService;
-import com.biswasakashdev.swiftmart.accounts.services.impl.JwtServiceImpl;
 
 @Configuration
 @RequiredArgsConstructor

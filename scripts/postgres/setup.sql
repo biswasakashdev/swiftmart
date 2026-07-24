@@ -3,19 +3,23 @@ CREATE USER dev WITH PASSWORD 'devpassword';
 CREATE USER test WITH PASSWORD 'testpassword';
 
 -- Create databases
-CREATE DATABASE swiftmart_core_dev_db OWNER dev;
-CREATE DATABASE swiftmart_core_test_db OWNER test;
 
-CREATE DATABASE swiftmart_orders_dev_db OWNER dev;
-CREATE DATABASE swiftmart_orders_test_db OWNER test;
+-- Dev Instances
+CREATE DATABASE swiftmart_accounts_dev OWNER dev;
+CREATE DATABASE swiftmart_orders_dev OWNER dev;
+
+
+-- Test Instances
+CREATE DATABASE swiftmart_accounts_test OWNER test;
+CREATE DATABASE swiftmart_orders_test OWNER test;
 
 -- Optional: grant privileges
 
--- Grant access to dev user for test and dev database.
-GRANT ALL PRIVILEGES ON DATABASE swiftmart_core_dev_db TO dev;
-GRANT ALL PRIVILEGES ON DATABASE swiftmart_core_test_db TO test;
+-- Grant access to dev user for test database.
+GRANT ALL PRIVILEGES ON DATABASE swiftmart_accounts_dev TO dev;
+GRANT ALL PRIVILEGES ON DATABASE swiftmart_orders_dev TO dev;
 
 
--- Grant access to test user for test and dev database.
-GRANT ALL PRIVILEGES ON DATABASE swiftmart_orders_dev_db TO dev;
-GRANT ALL PRIVILEGES ON DATABASE swiftmart_orders_test_db TO test;
+-- Grant access to test user for test databases.
+GRANT ALL PRIVILEGES ON DATABASE swiftmart_accounts_test TO test;
+GRANT ALL PRIVILEGES ON DATABASE swiftmart_orders_test TO test;

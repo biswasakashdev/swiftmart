@@ -1,8 +1,8 @@
 package com.biswasakashdev.swiftmart.accounts.services;
 
+import com.biswasakashdev.swiftmart.accounts.dtos.req.NewUserRequest;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 
-import com.biswasakashdev.swiftmart.protogen.accounts.v1.CreateUserRequest;
 import reactor.core.publisher.Mono;
 
 public interface UserService {
@@ -11,5 +11,5 @@ public interface UserService {
 
     Mono<User> findUserByEmail(String email);
 
-    Mono<Void> createAccount(CreateUserRequest createUserRequest);
+    Mono<Void> createUser(NewUserRequest request);
 }

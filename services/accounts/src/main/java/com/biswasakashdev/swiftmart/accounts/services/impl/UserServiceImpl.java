@@ -1,5 +1,7 @@
 package com.biswasakashdev.swiftmart.accounts.services.impl;
 
+import com.biswasakashdev.swiftmart.accounts.dtos.req.NewUserRequest;
+import com.biswasakashdev.swiftmart.accounts.dtos.req.UserCredentials;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.repository.UsersRepository;
 import com.biswasakashdev.swiftmart.accounts.repository.r2dbc.UsersR2DBCRepository;
@@ -32,13 +34,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Mono<Void> createAccount(CreateUserRequest createAccountRequest) {
+    public Mono<Void> createUser(NewUserRequest request) {
         User user = User.builder()
-                .name(createAccountRequest.getName())
-                .email(createAccountRequest.getEmail())
-                .password(passwordEncoder.encode(createAccountRequest.getPassword()))
-                .countryCode(createAccountRequest.getCountryCode())
-                .contactNumber(createAccountRequest.getPhone())
+                .name(request.name())
+                .email(request.email())
+                .password(passwordEncoder.encode(request.password()))
+                .countryCode(request.countryCode())
+                .contactNumber(request.phone())
                 .accountLocked(false)
                 .createdOn(LocalDate.now())
                 .build();

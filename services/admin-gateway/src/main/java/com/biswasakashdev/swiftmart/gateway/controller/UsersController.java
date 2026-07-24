@@ -15,18 +15,5 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class UsersController {
 
-    private final AccountsClient accountsClient;
-
-    @MutationMapping
-    public Mono<Authorization> authorize(@Argument CredentialsInp inp){
-        return accountsClient.authorize(inp);
-    }
-
-    @MutationMapping
-    public Mono<Boolean> createUser(@Argument CreateUserInp inp){
-        return accountsClient
-                .createUser(inp)
-                .then(Mono.just(Boolean.TRUE));
-    }
 
 }

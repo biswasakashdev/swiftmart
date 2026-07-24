@@ -1,5 +1,6 @@
-package com.biswasakashdev.swiftmart.accounts.services.impl;
+package com.biswasakashdev.swiftmart.common.service.impl;
 
+import com.biswasakashdev.swiftmart.common.TokenType;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -11,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import com.biswasakashdev.swiftmart.accounts.services.JwtService;
+import com.biswasakashdev.swiftmart.common.service.JwtService;
 
 public class JwtServiceImpl implements JwtService {
 
@@ -26,8 +27,7 @@ public class JwtServiceImpl implements JwtService {
 
     public JwtServiceImpl(
             String secret,
-            String issuer
-        ) {
+            String issuer) {
         this.secret = secret;
         this.issuer = issuer;
         this.expiry = Duration.ofMinutes(DEFAULT_EXPIRY_IN_MINUTES);
@@ -61,8 +61,14 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String buildToken(String userId, Duration expiry, Map<String, Object> extraClaims) {
+    public String buildToken(
+            String userId,
+            Duration expiry,
+            TokenType tokenType,
+            Map<String, Object> extraClaims
+    ) {
         Map<String , Object> claims = new HashMap<>(extraClaims);
+        claims.put("token_type", tokenType.name());
         return createToken(userId, expiry.toMillis(), claims);
     }
 

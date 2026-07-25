@@ -1,7 +1,6 @@
 package com.biswasakashdev.swiftmart.gateway.config;
 
 
-import com.biswasakashdev.swiftmart.gateway.auth.JwtAuthenticationManager;
 import com.biswasakashdev.swiftmart.gateway.auth.JwtSecurityContextRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,17 +14,18 @@ public class SecurityConfig {
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http,
-                                                            JwtAuthenticationManager authManager,
                                                             JwtSecurityContextRepository contextRepo) {
         return http
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchanges -> exchanges
-                        .pathMatchers("/api/v1/graphql")
-                        .authenticated()
                         .anyExchange()
                         .permitAll()
                 )
                 .securityContextRepository(contextRepo)
+                .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
+                .cors(ServerHttpSecurity.CorsSpec::disable)
+                .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
+                .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .build();
     }
 }

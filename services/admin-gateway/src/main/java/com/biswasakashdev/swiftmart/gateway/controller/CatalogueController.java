@@ -3,9 +3,9 @@ package com.biswasakashdev.swiftmart.gateway.controller;
 
 import com.biswasakashdev.swiftmart.gateway.dtos.inputs.catelogue.CreateProductInput;
 import com.biswasakashdev.swiftmart.gateway.dtos.inputs.PageInfo;
+import com.biswasakashdev.swiftmart.gateway.dtos.models.Page;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.PageDetails;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.catelogues.Product;
-import com.biswasakashdev.swiftmart.gateway.dtos.models.catelogues.ProductList;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.catelogues.ProductStatus;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.catelogues.ProductVariant;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -17,11 +17,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
-public class ProductsController {
+public class CatalogueController {
 
 
     @QueryMapping
-    public Product getProduct(@Argument String shopId, @Argument String id) {
+    public Product product(
+            @Argument String shopId,
+            @Argument String id
+    ) {
         // Example stub: fetch product by id
         return new Product(
                 id,
@@ -38,7 +41,7 @@ public class ProductsController {
     }
 
     @QueryMapping
-    public ProductList getProducts(@Argument String shopId, @Argument PageInfo pageInfo, @Argument String query) {
+    public Page<Product> products(@Argument String shopId, @Argument PageInfo pageInfo, @Argument String query) {
         // Example stub: return list of products
         PageDetails pageDetails = new PageDetails(
                 1,
@@ -46,7 +49,7 @@ public class ProductsController {
                 12L,
                 false
         );
-        return new ProductList(
+        return new Page<>(
                 pageDetails,
                 List.of(
                         new Product(
@@ -83,7 +86,7 @@ public class ProductsController {
     }
 
     @MutationMapping
-    public ProductVariant updateInventory(
+    public ProductVariant updateStock(
             @Argument String shopId,
             @Argument String variantId,
             @Argument Integer quantityDelta

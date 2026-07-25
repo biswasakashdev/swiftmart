@@ -1,0 +1,30 @@
+# Types
+type Shop{
+    id: ID!
+    name: String!
+    description: String!
+    createdAt: String!
+    updatedAt: String!
+}
+
+type ShopList{
+    pageDetails: PageDetails!
+    content:[Shop!]!
+}
+
+# Inputs
+
+input CreateShopInput{
+    name: String!,
+    description: String!
+}
+
+extend type Query {
+    shops(pageInfo: PageInfo!): ShopList!
+
+    shop(shopId: String!): Shop!
+}
+
+extend type Mutation {
+    createShop(inp:CreateShopInput!) : Shop!
+}

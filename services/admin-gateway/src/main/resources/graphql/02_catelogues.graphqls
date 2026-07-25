@@ -51,9 +51,9 @@ input CreateVariantInput {
 
 extend type Query {
     # Catalog
-    getProduct(shopId:ID!, id: ID!): Product
+    product(shopId:ID!, id: ID!): Product
 
-    getProducts(shopId:ID!, pageInfo: PageInfo!, query: String): ProductList!
+    products(shopId:ID!, pageInfo: PageInfo!, query: String): ProductList!
 
 }
 
@@ -62,8 +62,7 @@ extend type Mutation{
 
     createProduct(input: CreateProductInput!): Product!
 
-    updateInventory(shopId:ID! ,variantId: ID!, quantityDelta: Int!): ProductVariant!
-
+    updateStock(shopId:ID! ,variantId: ID!, quantityDelta: Int!): ProductVariant!
 
 }
 

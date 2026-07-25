@@ -16,7 +16,7 @@ public class GatewayConfig {
     private final String accountsUrl;
 
     public GatewayConfig(Environment environment){
-        String url = environment.getProperty("accounts.url");
+        String url = environment.getProperty("rest.accounts.url");
 
         if(Objects.isNull(url) || url.isBlank()){
             throw new IllegalArgumentException("Invalid accounts url found");

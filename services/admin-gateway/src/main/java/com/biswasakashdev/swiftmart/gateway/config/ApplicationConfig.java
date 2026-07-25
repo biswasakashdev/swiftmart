@@ -23,8 +23,6 @@ public class ApplicationConfig {
         if (Objects.isNull(url) || url.isBlank()) {
             throw new IllegalArgumentException("Accounts url not found");
         }
-
-
         return NettyChannelBuilder
                 .forTarget(url)
                 .usePlaintext()

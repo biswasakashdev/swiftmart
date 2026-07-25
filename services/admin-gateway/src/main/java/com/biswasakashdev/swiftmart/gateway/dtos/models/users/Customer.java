@@ -1,4 +1,4 @@
-package com.biswasakashdev.swiftmart.gateway.dtos.models;
+package com.biswasakashdev.swiftmart.gateway.dtos.models.users;
 
 
 import com.biswasakashdev.swiftmart.gateway.dtos.models.order.Order;

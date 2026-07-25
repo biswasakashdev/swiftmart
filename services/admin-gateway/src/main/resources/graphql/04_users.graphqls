@@ -1,0 +1,16 @@
+
+
+
+# Types
+
+type User{
+    id: ID!
+    name: String!
+    email: String!
+    avatar: String!
+}
+
+
+extend type Query {
+     user: User!
+}

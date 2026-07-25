@@ -2,7 +2,7 @@ package com.biswasakashdev.swiftmart.gateway.dtos.models.order;
 
 
 
-import com.biswasakashdev.swiftmart.gateway.dtos.models.Customer;
+import com.biswasakashdev.swiftmart.gateway.dtos.models.users.Customer;
 
 import java.time.LocalDateTime;
 import java.util.List;

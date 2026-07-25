@@ -3,17 +3,14 @@ package com.biswasakashdev.swiftmart.accounts.controller.rest;
 
 import com.biswasakashdev.swiftmart.accounts.dtos.req.NewUserRequest;
 import com.biswasakashdev.swiftmart.accounts.dtos.req.UserCredentials;
-import com.biswasakashdev.swiftmart.accounts.dtos.res.Authorization;
 import com.biswasakashdev.swiftmart.accounts.dtos.res.SessionDetails;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.services.AuthService;
 import com.biswasakashdev.swiftmart.accounts.services.UserService;
-import com.biswasakashdev.swiftmart.accounts.utils.UsersUtils;
 import com.biswasakashdev.swiftmart.common.TokenType;
 import com.biswasakashdev.swiftmart.common.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -58,7 +55,6 @@ public class AuthController {
         return usersMono
                 .flatMap(users -> {
 
-
                     String token = jwtService.buildToken(
                             users.getId(),
                             Duration.ofHours(1),
@@ -76,34 +72,4 @@ public class AuthController {
                 });
     }
 
-
-    @GetMapping("/authorization")
-    public Mono<ResponseEntity<Authorization>> refreshAuthorization(
-            @RequestHeader("Authentication-Info") String userId
-    ) {
-        Mono<User> userMono = userService.findUserById(userId);
-
-        return userMono
-                .map(user -> {
-
-
-                    Duration expiration = Duration.ofDays(1);
-
-                    String token = jwtService.buildToken(
-                            user.getId(),
-                            expiration,
-                            TokenType.AUTHORIZATION,
-                            new HashMap<>()
-                    );
-
-                    Authorization sessionDetails = new Authorization(
-                            token,
-                            UsersUtils.getUserResponse(user)
-                    );
-
-                    return ResponseEntity
-                            .status(HttpStatus.OK)
-                            .body(sessionDetails);
-                });
-    }
 }

@@ -6,9 +6,11 @@ spring:
   graphql:
     http:
       path: /api/v1/graphql
-  cloud:
-    gateway:
-
 server:
   port: 9000
+
+jwt:
+  secret: 1A50EF4F7AB1F6069BC04EEABFA52D66257D47E7FBBE0D7C1C20D2D88E9489C5
+  issuer: https://nexussphere.com
+
 

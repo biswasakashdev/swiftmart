@@ -4,6 +4,7 @@ package com.biswasakashdev.swiftmart.gateway.controller;
 import com.biswasakashdev.swiftmart.gateway.dtos.inputs.PageInfo;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.*;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.order.*;
+import com.biswasakashdev.swiftmart.gateway.dtos.models.users.Customer;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;
@@ -35,9 +36,10 @@ public class OrderController {
     }
 
     @QueryMapping
-    public Mono<OrderList> getOrdersAdmin(
+    public Mono<Page<Order>> getOrdersAdmin(
             @Argument String shopId,
-            @Argument PageInfo pageInfo) {
+            @Argument PageInfo pageInfo
+    ) {
         // Stubbed example: fetch orders for a shop
         List<Order> orders = List.of(
                 new Order(
@@ -59,11 +61,11 @@ public class OrderController {
         );
 
 
-        return Mono.just(new OrderList(pageDetails,orders));
+        return Mono.just(new Page<>(pageDetails,orders));
     }
 
     @QueryMapping
-    public OrderList getOrderCustomer(@Argument String shopId, @Argument PageInfo pageInfo, @Argument String customerId) {
+    public Mono<Page<Order>> getOrderCustomer(@Argument String shopId, @Argument PageInfo pageInfo, @Argument String customerId) {
         // Stubbed example: fetch orders for a specific customer
         Customer customer = new Customer(
                 customerId,
@@ -95,7 +97,7 @@ public class OrderController {
         );
 
 
-        return new OrderList(pageDetails,orders);
+        return Mono.just(new Page<>(pageDetails,orders));
     }
 
 }

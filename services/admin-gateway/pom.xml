@@ -65,13 +65,6 @@
 			<scope>test</scope>
 		</dependency>
 
-<!--		Proto gen dep-->
-
-		<dependency>
-			<groupId>com.biswasakashdev.swiftmart</groupId>
-			<artifactId>proto-gen-java</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 
 		<dependency>
 			<groupId>io.grpc</groupId>

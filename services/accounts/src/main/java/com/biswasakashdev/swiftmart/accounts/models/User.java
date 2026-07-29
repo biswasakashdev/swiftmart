@@ -14,14 +14,14 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @Table("users")
+@ToString
 public class User {
     @Id
     private String id;
     private String email;
     @Column("country_code")
     private String countryCode;
-    @Column("contact_number")
-    private String contactNumber;
+    private String phone;
     private String password;
     @Column("full_name")
     private String name;
@@ -29,4 +29,5 @@ public class User {
     private LocalDate createdOn;
     @Column("account_locked")
     private Boolean accountLocked;
+    private String avatar;
 }

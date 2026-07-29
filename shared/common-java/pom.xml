@@ -19,6 +19,10 @@
     <junit.version>5.14.2</junit.version>
     <mockito.version>5.21.0</mockito.version>
     <jwt.version>0.11.5</jwt.version>
+<!--    gRPC & Protobuf versions-->
+    <grpc.version>1.82.1</grpc.version>
+    <protobuf.version>4.34.1</protobuf.version>
+    <reactive.grpc.version>1.2.4</reactive.grpc.version>
   </properties>
 
   <dependencies>
@@ -78,6 +82,60 @@
       <artifactId>jjwt-jackson</artifactId>
       <version>${jwt.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <version>3.5.4</version>
+    </dependency>
+
+
+    <!--   gRPC dependencies-->
+
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-core</artifactId>
+      <version>${grpc.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-protobuf</artifactId>
+      <version>${grpc.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-stub</artifactId>
+      <version>${grpc.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>${protobuf.version}</version>
+      <scope>compile</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.salesforce.servicelibs</groupId>
+      <artifactId>reactor-grpc-stub</artifactId>
+      <version>1.2.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.projectreactor</groupId>
+      <artifactId>reactor-core</artifactId>
+      <version>3.5.4</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-netty-shaded</artifactId>
+      <version>${grpc.version}</version>
+    </dependency>
+
+
   </dependencies>
 
   <build>

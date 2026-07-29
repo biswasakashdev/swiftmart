@@ -5,12 +5,13 @@ CREATE TABLE users
 (
     id             VARCHAR(50) PRIMARY KEY,
     email          VARCHAR(100) NOT NULL UNIQUE,
-    full_name      VARCHAR(100)  NOT NULL,
+    full_name      VARCHAR(100) NOT NULL,
     password       VARCHAR(100) NOT NULL,
-    contact_number VARCHAR(30)  NOT NULL,
+    phone          VARCHAR(30)  NOT NULL,
     country_code   VARCHAR(30)  NOT NULL,
     account_locked BOOLEAN      NOT NULL,
-    created_on     DATE         NOT NULL
+    created_on     DATE         NOT NULL,
+    avatar         VARCHAR(300)
 );
 
 

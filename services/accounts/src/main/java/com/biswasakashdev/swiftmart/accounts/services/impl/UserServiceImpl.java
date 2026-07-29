@@ -1,12 +1,10 @@
 package com.biswasakashdev.swiftmart.accounts.services.impl;
 
 import com.biswasakashdev.swiftmart.accounts.dtos.req.NewUserRequest;
-import com.biswasakashdev.swiftmart.accounts.dtos.req.UserCredentials;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.repository.UsersRepository;
 import com.biswasakashdev.swiftmart.accounts.repository.r2dbc.UsersR2DBCRepository;
 import com.biswasakashdev.swiftmart.accounts.services.UserService;
-import com.biswasakashdev.swiftmart.protogen.accounts.v1.CreateUserRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,7 +38,7 @@ public class UserServiceImpl implements UserService {
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .countryCode(request.countryCode())
-                .contactNumber(request.phone())
+                .phone(request.phone())
                 .accountLocked(false)
                 .createdOn(LocalDate.now())
                 .build();

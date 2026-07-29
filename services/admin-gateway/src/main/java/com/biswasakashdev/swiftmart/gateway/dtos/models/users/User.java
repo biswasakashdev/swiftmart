@@ -7,6 +7,8 @@ public record User(
         String id,
         String email,
         String name,
+        String countryCode,
+        String phone,
         String avatar
 ) {
 }

@@ -1,4 +1,4 @@
-package com.biswasakashdev.swiftmart.gateway.controller;
+package com.biswasakashdev.swiftmart.gateway.controller.gpql;
 
 
 import com.biswasakashdev.swiftmart.gateway.dtos.inputs.PageInfo;

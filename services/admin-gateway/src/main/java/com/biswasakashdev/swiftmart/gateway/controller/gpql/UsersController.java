@@ -1,6 +1,7 @@
-package com.biswasakashdev.swiftmart.gateway.controller;
+package com.biswasakashdev.swiftmart.gateway.controller.gpql;
 
 
+import com.biswasakashdev.swiftmart.gateway.clients.AccountsClient;
 import com.biswasakashdev.swiftmart.gateway.dtos.models.users.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,19 +15,11 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class UsersController {
 
+    private final AccountsClient accountsClient;
+
     @QueryMapping
     public Mono<User> user(Authentication authentication) {
-
-        log.info("The authentication is {} ",authentication.getPrincipal());
-
-        // Map your Security Principal (e.g., Jwt, UserDetails) to your User object
-        User user = User.builder()
-                .id("123") // Must provide required non-null fields
-                .name("John Doe")
-                .email("john@example.com")
-                .avatar("https://example.com/avatar.png")
-                .build();
-
-        return Mono.just(user);
+        String userId =(String) authentication.getPrincipal();
+        return accountsClient.fetchUser(userId);
     }
 }

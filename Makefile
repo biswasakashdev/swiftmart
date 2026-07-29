@@ -1,3 +1,3 @@
 
 gen-proto:
-	buf generate --template shared/proto-gen-java/buf.gen.yaml
+	buf generate --template shared/common-java/buf.gen.yaml

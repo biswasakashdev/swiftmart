@@ -16,7 +16,8 @@ import reactor.test.StepVerifier;
 
 
 @Import(value = {
-        PostgresUserRepositoryImpl.class
+        PostgresUserRepositoryImpl.class,
+        UsersR2DBCRepository.class
 })
 class UserRepositoryTest extends AbstractRepositoryTest{
 

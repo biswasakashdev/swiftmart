@@ -9,6 +9,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -21,16 +23,18 @@ public class UserGrpcServiceImpl extends ReactorUserServiceGrpc.UserServiceImplB
         return request
                 .flatMap(req-> userService.findUserById(req.getUserId()))
                 .map(user -> {
-                    log.info("User {} has been found", user.getId());
-                    return GetUserResponse.newBuilder()
+                    log.info("User {} has been found", user);
+                    GetUserResponse.Builder resBuilder = GetUserResponse.newBuilder()
                             .setId(user.getId())
                             .setEmail(user.getEmail())
                             .setPhone(user.getPhone())
-                            .setAvatar(user.getAvatar())
                             .setName(user.getName())
-                            .setCountryCode(user.getCountryCode())
-                            .setAvatar(user.getAvatar())
-                            .build();
+                            .setCountryCode(user.getCountryCode());
+
+                    if(Objects.isNull(user.getAvatar())){
+                        return resBuilder.build();
+                    }
+                    return resBuilder.setAvatar(user.getAvatar()).build();
                 });
     }
 

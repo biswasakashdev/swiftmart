@@ -20,8 +20,8 @@
     <mockito.version>5.21.0</mockito.version>
     <jwt.version>0.11.5</jwt.version>
 <!--    gRPC & Protobuf versions-->
-    <grpc.version>1.82.1</grpc.version>
-    <protobuf.version>4.34.1</protobuf.version>
+    <grpc.version>1.80.0</grpc.version>
+    <protobuf.version>4.34.0</protobuf.version>
     <reactive.grpc.version>1.2.4</reactive.grpc.version>
   </properties>
 

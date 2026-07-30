@@ -1,29 +1,31 @@
 package com.biswasakashdev.swiftmart.gateway.config;
 
 
+import com.biswasakashdev.swiftmart.gateway.filters.JwtSessionAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 
-import java.util.Objects;
-
 @Configuration
+@RequiredArgsConstructor
 public class GatewayConfig {
 
-    private final String accountsUrl;
+    private final ApplicationConfig applicationConfig;
 
-    public GatewayConfig(Environment environment){
-        String url = environment.getProperty("rest.accounts.url");
+    private final JwtSessionAuthenticationFilter jwtSessionAuthenticationFilter;
 
-        if(Objects.isNull(url) || url.isBlank()){
-            throw new IllegalArgumentException("Invalid accounts url found");
-        }
 
-        accountsUrl = url;
-    }
+    private static final String [] WEB_CLIENT_ENDPOINTS = {
+            "/",
+            "/home/**",
+            "/auth/**",
+            "/_next/**"
+    };
+
+
 
     @Bean
     RouteLocator routeLocator(RouteLocatorBuilder routeLocatorBuilder) {
@@ -36,7 +38,19 @@ public class GatewayConfig {
                                 "/api/v1/auth/register",
                                 "/api/v1/auth"
                         )
-                        .uri(accountsUrl)
+                        .uri(applicationConfig.accountsRest())
+                )
+                .route("authorization",r->r
+                        .method(HttpMethod.GET)
+                        .and()
+                        .path("/api/v1/auth")
+                        .filters(f->f.filter(jwtSessionAuthenticationFilter))
+                        .uri(applicationConfig.accountsRest()))
+                .route("client",r->r
+                        .method(HttpMethod.GET)
+                        .and()
+                        .path(WEB_CLIENT_ENDPOINTS)
+                        .uri(applicationConfig.webRest())
                 )
                 .build();
     }

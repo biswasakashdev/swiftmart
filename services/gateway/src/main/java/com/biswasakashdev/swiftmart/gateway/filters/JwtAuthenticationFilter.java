@@ -1,7 +1,10 @@
 package com.biswasakashdev.swiftmart.gateway.filters;
 
 
+import com.biswasakashdev.swiftmart.common.TokenType;
+import com.biswasakashdev.swiftmart.common.exceptions.InvalidTokenTypeException;
 import com.biswasakashdev.swiftmart.common.service.JwtService;
+import com.biswasakashdev.swiftmart.gateway.util.ResponseBuilder;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,8 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.biswasakashdev.swiftmart.gateway.util.ResponseBuilder.buildResponse;
 
 
 @Slf4j
@@ -53,29 +58,21 @@ public class JwtAuthenticationFilter implements WebFilter {
             String token = authHeader.substring(7);
 
             try {
-
-                String userId = jwtService.getUserId(token);
+                String userId = jwtService.validate(token, TokenType.AUTHORIZATION);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                         userId, "", List.of());
                 SecurityContext context = new SecurityContextImpl(authenticationToken);
                 return chain.filter(exchange)
                         .contextWrite(ReactiveSecurityContextHolder.withSecurityContext(Mono.just(context)));
-                // return chain.filter(exchange);
-            } catch (ExpiredJwtException ex) {
-                return buildResponse("Expired authentication toke.", ex.getMessage(), response);
-            } catch (MalformedJwtException ex) {
-                return buildResponse("Invalid authentication found.", ex.getMessage(), response);
+
             } catch (RuntimeException ex) {
-                return buildResponse("Authentication error", ex.getMessage(), response);
+                log.error("Error occurred while verifying token with message : {}", ex.getMessage());
+                return buildResponse("Invalid Authentication found",  response);
             }
         }
         return chain.filter(exchange);
     }
 
-    private Mono<Void> buildResponse(String resMessage, String errLog, ServerHttpResponse response) {
-        log.error("Error occurred while validating the JWT with message: {}", errLog);
-        response.getHeaders().add("WWW-Authenticate", resMessage);
-        return response.setComplete();
-    }
+
 }
 

@@ -1,6 +1,7 @@
 package com.biswasakashdev.swiftmart.common.service.impl;
 
 import com.biswasakashdev.swiftmart.common.TokenType;
+import com.biswasakashdev.swiftmart.common.exceptions.InvalidTokenTypeException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -18,6 +19,8 @@ public class JwtServiceImpl implements JwtService {
 
     //    In minutes.
     private static final int DEFAULT_EXPIRY_IN_MINUTES = 1440;
+
+    private static final String TOKEN_TYPE_KEY = "token_type";
 
     //    Jwt secret.
     private final String secret;
@@ -74,8 +77,16 @@ public class JwtServiceImpl implements JwtService {
 
 
     @Override
-    public String getUserId(String token) throws ExpiredJwtException, MalformedJwtException {
-        return extractAllClaims(token).getSubject();
+    public String validate(String token, TokenType tokenType) throws ExpiredJwtException, MalformedJwtException,InvalidTokenTypeException {
+        Claims claims = extractAllClaims(token);
+
+        String tType= claims.get(TOKEN_TYPE_KEY, String.class);
+
+        if(!tType.equals(tokenType.name())) {
+            throw new InvalidTokenTypeException("Token type invalid");
+        }
+
+        return claims.getSubject();
     }
 
     @Override

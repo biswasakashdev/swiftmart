@@ -3,7 +3,9 @@ package com.biswasakashdev.swiftmart.accounts.controller.rest;
 
 import com.biswasakashdev.swiftmart.accounts.dtos.req.NewUserRequest;
 import com.biswasakashdev.swiftmart.accounts.dtos.req.UserCredentials;
+import com.biswasakashdev.swiftmart.accounts.dtos.res.Authorization;
 import com.biswasakashdev.swiftmart.accounts.dtos.res.SessionDetails;
+import com.biswasakashdev.swiftmart.accounts.dtos.res.UserResponse;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.services.AuthService;
 import com.biswasakashdev.swiftmart.accounts.services.UserService;
@@ -11,6 +13,8 @@ import com.biswasakashdev.swiftmart.common.TokenType;
 import com.biswasakashdev.swiftmart.common.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -44,7 +48,8 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public Mono<SessionDetails> login(
             @RequestBody UserCredentials credentials,
-            @RequestParam(name = "rememberMe", required = false, defaultValue = "false") boolean rememberMe
+            @RequestParam(name = "rememberMe", required = false, defaultValue = "false") boolean rememberMe,
+            ServerHttpResponse response
     ) {
 
 //        How many days the generated session token valid.
@@ -62,6 +67,13 @@ public class AuthController {
                             new HashMap<>()
                     );
 
+                    ResponseCookie cookie = ResponseCookie.from("SESSIONID", token)
+                            .httpOnly(true)          // Prevent client-side JS access
+                            .path("/")               // Cookie valid for entire domain
+                            .maxAge(duration.getSeconds())            // Expiration in seconds
+                            .build();
+
+                    response.addCookie(cookie);
 
                     SessionDetails sessionDetails = new SessionDetails(
                             token,
@@ -69,6 +81,25 @@ public class AuthController {
                     );
 
                     return Mono.just(sessionDetails);
+                });
+    }
+
+    @GetMapping
+    public Mono<Authorization> getAuthorization(@RequestHeader("Authentication-Info") String userId) {
+        return userService
+                .findUserById(userId)
+                .map(user -> {
+
+                    String token = jwtService.buildToken(user.getId(), Duration.ofMinutes(15), TokenType.AUTHORIZATION, new HashMap<>());
+
+                    return new Authorization(
+                            token,
+                            new UserResponse(
+                                    user.getEmail(),
+                                    user.getName(),
+                                    user.getAvatar()
+                            )
+                    );
                 });
     }
 

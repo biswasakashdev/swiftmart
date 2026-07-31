@@ -18,11 +18,11 @@ public class GatewayConfig {
     private final JwtSessionAuthenticationFilter jwtSessionAuthenticationFilter;
 
 
-    private static final String [] WEB_CLIENT_ENDPOINTS = {
+    private static final String [] WEB_CLIENT_PUBLIC_ENDPOINTS = {
             "/",
-            "/home/**",
             "/auth/**",
-            "/_next/**"
+            "/_next/**",
+            "/favicon.ico",
     };
 
 
@@ -40,16 +40,22 @@ public class GatewayConfig {
                         )
                         .uri(applicationConfig.accountsRest())
                 )
-                .route("authorization",r->r
+                .route("secured",r->r
                         .method(HttpMethod.GET)
                         .and()
                         .path("/api/v1/auth")
                         .filters(f->f.filter(jwtSessionAuthenticationFilter))
                         .uri(applicationConfig.accountsRest()))
-                .route("client",r->r
+                .route("client-public",r->r
                         .method(HttpMethod.GET)
                         .and()
-                        .path(WEB_CLIENT_ENDPOINTS)
+                        .path(WEB_CLIENT_PUBLIC_ENDPOINTS)
+                        .uri(applicationConfig.webRest())
+                ).route("client-secured",r->r
+                        .method(HttpMethod.GET)
+                        .and()
+                        .path("/home/**")
+                        .filters(f->f.filter(jwtSessionAuthenticationFilter))
                         .uri(applicationConfig.webRest())
                 )
                 .build();

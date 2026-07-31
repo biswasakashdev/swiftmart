@@ -32,12 +32,16 @@ public class JwtSessionAuthenticationFilter implements GatewayFilter {
         HttpCookie sessionId = exchange.getRequest()
                 .getCookies()
                 .getFirst("SESSIONID");
-        
+
+        RequestPath requestPath = exchange.getRequest().getPath();
+
         if(sessionId != null) {
             String sessionToken = sessionId.getValue();
 
             try{
                 String authentication = jwtService.validate(sessionToken, TokenType.SESSION);
+
+                log.info("Request at {} User[{}]", requestPath, authentication);
 
                 // Mutate request to add Authentication-Info header
                 ServerWebExchange mutatedExchange = exchange.mutate()

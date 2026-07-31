@@ -10,6 +10,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.NullMarked;
+import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +18,7 @@ import org.springframework.security.core.context.ReactiveSecurityContextHolder;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextImpl;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
@@ -53,14 +55,19 @@ public class JwtAuthenticationFilter implements WebFilter {
 
         String authHeader = request.getHeaders().getFirst("Authorization");
 
+        RequestPath requestPath = exchange.getRequest().getPath();
+
         if (Objects.nonNull(authHeader) && authHeader.startsWith("Bearer ")) {
 
             String token = authHeader.substring(7);
 
             try {
-                String userId = jwtService.validate(token, TokenType.AUTHORIZATION);
+                String authentication = jwtService.validate(token, TokenType.AUTHORIZATION);
+
+
+                log.info("Request at {} User[{}]", requestPath, authentication);
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                        userId, "", List.of());
+                        authentication, "", List.of());
                 SecurityContext context = new SecurityContextImpl(authenticationToken);
                 return chain.filter(exchange)
                         .contextWrite(ReactiveSecurityContextHolder.withSecurityContext(Mono.just(context)));

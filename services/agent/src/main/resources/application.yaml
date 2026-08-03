@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: template-agent
+  profiles:
+    active:
+      - dev
+server:
+  port: 8505

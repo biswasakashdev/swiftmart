@@ -10,7 +10,7 @@ import dev.langchain4j.service.V;
 public interface TemplateAIService {
 
     @SystemMessage("""
-            
+   
     You are generating page definitions for the SwiftmartJ template engine.
 
     Return only valid JSON that conforms to the provided JSON Schema.
@@ -30,8 +30,7 @@ public interface TemplateAIService {
     * Only include attributes that are necessary for the element.
     * Do not generate fields that are not defined in the schema.
     * Ensure the generated hierarchy is valid and can be reconstructed into a DOM tree using `parentId` and `order`.
-                
-            """)
+   """)
     @UserMessage("Generate a page template for: {{prompt}}")
     PageTemplate generatePage(@V("prompt") String prompt);
 

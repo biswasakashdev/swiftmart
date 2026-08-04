@@ -4,49 +4,8 @@ import HomeMain from "@/components/home/home-main-section"
 import HomeSidebar from "@/components/home/home-sidebar"
 import { SidebarProvider } from "@/components/ui/sidebar"
 import { Shop } from "@/types/shop.types"
-
-const mockShops: Shop[] = [
-  //   {
-  //     id: "shop-1",
-  //     name: "Aether Apparel",
-  //     domain: "aether.store.com",
-  //     role: "Owner",
-  //     status: "Active",
-  //     revenue: "$42,850.00",
-  //     ordersCount: 384,
-  //     productsCount: 42,
-  //   },
-  //   {
-  //     id: "shop-2",
-  //     name: "Urban Pulse Tech",
-  //     domain: "urbanpulse.io",
-  //     role: "Owner",
-  //     status: "Active",
-  //     revenue: "$128,400.00",
-  //     ordersCount: 1290,
-  //     productsCount: 18,
-  //   },
-  //   {
-  //     id: "shop-3",
-  //     name: "Lumina Home & Decor",
-  //     domain: "luminahome.co",
-  //     role: "Admin",
-  //     status: "Active",
-  //     revenue: "$18,210.00",
-  //     ordersCount: 142,
-  //     productsCount: 95,
-  //   },
-  //   {
-  //     id: "shop-4",
-  //     name: "Botanica Organics",
-  //     domain: "botanica-dev.store",
-  //     role: "Member",
-  //     status: "Draft",
-  //     revenue: "$0.00",
-  //     ordersCount: 0,
-  //     productsCount: 6,
-  //   },
-]
+import { AxiosInstance } from "axios"
+import { usePathname } from "next/navigation"
 
 const currentUser = {
   name: "Alex Morgan",
@@ -57,12 +16,13 @@ const currentUser = {
 export default function HomePage() {
   return (
     <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-background">
-        {/* Collapsible Sidebar */}
-        <HomeSidebar />
+      {/* Collapsible Sidebar */}
+      <HomeSidebar />
+
+      <main className="flex min-h-screen w-full bg-background">
         {/* Main Content Area */}
         <HomeMain />
-      </div>
+      </main>
     </SidebarProvider>
   )
 }

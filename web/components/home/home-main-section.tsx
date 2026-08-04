@@ -9,9 +9,11 @@ import { Input } from "@/components/ui/input"
 import { motion, Variants } from "framer-motion"
 
 import { Shop } from "@/types/shop.types"
-import { useEffect, useState } from "react"
+import { use, useEffect, useState } from "react"
 import { PrimaryDetails } from "./primary-details"
-import ShopCard from "./shop-card"
+import ShopCard, { ShopCardProps } from "./shop-card"
+import useAuthContext from "@/context/auth.context"
+import { AxiosInstance } from "axios"
 
 // --- Framer Motion Animations ---
 const containerVariants: Variants = {
@@ -33,13 +35,53 @@ const cardVariants: Variants = {
   },
 }
 
+const fetchShopList = async (client: AxiosInstance, searchQuery: string, page: number): Promise<Shop[]> => {
+      const gpqlQuery = {
+        query: `
+          query GetShops($query: String!){
+            shops(query: $query){
+              id,
+              name,
+              role,
+              status,
+              revenue,
+              ordersCount,
+              productsCount
+            }
+          }
+        `,
+        variables: {
+          query: searchQuery,
+        },
+      }
+      const res = await client.post("/", gpqlQuery)
+
+      console.log(res.data)
+
+      return new Promise((resl) => {
+        setTimeout(() => {
+          resl(mockShops)
+        }, 1500)
+      })
+    }
+
 export default function HomeMain() {
   const [shopList, setShopList] = useState<Shop[]>([])
   const [searchQuery, setSearchQuery] = useState("")
 
+  const { gpqlClient } = useAuthContext()
+
   useEffect(() => {
-    const fetchShopList = () => {}
+    
+    const timeOut = setTimeout(() => {
+      set
+    }, 500)
+
+    return clearTimeout(timeOut)
   }, [searchQuery])
+
+
+  const shopListPromise = fetchShopList()
 
   return (
     <>
@@ -86,43 +128,19 @@ export default function HomeMain() {
               </div>
             </div>
 
-            {/* Stores Grid */}
+            {/* Shops Grid */}
             <motion.div
               variants={containerVariants}
               initial="hidden"
               animate="visible"
               className="grid gap-4 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3"
             >
-              {shopList.map((shop) => (
-                <motion.div key={shop.id} variants={cardVariants}>
-                  <ShopCard {...shop} />
-                </motion.div>
-              ))}
+              <ShopsGrid  shopListPromise={}/>
             </motion.div>
 
             {/* Empty State */}
             {shopList.length === 0 && (
-              <div className="flex min-h-75 flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
-                <div className="flex size-12 items-center justify-center rounded-full bg-muted">
-                  <Store className="size-6 text-muted-foreground" />
-                </div>
-                <h3 className="mt-4 text-sm font-semibold">No stores found</h3>
-
-                {searchQuery.length !== 0 && (
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    No matching stores were found for &quot;{searchQuery}
-                    &ldquo;.
-                  </p>
-                )}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="mt-4"
-                  onClick={() => setSearchQuery("")}
-                >
-                  Clear Search
-                </Button>
-              </div>
+              
             )}
           </div>
         </main>
@@ -130,3 +148,85 @@ export default function HomeMain() {
     </>
   )
 }
+
+export const ShopsGrid = ({
+  shopListPromise,
+  searchQuery,
+}: {
+  shopListPromise: Promise<Shop[]>,
+  searchQuery:string
+}) => {
+  const shopList = use(shopListPromise)
+
+  if(shopList.length === 0 ){
+    return (
+
+<div className="flex min-h-75 flex-col items-center justify-center rounded-lg border border-dashed p-8 text-center">
+                <div className="flex size-12 items-center justify-center rounded-full bg-muted">
+                  <Store className="size-6 text-muted-foreground" />
+                </div>
+                <h3 className="mt-4 text-sm font-semibold">No stores found</h3>
+
+                {searchQuery.length !== 0 && (
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      No matching stores were found for &quot;{searchQuery}
+                      &ldquo;.
+                    </p>
+                )}
+              </div>
+    )
+  }
+
+  return (
+    <>
+      {shopList.map((shop) => (
+        <motion.div key={shop.id} variants={cardVariants}>
+          <ShopCard {...shop} />
+        </motion.div>
+      ))}
+    </>
+  )
+}
+
+export const mockShops: Shop[] = [
+  {
+    id: "shop-1",
+    name: "Aether Apparel",
+    lastActive: "1 day ago",
+    role: "Owner",
+    status: "Active",
+    revenue: 42850.0,
+    ordersCount: 384,
+    productsCount: 42,
+  },
+  {
+    id: "shop-2",
+    name: "Urban Pulse Tech",
+    lastActive: "2 days ago",
+    role: "Owner",
+    status: "Active",
+    revenue: 128400.0,
+    ordersCount: 1290,
+    productsCount: 18,
+  },
+  {
+    id: "shop-3",
+    name: "Lumina Home & Decor",
+    lastActive: "25/1/2026",
+    role: "Admin",
+    status: "Active",
+    revenue: 18210.0,
+    ordersCount: 142,
+    productsCount: 95,
+  },
+  {
+    id: "shop-4",
+    name: "Botanica Organics",
+    lastActive: "23/11/2022",
+    role: "Member",
+    status: "Draft",
+    revenue: 0.0,
+    ordersCount: 0,
+    productsCount: 6,
+  },
+]

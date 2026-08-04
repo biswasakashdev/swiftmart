@@ -46,7 +46,11 @@ export const AuthContextProvider = ({
   }
 
   const instance = axios.create({
-    baseURL: "http://localhost:9000",
+    baseURL: "/",
+    headers:{
+      "Authorization": authorization.token,
+      "Content-Length": "application/json"
+    }
   })
 
   return (

@@ -1,8 +1,0 @@
-clients:
-  accounts:
-    rest: http://localhost:8501
-    grpc: localhost:50051
-spring:
-  graphql:
-    graphiql:
-      enabled: true

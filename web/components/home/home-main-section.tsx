@@ -35,7 +35,16 @@ const cardVariants: Variants = {
   },
 }
 
-const fetchShopList = async (client: AxiosInstance, searchQuery: string, page: number): Promise<Shop[]> => {
+
+export default function HomeMain() {
+  const [shopList, setShopList] = useState<Shop[]>([])
+  const [searchQuery, setSearchQuery] = useState("")
+
+  const { gpqlClient } = useAuthContext()
+
+  useEffect(() => {
+
+  const fetchShopList = async (searchQuery:string): Promise<Shop[]> => {
       const gpqlQuery = {
         query: `
           query GetShops($query: String!){
@@ -54,7 +63,7 @@ const fetchShopList = async (client: AxiosInstance, searchQuery: string, page: n
           query: searchQuery,
         },
       }
-      const res = await client.post("/", gpqlQuery)
+      const res = await gpqlClient.post("/", gpqlQuery)
 
       console.log(res.data)
 
@@ -65,23 +74,16 @@ const fetchShopList = async (client: AxiosInstance, searchQuery: string, page: n
       })
     }
 
-export default function HomeMain() {
-  const [shopList, setShopList] = useState<Shop[]>([])
-  const [searchQuery, setSearchQuery] = useState("")
-
-  const { gpqlClient } = useAuthContext()
-
-  useEffect(() => {
     
     const timeOut = setTimeout(() => {
-      set
+      
+  const shopListPromise = fetchShopList()
     }, 500)
 
     return clearTimeout(timeOut)
   }, [searchQuery])
 
 
-  const shopListPromise = fetchShopList()
 
   return (
     <>

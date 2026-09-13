@@ -29,4 +29,14 @@ public class PostgresUserRepositoryImpl implements UsersRepository {
                 .using(user);
     }
 
+    @Override
+    public Mono<User> findByEmil(String email) {
+        return usersR2DBCRepository.findByEmailIgnoreCase(email);
+    }
+
+    @Override
+    public Mono<User> findById(String id) {
+        return usersR2DBCRepository.findById(id);
+    }
+
 }

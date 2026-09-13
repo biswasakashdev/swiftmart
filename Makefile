@@ -1,3 +1,4 @@
-
-gen-proto:
-	buf generate --template shared/common-java/buf.gen.yaml
+gen-proto-gatway:
+	buf generate --template services/gateway/buf.gen.yaml
+gen-proto-accounts:
+	buf generate --template services/accounts/buf.gen.yaml

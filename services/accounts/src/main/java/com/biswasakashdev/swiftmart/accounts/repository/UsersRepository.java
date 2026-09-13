@@ -7,4 +7,8 @@ import reactor.core.publisher.Mono;
 
 public interface UsersRepository {
     Mono<User> saveUser(User user);
+
+    Mono<User> findByEmil(String email);
+
+    Mono<User> findById(String id);
 }

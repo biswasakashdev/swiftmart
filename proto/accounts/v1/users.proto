@@ -1,27 +1,50 @@
-syntax="proto3";
+syntax = "proto3";
 
-package accounts.v1;
 
-import "google/protobuf/empty.proto";
+package accounts.v1.users;
 
-service UserService{
+import "types/v1/users.proto";
 
+option go_package = "accountsv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
+option java_multiple_files = true;
+
+
+
+service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
-  
+
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+
+  rpc Verify(VerifyRequest) returns(VerifyResponse);
 }
 
-message GetUserRequest{
+message CreateUserRequest {
+  string email = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string password = 4;
+}
+
+message CreateUserResponse {
+  types.v1.users.UsersProto user = 1;
+}
+
+message GetUserRequest {
   string user_id = 1;
 }
 
-message GetUserResponse{
-  string id = 1;
-  string name = 2;
-  string email = 3;
-  string country_code = 4;
-  string phone = 5;  
-  optional string avatar = 6;
+message GetUserResponse {
+  types.v1.users.UsersProto user = 1;
 }
 
-
-
+message VerifyRequest{
+  string email = 1;
+  string password = 2;
+}
+message VerifyResponse{
+  oneof res {
+    string err = 1;
+    types.v1.users.UsersProto user = 2;
+  }
+}

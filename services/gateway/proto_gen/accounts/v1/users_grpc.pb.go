@@ -4,7 +4,7 @@
 // - protoc             (unknown)
 // source: accounts/v1/users.proto
 
-package accountsv1
+package v1
 
 import (
 	context "context"
@@ -19,8 +19,9 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	UserService_GetUser_FullMethodName    = "/accounts.v1.UserService/GetUser"
-	UserService_CreateUser_FullMethodName = "/accounts.v1.UserService/CreateUser"
+	UserService_GetUser_FullMethodName    = "/accounts.v1.users.UserService/GetUser"
+	UserService_CreateUser_FullMethodName = "/accounts.v1.users.UserService/CreateUser"
+	UserService_Verify_FullMethodName     = "/accounts.v1.users.UserService/Verify"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -29,6 +30,7 @@ const (
 type UserServiceClient interface {
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	CreateUser(ctx context.Context, in *CreateUserRequest, opts ...grpc.CallOption) (*CreateUserResponse, error)
+	Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error)
 }
 
 type userServiceClient struct {
@@ -59,12 +61,23 @@ func (c *userServiceClient) CreateUser(ctx context.Context, in *CreateUserReques
 	return out, nil
 }
 
+func (c *userServiceClient) Verify(ctx context.Context, in *VerifyRequest, opts ...grpc.CallOption) (*VerifyResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(VerifyResponse)
+	err := c.cc.Invoke(ctx, UserService_Verify_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
 type UserServiceServer interface {
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error)
+	Verify(context.Context, *VerifyRequest) (*VerifyResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) 
 }
 func (UnimplementedUserServiceServer) CreateUser(context.Context, *CreateUserRequest) (*CreateUserResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateUser not implemented")
+}
+func (UnimplementedUserServiceServer) Verify(context.Context, *VerifyRequest) (*VerifyResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Verify not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -138,11 +154,29 @@ func _UserService_CreateUser_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_Verify_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(VerifyRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).Verify(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_Verify_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).Verify(ctx, req.(*VerifyRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var UserService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "accounts.v1.UserService",
+	ServiceName: "accounts.v1.users.UserService",
 	HandlerType: (*UserServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
@@ -152,6 +186,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CreateUser",
 			Handler:    _UserService_CreateUser_Handler,
+		},
+		{
+			MethodName: "Verify",
+			Handler:    _UserService_Verify_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

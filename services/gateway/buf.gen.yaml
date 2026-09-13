@@ -3,7 +3,7 @@ managed:
   enabled: true
   override:
     - file_option: go_package_prefix
-      value: github.com/biswasakashdev/swiftmart/services/gateway
+      value: github.com/biswasakashdev/swiftmart/services/gateway/proto_gen
 
 plugins:
   - remote: buf.build/grpc/go:v1.6.2

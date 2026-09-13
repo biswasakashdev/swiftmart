@@ -1,0 +1,10 @@
+version: v2
+plugins:
+  - remote: buf.build/community/salesforce-reactive-grpc:v1.2.4
+    out: services/accounts/src/main/java
+  # community/salesforce-reactive-grpc depends on grpc/java
+  - remote: buf.build/grpc/java:v1.73.0
+    out: services/accounts/src/main/java
+  # grpc/java depends on protocolbuffers/java
+  - remote: buf.build/protocolbuffers/java:v31.0
+    out: services/accounts/src/main/java

@@ -4,9 +4,10 @@
 // 	protoc        (unknown)
 // source: accounts/v1/users.proto
 
-package accountsv1
+package v1
 
 import (
+	v1 "github.com/biswasakashdev/swiftmart/services/gateway/proto_gen/types/v1"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"
@@ -26,6 +27,7 @@ type CreateUserRequest struct {
 	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
 	FirstName     string                 `protobuf:"bytes,2,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
 	LastName      string                 `protobuf:"bytes,3,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
+	Password      string                 `protobuf:"bytes,4,opt,name=password,proto3" json:"password,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -81,13 +83,16 @@ func (x *CreateUserRequest) GetLastName() string {
 	return ""
 }
 
+func (x *CreateUserRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
 type CreateUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	FirstName     string                 `protobuf:"bytes,3,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName      string                 `protobuf:"bytes,4,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	User          *v1.UsersProto         `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -122,39 +127,11 @@ func (*CreateUserResponse) Descriptor() ([]byte, []int) {
 	return file_accounts_v1_users_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *CreateUserResponse) GetId() string {
+func (x *CreateUserResponse) GetUser() *v1.UsersProto {
 	if x != nil {
-		return x.Id
+		return x.User
 	}
-	return ""
-}
-
-func (x *CreateUserResponse) GetEmail() string {
-	if x != nil {
-		return x.Email
-	}
-	return ""
-}
-
-func (x *CreateUserResponse) GetFirstName() string {
-	if x != nil {
-		return x.FirstName
-	}
-	return ""
-}
-
-func (x *CreateUserResponse) GetLastName() string {
-	if x != nil {
-		return x.LastName
-	}
-	return ""
-}
-
-func (x *CreateUserResponse) GetCreatedAt() string {
-	if x != nil {
-		return x.CreatedAt
-	}
-	return ""
+	return nil
 }
 
 type GetUserRequest struct {
@@ -203,12 +180,7 @@ func (x *GetUserRequest) GetUserId() string {
 
 type GetUserResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
-	FirstName     string                 `protobuf:"bytes,3,opt,name=first_name,json=firstName,proto3" json:"first_name,omitempty"`
-	LastName      string                 `protobuf:"bytes,4,opt,name=last_name,json=lastName,proto3" json:"last_name,omitempty"`
-	CreatedAt     string                 `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	Avatar        *string                `protobuf:"bytes,6,opt,name=avatar,proto3,oneof" json:"avatar,omitempty"`
+	User          *v1.UsersProto         `protobuf:"bytes,1,opt,name=user,proto3" json:"user,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -243,84 +215,178 @@ func (*GetUserResponse) Descriptor() ([]byte, []int) {
 	return file_accounts_v1_users_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetUserResponse) GetId() string {
+func (x *GetUserResponse) GetUser() *v1.UsersProto {
 	if x != nil {
-		return x.Id
+		return x.User
 	}
-	return ""
+	return nil
 }
 
-func (x *GetUserResponse) GetEmail() string {
+type VerifyRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyRequest) Reset() {
+	*x = VerifyRequest{}
+	mi := &file_accounts_v1_users_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyRequest) ProtoMessage() {}
+
+func (x *VerifyRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_accounts_v1_users_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyRequest.ProtoReflect.Descriptor instead.
+func (*VerifyRequest) Descriptor() ([]byte, []int) {
+	return file_accounts_v1_users_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *VerifyRequest) GetEmail() string {
 	if x != nil {
 		return x.Email
 	}
 	return ""
 }
 
-func (x *GetUserResponse) GetFirstName() string {
+func (x *VerifyRequest) GetPassword() string {
 	if x != nil {
-		return x.FirstName
+		return x.Password
 	}
 	return ""
 }
 
-func (x *GetUserResponse) GetLastName() string {
+type VerifyResponse struct {
+	state protoimpl.MessageState `protogen:"open.v1"`
+	// Types that are valid to be assigned to Res:
+	//
+	//	*VerifyResponse_Err
+	//	*VerifyResponse_User
+	Res           isVerifyResponse_Res `protobuf_oneof:"res"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *VerifyResponse) Reset() {
+	*x = VerifyResponse{}
+	mi := &file_accounts_v1_users_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *VerifyResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*VerifyResponse) ProtoMessage() {}
+
+func (x *VerifyResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_accounts_v1_users_proto_msgTypes[5]
 	if x != nil {
-		return x.LastName
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use VerifyResponse.ProtoReflect.Descriptor instead.
+func (*VerifyResponse) Descriptor() ([]byte, []int) {
+	return file_accounts_v1_users_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *VerifyResponse) GetRes() isVerifyResponse_Res {
+	if x != nil {
+		return x.Res
+	}
+	return nil
+}
+
+func (x *VerifyResponse) GetErr() string {
+	if x != nil {
+		if x, ok := x.Res.(*VerifyResponse_Err); ok {
+			return x.Err
+		}
 	}
 	return ""
 }
 
-func (x *GetUserResponse) GetCreatedAt() string {
+func (x *VerifyResponse) GetUser() *v1.UsersProto {
 	if x != nil {
-		return x.CreatedAt
+		if x, ok := x.Res.(*VerifyResponse_User); ok {
+			return x.User
+		}
 	}
-	return ""
+	return nil
 }
 
-func (x *GetUserResponse) GetAvatar() string {
-	if x != nil && x.Avatar != nil {
-		return *x.Avatar
-	}
-	return ""
+type isVerifyResponse_Res interface {
+	isVerifyResponse_Res()
 }
+
+type VerifyResponse_Err struct {
+	Err string `protobuf:"bytes,1,opt,name=err,proto3,oneof"`
+}
+
+type VerifyResponse_User struct {
+	User *v1.UsersProto `protobuf:"bytes,2,opt,name=user,proto3,oneof"`
+}
+
+func (*VerifyResponse_Err) isVerifyResponse_Res() {}
+
+func (*VerifyResponse_User) isVerifyResponse_Res() {}
 
 var File_accounts_v1_users_proto protoreflect.FileDescriptor
 
 const file_accounts_v1_users_proto_rawDesc = "" +
 	"\n" +
-	"\x17accounts/v1/users.proto\x12\vaccounts.v1\"e\n" +
+	"\x17accounts/v1/users.proto\x12\x11accounts.v1.users\x1a\x14types/v1/users.proto\"\x81\x01\n" +
 	"\x11CreateUserRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1d\n" +
 	"\n" +
 	"first_name\x18\x02 \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\x03 \x01(\tR\blastName\"\x95\x01\n" +
-	"\x12CreateUserResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
-	"\n" +
-	"first_name\x18\x03 \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\x04 \x01(\tR\blastName\x12\x1d\n" +
-	"\n" +
-	"created_at\x18\x05 \x01(\tR\tcreatedAt\")\n" +
+	"\tlast_name\x18\x03 \x01(\tR\blastName\x12\x1a\n" +
+	"\bpassword\x18\x04 \x01(\tR\bpassword\"D\n" +
+	"\x12CreateUserResponse\x12.\n" +
+	"\x04user\x18\x01 \x01(\v2\x1a.types.v1.users.UsersProtoR\x04user\")\n" +
 	"\x0eGetUserRequest\x12\x17\n" +
-	"\auser_id\x18\x01 \x01(\tR\x06userId\"\xba\x01\n" +
-	"\x0fGetUserResponse\x12\x0e\n" +
-	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1d\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"A\n" +
+	"\x0fGetUserResponse\x12.\n" +
+	"\x04user\x18\x01 \x01(\v2\x1a.types.v1.users.UsersProtoR\x04user\"A\n" +
+	"\rVerifyRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"]\n" +
+	"\x0eVerifyResponse\x12\x12\n" +
+	"\x03err\x18\x01 \x01(\tH\x00R\x03err\x120\n" +
+	"\x04user\x18\x02 \x01(\v2\x1a.types.v1.users.UsersProtoH\x00R\x04userB\x05\n" +
+	"\x03res2\x89\x02\n" +
+	"\vUserService\x12P\n" +
+	"\aGetUser\x12!.accounts.v1.users.GetUserRequest\x1a\".accounts.v1.users.GetUserResponse\x12Y\n" +
 	"\n" +
-	"first_name\x18\x03 \x01(\tR\tfirstName\x12\x1b\n" +
-	"\tlast_name\x18\x04 \x01(\tR\blastName\x12\x1d\n" +
-	"\n" +
-	"created_at\x18\x05 \x01(\tR\tcreatedAt\x12\x1b\n" +
-	"\x06avatar\x18\x06 \x01(\tH\x00R\x06avatar\x88\x01\x01B\t\n" +
-	"\a_avatar2\xa2\x01\n" +
-	"\vUserService\x12D\n" +
-	"\aGetUser\x12\x1b.accounts.v1.GetUserRequest\x1a\x1c.accounts.v1.GetUserResponse\x12M\n" +
-	"\n" +
-	"CreateUser\x12\x1e.accounts.v1.CreateUserRequest\x1a\x1f.accounts.v1.CreateUserResponseB\xb7\x01\n" +
-	"\x0fcom.accounts.v1B\n" +
-	"UsersProtoP\x01ZKgithub.com/biswasakashdev/swiftmart/services/gateway/accounts/v1;accountsv1\xa2\x02\x03AXX\xaa\x02\vAccounts.V1\xca\x02\vAccounts\\V1\xe2\x02\x17Accounts\\V1\\GPBMetadata\xea\x02\fAccounts::V1b\x06proto3"
+	"CreateUser\x12$.accounts.v1.users.CreateUserRequest\x1a%.accounts.v1.users.CreateUserResponse\x12M\n" +
+	"\x06Verify\x12 .accounts.v1.users.VerifyRequest\x1a!.accounts.v1.users.VerifyResponseB\xd5\x01\n" +
+	"\x15com.accounts.v1.usersB\n" +
+	"UsersProtoP\x01ZJgithub.com/biswasakashdev/swiftmart/services/gateway/proto_gen/accounts/v1\xa2\x02\x03AVU\xaa\x02\x11Accounts.V1.Users\xca\x02\x11Accounts\\V1\\Users\xe2\x02\x1dAccounts\\V1\\Users\\GPBMetadata\xea\x02\x13Accounts::V1::Usersb\x06proto3"
 
 var (
 	file_accounts_v1_users_proto_rawDescOnce sync.Once
@@ -334,23 +400,31 @@ func file_accounts_v1_users_proto_rawDescGZIP() []byte {
 	return file_accounts_v1_users_proto_rawDescData
 }
 
-var file_accounts_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_accounts_v1_users_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_accounts_v1_users_proto_goTypes = []any{
-	(*CreateUserRequest)(nil),  // 0: accounts.v1.CreateUserRequest
-	(*CreateUserResponse)(nil), // 1: accounts.v1.CreateUserResponse
-	(*GetUserRequest)(nil),     // 2: accounts.v1.GetUserRequest
-	(*GetUserResponse)(nil),    // 3: accounts.v1.GetUserResponse
+	(*CreateUserRequest)(nil),  // 0: accounts.v1.users.CreateUserRequest
+	(*CreateUserResponse)(nil), // 1: accounts.v1.users.CreateUserResponse
+	(*GetUserRequest)(nil),     // 2: accounts.v1.users.GetUserRequest
+	(*GetUserResponse)(nil),    // 3: accounts.v1.users.GetUserResponse
+	(*VerifyRequest)(nil),      // 4: accounts.v1.users.VerifyRequest
+	(*VerifyResponse)(nil),     // 5: accounts.v1.users.VerifyResponse
+	(*v1.UsersProto)(nil),      // 6: types.v1.users.UsersProto
 }
 var file_accounts_v1_users_proto_depIdxs = []int32{
-	2, // 0: accounts.v1.UserService.GetUser:input_type -> accounts.v1.GetUserRequest
-	0, // 1: accounts.v1.UserService.CreateUser:input_type -> accounts.v1.CreateUserRequest
-	3, // 2: accounts.v1.UserService.GetUser:output_type -> accounts.v1.GetUserResponse
-	1, // 3: accounts.v1.UserService.CreateUser:output_type -> accounts.v1.CreateUserResponse
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	6, // 0: accounts.v1.users.CreateUserResponse.user:type_name -> types.v1.users.UsersProto
+	6, // 1: accounts.v1.users.GetUserResponse.user:type_name -> types.v1.users.UsersProto
+	6, // 2: accounts.v1.users.VerifyResponse.user:type_name -> types.v1.users.UsersProto
+	2, // 3: accounts.v1.users.UserService.GetUser:input_type -> accounts.v1.users.GetUserRequest
+	0, // 4: accounts.v1.users.UserService.CreateUser:input_type -> accounts.v1.users.CreateUserRequest
+	4, // 5: accounts.v1.users.UserService.Verify:input_type -> accounts.v1.users.VerifyRequest
+	3, // 6: accounts.v1.users.UserService.GetUser:output_type -> accounts.v1.users.GetUserResponse
+	1, // 7: accounts.v1.users.UserService.CreateUser:output_type -> accounts.v1.users.CreateUserResponse
+	5, // 8: accounts.v1.users.UserService.Verify:output_type -> accounts.v1.users.VerifyResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_accounts_v1_users_proto_init() }
@@ -358,14 +432,17 @@ func file_accounts_v1_users_proto_init() {
 	if File_accounts_v1_users_proto != nil {
 		return
 	}
-	file_accounts_v1_users_proto_msgTypes[3].OneofWrappers = []any{}
+	file_accounts_v1_users_proto_msgTypes[5].OneofWrappers = []any{
+		(*VerifyResponse_Err)(nil),
+		(*VerifyResponse_User)(nil),
+	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_accounts_v1_users_proto_rawDesc), len(file_accounts_v1_users_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -53,7 +53,7 @@ func main() {
 
 	// Creating auth router
 
-	authRouter := appRoutes.NewAuthHandler(&usersClient)
+	authRouter := appRoutes.NewAuthHandler(usersClient)
 
 	// Add the graphql handler to the router
 	router.Handle("/", playground.Handler("GraphQL playground", "/api/query"))

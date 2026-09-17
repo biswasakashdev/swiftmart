@@ -13,10 +13,17 @@ import (
 	cnfg "github.com/biswasakashdev/swiftmart/services/gateway/internal/config"
 	"github.com/biswasakashdev/swiftmart/services/gateway/internal/gqlgen"
 	"github.com/biswasakashdev/swiftmart/services/gateway/internal/resolvers"
+	appRoutes "github.com/biswasakashdev/swiftmart/services/gateway/internal/routes"
+	"github.com/go-chi/chi/v5"
+	chiMiddleWare "github.com/go-chi/chi/v5/middleware"
 	"github.com/vektah/gqlparser/v2/ast"
 )
 
 func main() {
+
+	router := chi.NewRouter()
+
+	router.Use(chiMiddleWare.Logger)
 
 	cfg := cnfg.Load()
 
@@ -26,6 +33,11 @@ func main() {
 		UsersClient: usersClient,
 	}
 
+	/*
+		Creating routes and handlers
+	*/
+
+	// Graphql handler
 	srv := handler.New(gqlgen.NewExecutableSchema(gqlgen.Config{Resolvers: &resolvr}))
 
 	srv.AddTransport(transport.Options{})
@@ -39,10 +51,18 @@ func main() {
 		Cache: lru.New[string](100),
 	})
 
-	http.Handle("/", playground.Handler("GraphQL playground", "/query"))
-	http.Handle("/query", srv)
+	// Creating auth router
+
+	authRouter := appRoutes.NewAuthHandler(&usersClient)
+
+	// Add the graphql handler to the router
+	router.Handle("/", playground.Handler("GraphQL playground", "/api/query"))
+	router.Handle("/api/query", srv)
+
+	// Add the auth handlers
+	router.Mount("/api/v1/auth", authRouter)
 
 	log.Printf("connect to http://localhost:%s/ for GraphQL playground", cfg.Port)
-	log.Fatal(http.ListenAndServe(":"+cfg.Port, nil))
+	log.Fatal(http.ListenAndServe(":"+cfg.Port, router))
 
 }

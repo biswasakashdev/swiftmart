@@ -53,16 +53,16 @@ func main() {
 
 	// Creating auth router
 
-	authRouter := appRoutes.NewAuthHandler(usersClient)
+	authRouter := appRoutes.NewAuthHandler(usersClient, &cfg)
 
 	// Add the graphql handler to the router
-	router.Handle("/", playground.Handler("GraphQL playground", "/api/query"))
+	router.Handle("/playground", playground.Handler("GraphQL playground", "/api/query"))
 	router.Handle("/api/query", srv)
 
 	// Add the auth handlers
 	router.Mount("/api/v1/auth", authRouter)
 
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", cfg.Port)
+	log.Printf("connect to http://localhost:%s/playground for GraphQL playground", cfg.Port)
 	log.Fatal(http.ListenAndServe(":"+cfg.Port, router))
 
 }

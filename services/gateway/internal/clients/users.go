@@ -11,7 +11,7 @@ import (
 )
 
 func NewUsersClient(cfg *cnfg.Config) accountspbv1.UserServiceClient {
-	conn, err := grpc.NewClient(cfg.UsersClient, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.NewClient(cfg.AccountsGRPCAddr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
 	if err != nil {
 		log.Fatal("Error to build the client connection")

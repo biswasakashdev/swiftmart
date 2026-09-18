@@ -2,6 +2,7 @@ package com.biswasakashdev.nexussphere.core.repository;
 
 import java.time.LocalDate;
 
+import com.biswasakashdev.swiftmart.accounts.repository.UsersRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
@@ -11,24 +12,27 @@ import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.repository.impl.PostgresUserRepositoryImpl;
 import com.biswasakashdev.swiftmart.accounts.repository.r2dbc.UsersR2DBCRepository;
 
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 
 @Import(value = {
         PostgresUserRepositoryImpl.class,
-        UsersR2DBCRepository.class
+        UsersR2DBCRepository.class,
+        R2dbcEntityTemplate.class
 })
 class UserRepositoryTest extends AbstractRepositoryTest{
 
     @Autowired
-    private UsersR2DBCRepository usersRepository;
+    private UsersRepository usersRepository;
 
     private final String userEmail = "abc@gmail.com";
     private final User user = User.builder()
             .email(userEmail)
-            .password("password")
-            .name("John Doe")
+            .hashedPassword("password")
+            .firstName("Jon")
+            .lastName("Doe")
             .accountLocked(false)
             .createdOn(LocalDate.now())
             .build();
@@ -37,7 +41,7 @@ class UserRepositoryTest extends AbstractRepositoryTest{
     @Test
     void shouldSaveUser() {
         usersRepository
-                .save(user)
+                .saveUser(user)
                 .as(StepVerifier::create)
                 .expectNextCount(1)
                 .verifyComplete();
@@ -47,8 +51,8 @@ class UserRepositoryTest extends AbstractRepositoryTest{
     void shouldThrowUserAlreadyExistExceptionWhenTheEmailAlreadyExist() {
 
         usersRepository
-                .save(user)
-                .then(usersRepository.save(user))
+                .saveUser(user)
+                .then(usersRepository.saveUser(user))
                 .as(StepVerifier::create)
                 .expectError(DuplicateKeyException.class)
                 .verify();
@@ -57,10 +61,10 @@ class UserRepositoryTest extends AbstractRepositoryTest{
 
     @Test
     void shouldReturnEmptyMonoIfUserNotFound() {
-        Mono<User> usersMono = usersRepository.save(user);
+        Mono<User> usersMono = usersRepository.saveUser(user);
 
         usersMono
-                .then(usersRepository.findByEmailIgnoreCase(userEmail))
+                .then(usersRepository.findByEmil(userEmail))
                 .as(StepVerifier::create)
                 .expectNextCount(1)
                 .verifyComplete();

@@ -1,5 +1,6 @@
 package com.biswasakashdev.swiftmart.accounts.repository.impl;
 
+import com.biswasakashdev.swiftmart.accounts.exception.DatabaseOperationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
 import org.springframework.stereotype.Repository;
@@ -26,7 +27,8 @@ public class PostgresUserRepositoryImpl implements UsersRepository {
         user.setId(id);
         return r2dbcEntityTemplate
                 .insert(User.class)
-                .using(user);
+                .using(user)
+                .switchIfEmpty(Mono.error(new DatabaseOperationException("Could not save user")));
     }
 
     @Override

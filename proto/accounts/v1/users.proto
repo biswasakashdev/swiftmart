@@ -43,8 +43,5 @@ message VerifyRequest{
   string password = 2;
 }
 message VerifyResponse{
-  oneof res {
-    string err = 1;
-    types.v1.users.UsersProto user = 2;
-  }
+  types.v1.users.UsersProto user = 1;
 }

@@ -1,9 +1,11 @@
 package com.biswasakashdev.swiftmart.accounts.controller.grpc;
 
+import com.biswasakashdev.swiftmart.accounts.exception.DatabaseOperationException;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.services.UserService;
 import com.biswasakashdev.swiftmart.protogen.accounts.v1.*;
 import com.biswasakashdev.swiftmart.protogen.prototypes.v1.UsersProto;
+import io.grpc.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -23,8 +25,6 @@ public class UserGrpcServiceImpl extends ReactorUserServiceGrpc.UserServiceImplB
         return request
                 .flatMap(req-> userService.findUserById(req.getUserId()))
                 .map(user -> {
-                    log.info("User {} has been found", user);
-
                     UsersProto usersProto =mapToUserProto(user);
                     return GetUserResponse.newBuilder()
                             .setUser(usersProto)
@@ -40,7 +40,10 @@ public class UserGrpcServiceImpl extends ReactorUserServiceGrpc.UserServiceImplB
                     return CreateUserResponse.newBuilder()
                             .setUser(usersProto)
                             .build();
-                });
+                })
+                .onErrorMap(DatabaseOperationException.class, ex-> Status.INTERNAL
+                        .withDescription(ex.getMessage())
+                        .asRuntimeException());
     }
 
 
@@ -58,14 +61,19 @@ public class UserGrpcServiceImpl extends ReactorUserServiceGrpc.UserServiceImplB
     }
 
     private UsersProto mapToUserProto(User user) {
-        return UsersProto.newBuilder()
+
+        UsersProto.Builder userProtoBuilder = UsersProto.newBuilder()
                 .setId(user.getId())
                 .setEmail(user.getEmail())
                 .setFirstName(user.getFirstName())
                 .setLastName(user.getLastName())
                 .setAccountEnabled(user.getAccountLocked())
-                .setCreatedAt(user.getCreatedOn().toString())
-                .setAvatar(user.getAvatar())
-                .build();
+                .setCreatedAt(user.getCreatedOn().toString());
+
+        if (user.getAvatar() != null){
+            userProtoBuilder  = userProtoBuilder.setAvatar(user.getAvatar());
+        }
+        return userProtoBuilder.build();
+
     }
 }

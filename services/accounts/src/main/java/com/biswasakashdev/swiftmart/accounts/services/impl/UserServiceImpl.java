@@ -3,7 +3,6 @@ package com.biswasakashdev.swiftmart.accounts.services.impl;
 import com.biswasakashdev.swiftmart.accounts.exception.InvalidCredentialException;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.repository.UsersRepository;
-import com.biswasakashdev.swiftmart.accounts.repository.r2dbc.UsersR2DBCRepository;
 import com.biswasakashdev.swiftmart.accounts.services.UserService;
 import com.biswasakashdev.swiftmart.protogen.accounts.v1.CreateUserRequest;
 import com.biswasakashdev.swiftmart.protogen.accounts.v1.VerifyRequest;
@@ -42,7 +41,8 @@ public class UserServiceImpl implements UserService {
                 .accountLocked(false)
                 .createdOn(LocalDate.now())
                 .build();
-        return usersRepository.saveUser(user);
+        return usersRepository
+                .saveUser(user);
     }
 
     @Override

@@ -1,62 +1,58 @@
 services:
-
-  admin-gateway:
-    container_name: swiftmart-admin-gateway 
-    image: biswasakash/swiftmart-admin-gateway:local
-    ports:
-      - "9000:9000"
-    networks:
-      - service-network
-
-  template-engine:
+  gateway:
     container_name: swiftmart-template-engine
     image: biswasakash/swiftmart-template-engine:local
     ports:
       - "9001:9001"
-    networks:
-      - service-network
 
+  web:
+    container_name: swiftmart-web
+    image: biswasakash/swiftmart-web:local
+    ports:
+      - "3000:3000"
+    depends_on:
+      - gateway
 
   accounts:
-    container_name: swiftmart-accounts 
+    container_name: swiftmart-accounts
     image: biswasakash/swiftmart-accounts:local
     ports:
       - "8501:8501"
-    networks:
-      - service-network
+    depends_on:
+      - postgres
+      - postgres
 
   orders:
     container_name: swiftmart-orders
     image: biswasakash/swiftmart-orders:local
-    ports: 
+    ports:
       - "8502:8502"
-    networks:
-      - service-network
+    depends_on:
+      - postgres
 
   catelogue:
     container_name: swiftmart-catelogue
     image: biswasakash/swiftmart-catelogue:local
-    ports: 
+    ports:
       - "8503:8503"
-    networks:
-      - service-network
+    depends_on:
+      - mongo
 
   inventory:
     container_name: swiftmart-inventory
     image: biswasakash/swiftmart-inventory:local
-    ports: 
+    ports:
       - "8504:8504"
-    networks:
-      - service-network
+    depends_on:
+      - posgres
 
-  search-engine:
+  semantic-search:
     container_name: swiftmart-search-engine
     image: biswasakash/swiftmart-search-engine:local
-    ports: 
+    ports:
       - "8505:8505"
-    networks:
-      - service-network
-
+    depends_on:
+      - postgres
 
   postgres:
     container_name: swiftmart-postgres
@@ -69,8 +65,6 @@ services:
       - "5432:5432"
     volumes:
       - ./scripts/postgres/setup.sql:/docker-entrypoint-initdb.d/setup.sql
-    networks:
-      - postgres-network
 
   mongo:
     container_name: swiftmart-mongo
@@ -80,13 +74,3 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=password
     ports:
       - "27017:27017"
-    networks:
-      - mongo-network
-
-networks:
-  service-network:
-    driver: bridge
-  mongo-network:
-    driver: bridge
-  postgres-network:
-    driver: bridge

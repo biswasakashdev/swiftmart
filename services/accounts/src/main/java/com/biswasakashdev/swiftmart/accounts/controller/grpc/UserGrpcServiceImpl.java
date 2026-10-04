@@ -1,17 +1,23 @@
 package com.biswasakashdev.swiftmart.accounts.controller.grpc;
 
+import org.springframework.stereotype.Component;
+
 import com.biswasakashdev.swiftmart.accounts.exception.DatabaseOperationException;
 import com.biswasakashdev.swiftmart.accounts.models.User;
 import com.biswasakashdev.swiftmart.accounts.services.UserService;
-import com.biswasakashdev.swiftmart.protogen.accounts.v1.*;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.CreateUserRequest;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.CreateUserResponse;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.GetUserRequest;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.GetUserResponse;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.ReactorUserServiceGrpc;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.VerifyRequest;
+import com.biswasakashdev.swiftmart.protogen.accounts.v1.VerifyResponse;
 import com.biswasakashdev.swiftmart.protogen.prototypes.v1.UsersProto;
+
 import io.grpc.Status;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-
-import java.util.Objects;
 
 @Slf4j
 @Component

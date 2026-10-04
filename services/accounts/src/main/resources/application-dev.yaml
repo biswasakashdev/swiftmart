@@ -3,5 +3,3 @@ spring:
     url: r2dbc:postgres://localhost:5432/swiftmart_accounts_dev
     username: dev
     password: devpassword
-
-

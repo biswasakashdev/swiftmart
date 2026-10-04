@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+package types.v1.roles;
+
+option go_package = "typesv1";
+option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+
+// Permission is an atomic action on a resource within a tenant.
+message PermissionProto {
+  string id = 1;
+  string name = 2; // e.g. "products:read"
+  string description = 3;
+  string resource = 4; // e.g. "products"
+  string action = 5; // e.g. "read"
+}
+
+// Role groups permissions and is assigned to store members.
+message RoleProto {
+  string id = 1;
+  string store_id = 2;
+  string name = 3;
+  string description = 4;
+  repeated string permission_names = 5;
+  bool is_default = 6;
+  string created_at = 7;
+}
+
+// Membership links a user to a store through a role.
+message MemberProto {
+  string user_id = 1;
+  string store_id = 2;
+  string role_id = 3;
+  string role_name = 4;
+  MemberStatus status = 5;
+  string created_at = 6;
+}
+
+enum MemberStatus {
+  MEMBER_STATUS_UNSPECIFIED = 0;
+  MEMBER_STATUS_ACTIVE = 1;
+  MEMBER_STATUS_PENDING = 2;
+  MEMBER_STATUS_SUSPENDED = 3;
+}
+
+// ApiKey authenticates external GraphQL storefront integrations.
+message ApiKeyProto {
+  string id = 1;
+  string store_id = 2;
+  string key_prefix = 3; // e.g. "sm_live_"
+  string name = 4;
+  repeated string scopes = 5;
+  string created_at = 6;
+  string revoked_at = 7;
+}

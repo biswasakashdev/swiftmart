@@ -1,22 +1,21 @@
 syntax = "proto3";
 
-
 package accounts.v1.users;
 
 import "types/v1/users.proto";
+import "common/v1/common.proto";
 
 option go_package = "accountsv1";
 option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 option java_multiple_files = true;
 
-
-
+// UserService owns user identity and account state.
 service UserService {
   rpc GetUser(GetUserRequest) returns (GetUserResponse);
-
   rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
-
-  rpc Verify(VerifyRequest) returns(VerifyResponse);
+  rpc Verify(VerifyRequest) returns (VerifyResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc DeactivateUser(DeactivateUserRequest) returns (Status);
 }
 
 message CreateUserRequest {
@@ -38,10 +37,26 @@ message GetUserResponse {
   types.v1.users.UsersProto user = 1;
 }
 
-message VerifyRequest{
+message VerifyRequest {
   string email = 1;
   string password = 2;
 }
-message VerifyResponse{
+
+message VerifyResponse {
   types.v1.users.UsersProto user = 1;
+}
+
+message UpdateUserRequest {
+  string user_id = 1;
+  optional string first_name = 2;
+  optional string last_name = 3;
+  optional string avatar = 4;
+}
+
+message UpdateUserResponse {
+  types.v1.users.UsersProto user = 1;
+}
+
+message DeactivateUserRequest {
+  string user_id = 1;
 }

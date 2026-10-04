@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package accounts.v1.stores;
+
+import "types/v1/stores.proto";
+import "common/v1/common.proto";
+
+option go_package = "accountsv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
+option java_multiple_files = true;
+
+// StoreService owns store/business lifecycle and membership.
+service StoreService {
+  rpc CreateStore(CreateStoreRequest) returns (CreateStoreResponse);
+  rpc GetStore(GetStoreRequest) returns (GetStoreResponse);
+  rpc ListStores(ListStoresRequest) returns (ListStoresResponse);
+  rpc UpdateStore(UpdateStoreRequest) returns (UpdateStoreResponse);
+  rpc DeleteStore(DeleteStoreRequest) returns (common.v1.Status);
+
+  rpc AddMember(AddMemberRequest) returns (AddMemberResponse);
+  rpc ListMembers(ListMembersRequest) returns (ListMembersResponse);
+  rpc UpdateMember(UpdateMemberRequest) returns (UpdateMemberResponse);
+  rpc RemoveMember(RemoveMemberRequest) returns (common.v1.Status);
+}
+
+message CreateStoreRequest {
+  string owner_user_id = 1;
+  string name = 2;
+  string slug = 3;
+  string description = 4;
+  common.v1.Address billing_address = 5;
+}
+
+message CreateStoreResponse {
+  types.v1.stores.StoreProto store = 1;
+}
+
+message GetStoreRequest {
+  string store_id = 1;
+}
+
+message GetStoreResponse {
+  types.v1.stores.StoreProto store = 1;
+}
+
+message ListStoresRequest {
+  string owner_user_id = 1;
+  common.v1.PageRequest page = 2;
+}
+
+message ListStoresResponse {
+  repeated types.v1.stores.StoreProto stores = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message UpdateStoreRequest {
+  string store_id = 1;
+  optional string name = 2;
+  optional string slug = 3;
+  optional string description = 4;
+  optional types.v1.stores.StoreSettings settings = 5;
+}
+
+message UpdateStoreResponse {
+  types.v1.stores.StoreProto store = 1;
+}
+
+message DeleteStoreRequest {
+  string store_id = 1;
+}
+
+message AddMemberRequest {
+  string store_id = 1;
+  string user_id = 2;
+  string role_id = 3;
+}
+
+message AddMemberResponse {
+  types.v1.roles.MemberProto member = 1;
+}
+
+message ListMembersRequest {
+  string store_id = 1;
+  common.v1.PageRequest page = 2;
+}
+
+message ListMembersResponse {
+  repeated types.v1.roles.MemberProto members = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message UpdateMemberRequest {
+  string store_id = 1;
+  string user_id = 2;
+  optional string role_id = 3;
+  optional types.v1.roles.MemberStatus status = 4;
+}
+
+message UpdateMemberResponse {
+  types.v1.roles.MemberProto member = 1;
+}
+
+message RemoveMemberRequest {
+  string store_id = 1;
+  string user_id = 2;
+}

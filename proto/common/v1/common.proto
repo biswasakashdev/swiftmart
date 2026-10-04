@@ -1,0 +1,56 @@
+syntax = "proto3";
+
+package common.v1;
+
+option go_package = "commonv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.common.v1";
+option java_multiple_files = true;
+
+// Money represents an amount in a fixed currency. Amount is stored in the
+// smallest unit for the currency (e.g. paise for INR).
+message Money {
+  string amount = 1; // decimal string, e.g. "1234.56"
+  string currency = 2; // ISO 4217 currency code, e.g. "INR"
+}
+
+// Address is a physical shipping/billing address.
+message Address {
+  string line1 = 1;
+  string line2 = 2;
+  string city = 3;
+  string state = 4;
+  string postal_code = 5;
+  string country = 6; // ISO 3166-1 alpha-2
+}
+
+// Timestamp is an RFC3339 UTC timestamp.
+message Timestamp {
+  string created_at = 1;
+  string updated_at = 2;
+}
+
+// PageRequest is used for paginated list operations.
+message PageRequest {
+  uint64 page = 1; // 1-based page number
+  uint64 page_size = 2; // items per page
+}
+
+// PageResponse carries pagination metadata alongside a list.
+message PageResponse {
+  uint64 page = 1;
+  uint64 page_size = 2;
+  uint64 total = 3;
+}
+
+// Error is a stable, non-internal error payload returned to clients.
+message Error {
+  string code = 1; // machine-readable code, e.g. "UNAUTHENTICATED"
+  string message = 2; // human-readable message
+  repeated Error details = 3; // nested detail errors
+}
+
+// Status is a simple success/failure acknowledgement.
+message Status {
+  bool ok = 1;
+  string message = 2;
+}

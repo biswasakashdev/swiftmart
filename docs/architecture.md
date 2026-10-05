@@ -37,6 +37,8 @@ Core principles:
 │   ├── catalogue/
 │   ├── inventory/
 │   ├── semantic_search/
+│   ├── template-agent/
+│   ├── template-engine/
 │   └── common/
 ├── services/
 │   ├── gateway/
@@ -85,6 +87,10 @@ state
 
 `/services/semantic-search` semantic-search Java + Spring Boot Semantic search and
 recommendations
+
+`/services/template-agent` template-agent Java + Spring Boot Template agent for building Users customised HTMX + TailwindCSS templates with data types by using LLM and langchain and langgraph
+
+`/services/template-engine` compile templates when requested and send page wise with using Golang from Mongodb
 
 `/web` web React + pnpm Merchant/business control
 center
@@ -227,7 +233,42 @@ Responsibilities:
 It communicates with domain services through contracts rather than
 direct database coupling.
 
-## 10. Web Application
+## 10. Template Agent
+
+Location: `/services/template-agent`
+
+Technology:
+
+- Java
+- Spring Boot
+- gRPC
+- LLM (OpenAI/Anthropic/HuggingFace)
+- LangChain
+- LangGraph
+- MongoDB
+
+Responsibilities:
+
+- Build HTMX + TailwindCSS templates.
+- Use LLM + LangChain + LangGraph for template generation.
+- Store templates in MongoDB.
+
+## 11. Template Engine
+
+Location: `/services/template-engine`
+
+Technology:
+
+- Go
+- gRPC
+- MongoDB
+
+Responsibilities:
+
+- Compile templates when requested.
+- Send page wise with HTMX + TailwindCSS + MongoDB data.
+
+## 12. Web Application
 
 Location: `/web`
 
@@ -330,19 +371,16 @@ No cross-service SQL queries are allowed.
 User / Storefront
       |
       v
-GraphQL API
+Gateway
       |
       v
-Authenticate API Key / User
+Authenticate Request if secured / User
       |
       v
-Resolve Tenant + User
+Resolve Tenant / User / Business
       |
       v
 Authorize Permission
-      |
-      v
-Gateway
       |
       v
 gRPC

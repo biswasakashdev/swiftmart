@@ -18,25 +18,25 @@ Do not invent architecture that conflicts with these documents.
 
 All backend services are under:
 
-``` text
+```text
 /services/
 ```
 
 The React/pnpm frontend is the root-level:
 
-``` text
+```text
 /web/
 ```
 
 Shared Protocol Buffers are under:
 
-``` text
+```text
 /proto/
 ```
 
 Deployment/platform configuration is under:
 
-``` text
+```text
 /infrastructure/
 ```
 
@@ -49,16 +49,16 @@ Every service owns its domain.
 
 Never:
 
--   Query another service's database.
--   Import another service's internal persistence package.
--   Reuse another service's domain entity as if it were local.
--   Bypass gRPC to access another service's business logic.
+- Query another service's database.
+- Import another service's internal persistence package.
+- Reuse another service's domain entity as if it were local.
+- Bypass gRPC to access another service's business logic.
 
 Use:
 
--   gRPC.
--   Shared Protocol Buffers.
--   Kafka events for asynchronous workflows.
+- gRPC.
+- Shared Protocol Buffers.
+- Kafka events for asynchronous workflows.
 
 ## 4. Multi-Tenant Isolation
 
@@ -66,9 +66,9 @@ Tenant/store context must be explicit.
 
 Every tenant-owned operation must verify:
 
--   Tenant/store identity.
--   User identity where applicable.
--   Required permission.
+- Tenant/store identity.
+- User identity where applicable.
+- Required permission.
 
 Never trust tenant IDs supplied by clients without authorization.
 
@@ -78,11 +78,11 @@ All internal RPC contracts belong under `/proto`.
 
 Rules:
 
--   Edit `.proto` files rather than generated code.
--   Regenerate code with Buf/Make.
--   Do not manually patch generated protobuf code.
--   Avoid unnecessary breaking changes.
--   Keep package/version naming consistent.
+- Edit `.proto` files rather than generated code.
+- Regenerate code with Buf/Make.
+- Do not manually patch generated protobuf code.
+- Avoid unnecessary breaking changes.
+- Keep package/version naming consistent.
 
 ## 6. Makefile
 
@@ -90,7 +90,7 @@ Common repository operations should be exposed through Make targets.
 
 Expected categories:
 
-``` text
+```text
 make proto
 make proto-lint
 make proto-breaking
@@ -108,35 +108,36 @@ duplicate commands unnecessarily.
 
 Applies to:
 
-``` text
+```text
 /services/accounts
 /services/orders
 /services/inventory
 /services/semantic-search
+/services/template-agent
 ```
 
 Use:
 
--   Standard Spring Boot project structure.
--   Clear package boundaries.
--   Constructor injection.
--   Immutable DTOs where practical.
--   Service/domain/repository separation.
--   Reactive APIs in WebFlux services.
--   Proper exception handling.
--   Unit and integration tests.
+- Standard Spring Boot project structure.
+- Clear package boundaries.
+- Constructor injection.
+- Immutable DTOs where practical.
+- Service/domain/repository separation.
+- Reactive APIs in WebFlux services.
+- Proper exception handling.
+- Unit and integration tests.
 
 Do not:
 
--   Use field injection.
--   Put business logic in controllers.
--   Expose persistence entities directly as public API DTOs.
--   Block reactive threads with blocking calls.
--   Put unrelated domains into one service.
+- Use field injection.
+- Put business logic in controllers.
+- Expose persistence entities directly as public API DTOs.
+- Block reactive threads with blocking calls.
+- Put unrelated domains into one service.
 
 Ignore:
 
-``` text
+```text
 target/
 *.class
 ```
@@ -145,32 +146,33 @@ target/
 
 Applies to:
 
-``` text
+```text
 /services/gateway
 /services/catalogue
+/services/template-engine
 ```
 
 Use:
 
--   `cmd/` for application entrypoints where appropriate.
--   `internal/` for private implementation.
--   Small interfaces defined near their consumers.
--   Explicit error handling.
--   Context propagation.
--   Structured logging.
--   Tests alongside packages.
+- `cmd/` for application entrypoints where appropriate.
+- `internal/` for private implementation.
+- Small interfaces defined near their consumers.
+- Explicit error handling.
+- Context propagation.
+- Structured logging.
+- Tests alongside packages.
 
 Avoid:
 
--   Global mutable state.
--   Huge handler functions.
--   Hidden goroutines.
--   Ignoring returned errors.
--   Leaking implementation details from internal packages.
+- Global mutable state.
+- Huge handler functions.
+- Hidden goroutines.
+- Ignoring returned errors.
+- Leaking implementation details from internal packages.
 
 Ignore:
 
-``` text
+```text
 bin/
 dist/
 *.exe
@@ -181,7 +183,7 @@ coverage.out
 
 Applies to:
 
-``` text
+```text
 /web
 ```
 
@@ -189,22 +191,22 @@ The web application uses pnpm.
 
 Use:
 
--   Component-based architecture.
--   Feature-oriented organization where practical.
--   Typed API models.
--   Reusable UI components.
--   Clear separation between API/data code and presentation.
--   Proper loading/error states.
+- Component-based architecture.
+- Feature-oriented organization where practical.
+- Typed API models.
+- Reusable UI components.
+- Clear separation between API/data code and presentation.
+- Proper loading/error states.
 
 Do not:
 
--   Call internal microservices directly.
--   Embed secrets in browser code.
--   Commit package-manager artifacts.
+- Call internal microservices directly.
+- Embed secrets in browser code.
+- Commit package-manager artifacts.
 
 Ignore:
 
-``` text
+```text
 node_modules/
 dist/
 build/
@@ -218,10 +220,10 @@ Generated protobuf/client files must not be hand-edited.
 
 Generated files should be reproducible from:
 
--   `/proto`
--   Buf configuration
--   Make targets
--   Service-specific generation configuration
+- `/proto`
+- Buf configuration
+- Make targets
+- Service-specific generation configuration
 
 ## 11. Environment Variables
 
@@ -230,13 +232,13 @@ variables.
 
 Rules:
 
--   Do not silently read arbitrary environment variables.
--   Document every required runtime configuration.
--   Provide safe local-development defaults where appropriate.
--   Never commit secrets.
--   Never hard-code production credentials.
--   Do not use `.env` files as an undocumented source of required
-    application behavior.
+- Do not silently read arbitrary environment variables.
+- Document every required runtime configuration.
+- Provide safe local-development defaults where appropriate.
+- Never commit secrets.
+- Never hard-code production credentials.
+- Do not use `.env` files as an undocumented source of required
+  application behavior.
 
 If configuration is needed, explicitly define it in the service's
 configuration mechanism and document it.
@@ -245,7 +247,7 @@ configuration mechanism and document it.
 
 Never commit:
 
-``` text
+```text
 .env
 .env.*
 *.pem
@@ -259,7 +261,7 @@ secrets.*
 
 The root `.gitignore` should cover:
 
-``` text
+```text
 # Java
 /services/**/target/
 *.class
@@ -308,25 +310,25 @@ Each backend service should have a reproducible container build.
 
 Rules:
 
--   Prefer multi-stage builds.
--   Do not bake secrets into images.
--   Keep runtime images minimal.
--   Pin important dependency/base-image versions where practical.
--   Do not run unnecessary processes inside one container.
--   Use health/readiness checks where appropriate.
+- Prefer multi-stage builds.
+- Do not bake secrets into images.
+- Keep runtime images minimal.
+- Pin important dependency/base-image versions where practical.
+- Do not run unnecessary processes inside one container.
+- Use health/readiness checks where appropriate.
 
 ## 15. Kubernetes
 
 Rules:
 
--   One workload should have a clear ownership boundary.
--   Use Deployments for stateless services unless another workload type
-    is justified.
--   Configure readiness/liveness appropriately.
--   Use Services for internal discovery.
--   Do not expose internal services publicly unless required.
--   Store Kubernetes manifests under the infrastructure/deployment area.
--   Never commit plaintext production secrets.
+- One workload should have a clear ownership boundary.
+- Use Deployments for stateless services unless another workload type
+  is justified.
+- Configure readiness/liveness appropriately.
+- Use Services for internal discovery.
+- Do not expose internal services publicly unless required.
+- Store Kubernetes manifests under the infrastructure/deployment area.
+- Never commit plaintext production secrets.
 
 ## 16. ArgoCD
 
@@ -334,22 +336,22 @@ ArgoCD is the GitOps deployment mechanism.
 
 Rules:
 
--   Git is the desired-state source.
--   Do not manually modify live resources as a normal deployment
-    process.
--   Deployment changes should be reviewable in Git.
--   Application definitions must identify the intended environment and
-    manifests.
+- Git is the desired-state source.
+- Do not manually modify live resources as a normal deployment
+  process.
+- Deployment changes should be reviewable in Git.
+- Application definitions must identify the intended environment and
+  manifests.
 
 ## 17. Logging
 
 Never log:
 
--   API keys.
--   Passwords.
--   Payment credentials.
--   Authorization tokens.
--   Sensitive personal information.
+- API keys.
+- Passwords.
+- Payment credentials.
+- Authorization tokens.
+- Sensitive personal information.
 
 Use correlation/request IDs for tracing requests across services.
 
@@ -357,12 +359,12 @@ Use correlation/request IDs for tracing requests across services.
 
 Errors should:
 
--   Be explicit.
--   Preserve useful context.
--   Avoid leaking internals to external users.
--   Map correctly between gRPC and GraphQL boundaries.
--   Be distinguishable between client errors, dependency errors and
-    internal errors.
+- Be explicit.
+- Preserve useful context.
+- Avoid leaking internals to external users.
+- Map correctly between gRPC and GraphQL boundaries.
+- Be distinguishable between client errors, dependency errors and
+  internal errors.
 
 ## 19. Testing
 
@@ -370,11 +372,11 @@ New functionality should include appropriate tests.
 
 At minimum where applicable:
 
--   Unit tests for business logic.
--   API/RPC tests.
--   Integration tests for persistence.
--   Contract tests for important service boundaries.
--   Consumer tests for Kafka processing.
+- Unit tests for business logic.
+- API/RPC tests.
+- Integration tests for persistence.
+- Contract tests for important service boundaries.
+- Consumer tests for Kafka processing.
 
 Do not delete failing tests simply to make CI green.
 
@@ -384,13 +386,13 @@ Kafka consumers must be designed for duplicate delivery.
 
 Rules:
 
--   Assume at-least-once delivery unless explicitly guaranteed
-    otherwise.
--   Make handlers idempotent.
--   Validate event payloads.
--   Handle retries deliberately.
--   Do not acknowledge messages before required processing is safely
-    complete.
+- Assume at-least-once delivery unless explicitly guaranteed
+  otherwise.
+- Make handlers idempotent.
+- Validate event payloads.
+- Handle retries deliberately.
+- Do not acknowledge messages before required processing is safely
+  complete.
 
 ## 21. Redis
 
@@ -398,11 +400,11 @@ Use cache-aside or another explicitly documented strategy.
 
 Rules:
 
--   Database remains the source of truth.
--   Define TTLs deliberately.
--   Handle cache misses.
--   Handle Redis failure without corrupting domain state.
--   Invalidate/update cache when domain data changes where necessary.
+- Database remains the source of truth.
+- Define TTLs deliberately.
+- Handle cache misses.
+- Handle Redis failure without corrupting domain state.
+- Invalidate/update cache when domain data changes where necessary.
 
 ## 22. Resilience4j
 
@@ -411,11 +413,11 @@ especially payment integration.
 
 Configure deliberately:
 
--   Failure thresholds.
--   Slow-call thresholds.
--   Open/half-open/closed behavior.
--   Timeouts.
--   Retry policy where justified.
+- Failure thresholds.
+- Slow-call thresholds.
+- Open/half-open/closed behavior.
+- Timeouts.
+- Retry policy where justified.
 
 Do not blindly retry non-idempotent payment operations.
 

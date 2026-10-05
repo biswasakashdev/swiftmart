@@ -1,13 +1,13 @@
 services:
   gateway:
     container_name: swiftmart-template-engine
-    image: biswasakash/swiftmart-template-engine:local
+    image: biswasakash/swiftmart-template-engine:latest
     ports:
-      - "9001:9001"
+      - "9000:8080"
 
   web:
     container_name: swiftmart-web
-    image: biswasakash/swiftmart-web:local
+    image: biswasakash/swiftmart-web:latest
     ports:
       - "3000:3000"
     depends_on:
@@ -26,7 +26,7 @@ services:
     container_name: swiftmart-orders
     image: biswasakash/swiftmart-orders:local
     ports:
-      - "8502:8502"
+      - "8502:8080"
     depends_on:
       - postgres
 
@@ -34,7 +34,7 @@ services:
     container_name: swiftmart-catelogue
     image: biswasakash/swiftmart-catelogue:local
     ports:
-      - "8503:8503"
+      - "8503:8080"
     depends_on:
       - mongo
 
@@ -42,7 +42,7 @@ services:
     container_name: swiftmart-inventory
     image: biswasakash/swiftmart-inventory:local
     ports:
-      - "8504:8504"
+      - "8504:8080"
     depends_on:
       - posgres
 
@@ -50,9 +50,24 @@ services:
     container_name: swiftmart-search-engine
     image: biswasakash/swiftmart-search-engine:local
     ports:
-      - "8505:8505"
+      - "8505:8080"
     depends_on:
       - postgres
+
+  template-agent:
+    container_name: swiftmart-template-agent
+    image: biswasakash/swiftmart-template-agent:local
+    ports:
+      - "8506:8080"
+    depends_on:
+      - mongo
+  template-engine:
+    container_name: swiftmart-template-engine
+    image: biswasakash/swiftmart-template-engine:local
+    ports:
+      - "8507:8080"
+    depends_on:
+      - mongo
 
   postgres:
     container_name: swiftmart-postgres

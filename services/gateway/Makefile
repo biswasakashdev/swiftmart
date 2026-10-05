@@ -1,2 +1,2 @@
 run:
-	go build -o bin/app cmd/app/main.go && ./bin/app
+	go build -o bin/gateway cmd/gateway/main.go && ./bin/gateway

@@ -217,6 +217,16 @@ It should allow authorized users to manage:
 
 The client communicates through the public gateway/API boundary.
 
+### 3.14 Template Agent
+
+Template Agent is an AI-agent which build personalised store fronts with multi pages, in HTMX and TailwindCSS based on the needs of the merchant/business owner. It should be able to generate a custom theme for the store based on the merchant's requirements and with url slug and store.
+
+User can give prompt about the store want to build and the agent will generate the store fronts with pages like home, about, contact, products, category, etc. Pages should be interlinked and should be able to navigate through the pages. The template agent will use semantic search service to get the product data from the catalogue service and use the inventory service to get the stock data. Use redis for caching the product data and inventory data.
+
+### 3.15 Template Engine
+
+It compile the generated page componenets and map the url with the template and build the page on runtime and collects data from other services using grpc and return a complete html page which can be directly served to the client. It should also support cache the page on redis for fast access. It should also be able to handle dynamic data which changes frequently and should be able to update the page on runtime.
+
 ## 4. Non-Functional Requirements
 
 ### Scalability

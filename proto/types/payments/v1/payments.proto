@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package types.v1.payments;
+package types.payments.v1;
 
 import "common/v1/common.proto";
 
-option go_package = "typesv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option go_package = "typespaymentsv1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.payments.v1";
 
 // Payment captures the external payment-provider integration state for
 // an order. Razorpay-specific concerns live behind this boundary.

@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package accounts.v1.roles;
+package accounts.roles.v1;
 
-import "types/v1/roles.proto";
 import "common/v1/common.proto";
+import "types/roles/v1/roles.proto";
 
 option go_package = "accountsv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 
 // RoleService owns role and permission definitions for a store.
 service RoleService {
@@ -15,7 +15,7 @@ service RoleService {
   rpc GetRole(GetRoleRequest) returns (GetRoleResponse);
   rpc ListRoles(ListRolesRequest) returns (ListRolesResponse);
   rpc UpdateRole(UpdateRoleRequest) returns (UpdateRoleResponse);
-  rpc DeleteRole(DeleteRoleRequest) returns (common.v1.Status);
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse);
 
   rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse);
   rpc EvaluatePermission(EvaluatePermissionRequest) returns (EvaluatePermissionResponse);
@@ -29,7 +29,7 @@ message CreateRoleRequest {
 }
 
 message CreateRoleResponse {
-  types.v1.roles.RoleProto role = 1;
+  types.roles.v1.RoleProto role = 1;
 }
 
 message GetRoleRequest {
@@ -38,7 +38,7 @@ message GetRoleRequest {
 }
 
 message GetRoleResponse {
-  types.v1.roles.RoleProto role = 1;
+  types.roles.v1.RoleProto role = 1;
 }
 
 message ListRolesRequest {
@@ -47,7 +47,7 @@ message ListRolesRequest {
 }
 
 message ListRolesResponse {
-  repeated types.v1.roles.RoleProto roles = 1;
+  repeated types.roles.v1.RoleProto roles = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -60,7 +60,7 @@ message UpdateRoleRequest {
 }
 
 message UpdateRoleResponse {
-  types.v1.roles.RoleProto role = 1;
+  types.roles.v1.RoleProto role = 1;
 }
 
 message DeleteRoleRequest {
@@ -73,7 +73,7 @@ message ListPermissionsRequest {
 }
 
 message ListPermissionsResponse {
-  repeated types.v1.roles.PermissionProto permissions = 1;
+  repeated types.roles.v1.PermissionProto permissions = 1;
 }
 
 message EvaluatePermissionRequest {
@@ -85,4 +85,8 @@ message EvaluatePermissionRequest {
 message EvaluatePermissionResponse {
   bool allowed = 1;
   string role_name = 2;
+}
+
+message DeleteRoleResponse {
+  common.v1.Status status = 1;
 }

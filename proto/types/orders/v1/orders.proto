@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package types.v1.orders;
+package types.orders.v1;
 
 import "common/v1/common.proto";
 
-option go_package = "typesv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option go_package = "typesordersv1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.orders.v1";
 
 // Order is the orders service's core entity.
 message OrderProto {

@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package template_agent.v1.template_agent;
+package template_agent.v1;
 
-import "types/v1/templates.proto";
 import "common/v1/common.proto";
+import "types/templates/v1/templates.proto";
 
 option go_package = "template_agent";
-option java_package = "com.biswasakashdev.swiftmart.protogen.template_agent.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.template_agent.v1";
 
 // TemplateAgentService builds customised storefront templates from a
 // natural-language prompt using an LLM. It consumes catalogue and
@@ -17,7 +17,7 @@ service TemplateAgentService {
   rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse);
   rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse);
   rpc UpdateTemplate(UpdateTemplateRequest) returns (UpdateTemplateResponse);
-  rpc DeleteTemplate(DeleteTemplateRequest) returns (common.v1.Status);
+  rpc DeleteTemplate(DeleteTemplateRequest) returns (DeleteTemplateResponse);
 }
 
 message GenerateTemplateRequest {
@@ -28,7 +28,7 @@ message GenerateTemplateRequest {
 }
 
 message GenerateTemplateResponse {
-  types.v1.templates.TemplateProto template = 1;
+  types.templates.v1.TemplateProto template = 1;
 }
 
 message GetTemplateRequest {
@@ -37,7 +37,7 @@ message GetTemplateRequest {
 }
 
 message GetTemplateResponse {
-  types.v1.templates.TemplateProto template = 1;
+  types.templates.v1.TemplateProto template = 1;
 }
 
 message ListTemplatesRequest {
@@ -46,7 +46,7 @@ message ListTemplatesRequest {
 }
 
 message ListTemplatesResponse {
-  repeated types.v1.templates.TemplateProto templates = 1;
+  repeated types.templates.v1.TemplateProto templates = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -59,10 +59,14 @@ message UpdateTemplateRequest {
 }
 
 message UpdateTemplateResponse {
-  types.v1.templates.TemplateProto template = 1;
+  types.templates.v1.TemplateProto template = 1;
 }
 
 message DeleteTemplateRequest {
   common.v1.StoreContext context = 1;
   string id = 2;
+}
+
+message DeleteTemplateResponse {
+  common.v1.Status status = 1;
 }

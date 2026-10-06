@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-package orders.v1.orders;
+package orders.v1;
 
-import "types/v1/orders.proto";
-import "types/v1/payments.proto";
 import "common/v1/common.proto";
+import "types/orders/v1/orders.proto";
+import "types/payments/v1/payments.proto";
 
 option go_package = "orders";
-option java_package = "com.biswasakashdev.swiftmart.protogen.orders.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.orders.v1";
 
 // OrderService owns order lifecycle and payment-related order state.
 service OrderService {
@@ -45,7 +45,7 @@ message CreateOrderRequest {
 }
 
 message CreateOrderResponse {
-  types.v1.orders.OrderProto order = 1;
+  types.orders.v1.OrderProto order = 1;
 }
 
 message GetOrderRequest {
@@ -54,18 +54,18 @@ message GetOrderRequest {
 }
 
 message GetOrderResponse {
-  types.v1.orders.OrderProto order = 1;
+  types.orders.v1.OrderProto order = 1;
 }
 
 message ListOrdersRequest {
   common.v1.StoreContext context = 1;
   common.v1.PageRequest page = 2;
   optional string customer_id = 3;
-  optional types.v1.orders.OrderStatus status = 4;
+  optional types.orders.v1.OrderStatus status = 4;
 }
 
 message ListOrdersResponse {
-  repeated types.v1.orders.OrderProto orders = 1;
+  repeated types.orders.v1.OrderProto orders = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -75,7 +75,7 @@ message CancelOrderRequest {
 }
 
 message CancelOrderResponse {
-  types.v1.orders.OrderProto order = 1;
+  types.orders.v1.OrderProto order = 1;
 }
 
 message CreatePaymentOrderRequest {
@@ -85,7 +85,7 @@ message CreatePaymentOrderRequest {
 }
 
 message CreatePaymentOrderResponse {
-  types.v1.payments.PaymentProto payment = 1;
+  types.payments.v1.PaymentProto payment = 1;
   string provider_order_id = 2;
 }
 
@@ -97,7 +97,7 @@ message CapturePaymentRequest {
 }
 
 message CapturePaymentResponse {
-  types.v1.payments.PaymentProto payment = 1;
+  types.payments.v1.PaymentProto payment = 1;
 }
 
 message RefundPaymentRequest {
@@ -108,7 +108,7 @@ message RefundPaymentRequest {
 }
 
 message RefundPaymentResponse {
-  types.v1.payments.PaymentProto payment = 1;
+  types.payments.v1.PaymentProto payment = 1;
 }
 
 message GetPaymentRequest {
@@ -117,7 +117,7 @@ message GetPaymentRequest {
 }
 
 message GetPaymentResponse {
-  types.v1.payments.PaymentProto payment = 1;
+  types.payments.v1.PaymentProto payment = 1;
 }
 
 message PublishStockEventRequest {

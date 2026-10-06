@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package types.v1.roles;
+package types.roles.v1;
 
-option go_package = "typesv1";
+option go_package = "typesrolesv1";
 option java_multiple_files = true;
-option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.roles.v1";
 
 // Permission is an atomic action on a resource within a tenant.
 message PermissionProto {

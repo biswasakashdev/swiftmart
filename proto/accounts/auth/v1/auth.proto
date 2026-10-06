@@ -1,13 +1,12 @@
 syntax = "proto3";
 
-package accounts.v1.auth;
+package accounts.auth.v1;
 
-import "types/v1/users.proto";
-import "common/v1/common.proto";
+import "types/users/v1/users.proto";
 
 option go_package = "accountsv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 
 // AuthService owns identity verification and account upsert only.
 //
@@ -19,9 +18,7 @@ service AuthService {
   // Verify credentials and return the authenticated user. No token is
   // returned; the gateway issues tokens from the returned identity.
   rpc Verify(VerifyRequest) returns (VerifyResponse);
-  // Authenticate a Google ID token and upsert the user account. No token
-  // is returned; the gateway issues tokens from the returned identity.
-  rpc GoogleAuth(GoogleAuthRequest) returns (GoogleAuthResponse);
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
 }
 
 message VerifyRequest {
@@ -30,14 +27,16 @@ message VerifyRequest {
 }
 
 message VerifyResponse {
-  types.v1.users.UsersProto user = 1;
+  types.users.v1.UsersProto user = 1;
 }
 
-message GoogleAuthRequest {
-  string id_token = 1;
-  string access_token = 2;
+message CreateUserRequest {
+  string email = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string password = 4;
 }
 
-message GoogleAuthResponse {
-  types.v1.users.UsersProto user = 1;
+message CreateUserResponse {
+  types.users.v1.UsersProto user = 1;
 }

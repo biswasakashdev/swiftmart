@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package types.v1.stores;
-
-option go_package = "typesv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
-option java_multiple_files = true;
+package types.stores.v1;
 
 import "common/v1/common.proto";
+
+option go_package = "typesstoresv1";
+option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.stores.v1";
 
 // Store represents an isolated business tenant.
 message StoreProto {

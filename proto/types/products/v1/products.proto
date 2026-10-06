@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package types.v1.products;
+package types.products.v1;
 
 import "common/v1/common.proto";
 
-option go_package = "typesv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option go_package = "typesproductsv1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.products.v1";
 
 // Product is the catalogue's core entity. It owns descriptive and
 // structural metadata only; stock quantities are owned by inventory.

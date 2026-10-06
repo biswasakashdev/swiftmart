@@ -1,10 +1,10 @@
 syntax = "proto3";
 
-package types.v1.templates;
+package types.templates.v1;
 
-option go_package = "typesv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option go_package = "typestemplatesv1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.templates.v1";
 
 // Template is a generated storefront definition owned by the template
 // agent. It is compiled by the template engine at runtime.

@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package semantic_search.v1.semantic_search;
+package semantic_search.v1;
 
-import "types/v1/products.proto";
 import "common/v1/common.proto";
+import "types/products/v1/products.proto";
 
 option go_package = "semantic_search";
-option java_package = "com.biswasakashdev.swiftmart.protogen.semantic_search.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.semantic_search.v1";
 
 // SemanticSearchService provides natural-language product retrieval and
 // recommendations. It is not the source of truth for catalogue state.
@@ -22,11 +22,11 @@ message SearchRequest {
   string query = 2;
   uint32 limit = 3;
   optional uint32 offset = 4;
-  optional types.v1.products.ProductStatus status = 5;
+  optional types.products.v1.ProductStatus status = 5;
 }
 
 message SearchResult {
-  repeated types.v1.products.ProductProto products = 1;
+  repeated types.products.v1.ProductProto products = 1;
   double score = 2;
   string query = 3;
 }
@@ -42,7 +42,7 @@ message GetRecommendationsRequest {
 }
 
 message GetRecommendationsResponse {
-  repeated types.v1.products.ProductProto products = 1;
+  repeated types.products.v1.ProductProto products = 1;
 }
 
 message RecordSearchEventRequest {

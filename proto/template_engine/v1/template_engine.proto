@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-package template_engine.v1.template_engine;
+package template_engine.v1;
 
-import "types/v1/templates.proto";
 import "common/v1/common.proto";
+import "types/templates/v1/templates.proto";
 
 option go_package = "template_engine";
-option java_package = "com.biswasakashdev.swiftmart.protogen.template_engine.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.template_engine.v1";
 
 // TemplateEngineService compiles a stored template into a complete HTML
 // page for a given URL, resolving runtime data queries against other
@@ -38,7 +38,7 @@ message GetTemplateRequest {
 }
 
 message GetTemplateResponse {
-  types.v1.templates.TemplateProto template = 1;
+  types.templates.v1.TemplateProto template = 1;
 }
 
 message InvalidateCacheRequest {

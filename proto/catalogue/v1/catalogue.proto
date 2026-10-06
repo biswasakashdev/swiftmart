@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-package catalogue.v1.catalogue;
+package catalogue.v1;
 
-import "types/v1/products.proto";
-import "types/v1/categories.proto";
 import "common/v1/common.proto";
+import "types/categories/v1/categories.proto";
+import "types/products/v1/products.proto";
 
 option go_package = "catalogue";
-option java_package = "com.biswasakashdev.swiftmart.protogen.catalogue.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.catalogue.v1";
 
 // CatalogueService owns product and category state for a store.
 service CatalogueService {
@@ -16,13 +16,13 @@ service CatalogueService {
   rpc GetProduct(GetProductRequest) returns (GetProductResponse);
   rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
   rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
-  rpc DeleteProduct(DeleteProductRequest) returns (common.v1.Status);
+  rpc DeleteProduct(DeleteProductRequest) returns (DeleteProductResponse);
 
   rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse);
   rpc GetCategory(GetCategoryRequest) returns (GetCategoryResponse);
   rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse);
   rpc UpdateCategory(UpdateCategoryRequest) returns (UpdateCategoryResponse);
-  rpc DeleteCategory(DeleteCategoryRequest) returns (common.v1.Status);
+  rpc DeleteCategory(DeleteCategoryRequest) returns (DeleteCategoryResponse);
 }
 
 message CreateProductRequest {
@@ -42,7 +42,7 @@ message CreateVariantInput {
 }
 
 message CreateProductResponse {
-  types.v1.products.ProductProto product = 1;
+  types.products.v1.ProductProto product = 1;
 }
 
 message GetProductRequest {
@@ -51,19 +51,19 @@ message GetProductRequest {
 }
 
 message GetProductResponse {
-  types.v1.products.ProductProto product = 1;
+  types.products.v1.ProductProto product = 1;
 }
 
 message ListProductsRequest {
   common.v1.StoreContext context = 1;
   common.v1.PageRequest page = 2;
   optional string query = 3;
-  optional types.v1.products.ProductStatus status = 4;
+  optional types.products.v1.ProductStatus status = 4;
   repeated string category_ids = 5;
 }
 
 message ListProductsResponse {
-  repeated types.v1.products.ProductProto products = 1;
+  repeated types.products.v1.ProductProto products = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -73,12 +73,12 @@ message UpdateProductRequest {
   optional string title = 3;
   optional string description = 4;
   optional string slug = 5;
-  optional types.v1.products.ProductStatus status = 6;
+  optional types.products.v1.ProductStatus status = 6;
   repeated string category_ids = 7;
 }
 
 message UpdateProductResponse {
-  types.v1.products.ProductProto product = 1;
+  types.products.v1.ProductProto product = 1;
 }
 
 message DeleteProductRequest {
@@ -96,7 +96,7 @@ message CreateCategoryRequest {
 }
 
 message CreateCategoryResponse {
-  types.v1.categories.CategoryProto category = 1;
+  types.categories.v1.CategoryProto category = 1;
 }
 
 message GetCategoryRequest {
@@ -105,7 +105,7 @@ message GetCategoryRequest {
 }
 
 message GetCategoryResponse {
-  types.v1.categories.CategoryProto category = 1;
+  types.categories.v1.CategoryProto category = 1;
 }
 
 message ListCategoriesRequest {
@@ -115,7 +115,7 @@ message ListCategoriesRequest {
 }
 
 message ListCategoriesResponse {
-  repeated types.v1.categories.CategoryProto categories = 1;
+  repeated types.categories.v1.CategoryProto categories = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -131,10 +131,18 @@ message UpdateCategoryRequest {
 }
 
 message UpdateCategoryResponse {
-  types.v1.categories.CategoryProto category = 1;
+  types.categories.v1.CategoryProto category = 1;
 }
 
 message DeleteCategoryRequest {
   common.v1.StoreContext context = 1;
   string id = 2;
+}
+
+message DeleteProductResponse {
+  common.v1.Status status = 1;
+}
+
+message DeleteCategoryResponse {
+  common.v1.Status status = 1;
 }

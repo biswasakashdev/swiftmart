@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-package accounts.v1.stores;
+package accounts.stores.v1;
 
-import "types/v1/stores.proto";
-import "types/v1/roles.proto";
 import "common/v1/common.proto";
+import "types/roles/v1/roles.proto";
+import "types/stores/v1/stores.proto";
 
 option go_package = "accountsv1";
-option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 option java_multiple_files = true;
+option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
 
 // StoreService owns store/business lifecycle and membership.
 service StoreService {
@@ -16,12 +16,12 @@ service StoreService {
   rpc GetStore(GetStoreRequest) returns (GetStoreResponse);
   rpc ListStores(ListStoresRequest) returns (ListStoresResponse);
   rpc UpdateStore(UpdateStoreRequest) returns (UpdateStoreResponse);
-  rpc DeleteStore(DeleteStoreRequest) returns (common.v1.Status);
+  rpc DeleteStore(DeleteStoreRequest) returns (DeleteStoreResponse);
 
   rpc AddMember(AddMemberRequest) returns (AddMemberResponse);
   rpc ListMembers(ListMembersRequest) returns (ListMembersResponse);
   rpc UpdateMember(UpdateMemberRequest) returns (UpdateMemberResponse);
-  rpc RemoveMember(RemoveMemberRequest) returns (common.v1.Status);
+  rpc RemoveMember(RemoveMemberRequest) returns (RemoveMemberResponse);
 }
 
 message CreateStoreRequest {
@@ -33,7 +33,7 @@ message CreateStoreRequest {
 }
 
 message CreateStoreResponse {
-  types.v1.stores.StoreProto store = 1;
+  types.stores.v1.StoreProto store = 1;
 }
 
 message GetStoreRequest {
@@ -41,7 +41,7 @@ message GetStoreRequest {
 }
 
 message GetStoreResponse {
-  types.v1.stores.StoreProto store = 1;
+  types.stores.v1.StoreProto store = 1;
 }
 
 message ListStoresRequest {
@@ -50,7 +50,7 @@ message ListStoresRequest {
 }
 
 message ListStoresResponse {
-  repeated types.v1.stores.StoreProto stores = 1;
+  repeated types.stores.v1.StoreProto stores = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -59,15 +59,19 @@ message UpdateStoreRequest {
   optional string name = 2;
   optional string slug = 3;
   optional string description = 4;
-  optional types.v1.stores.StoreSettings settings = 5;
+  optional types.stores.v1.StoreSettings settings = 5;
 }
 
 message UpdateStoreResponse {
-  types.v1.stores.StoreProto store = 1;
+  types.stores.v1.StoreProto store = 1;
 }
 
 message DeleteStoreRequest {
   string store_id = 1;
+}
+
+message DeleteStoreResponse {
+  common.v1.Status status = 1;
 }
 
 message AddMemberRequest {
@@ -77,7 +81,7 @@ message AddMemberRequest {
 }
 
 message AddMemberResponse {
-  types.v1.roles.MemberProto member = 1;
+  types.roles.v1.MemberProto member = 1;
 }
 
 message ListMembersRequest {
@@ -86,7 +90,7 @@ message ListMembersRequest {
 }
 
 message ListMembersResponse {
-  repeated types.v1.roles.MemberProto members = 1;
+  repeated types.roles.v1.MemberProto members = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -94,14 +98,18 @@ message UpdateMemberRequest {
   string store_id = 1;
   string user_id = 2;
   optional string role_id = 3;
-  optional types.v1.roles.MemberStatus status = 4;
+  optional types.roles.v1.MemberStatus status = 4;
 }
 
 message UpdateMemberResponse {
-  types.v1.roles.MemberProto member = 1;
+  types.roles.v1.MemberProto member = 1;
 }
 
 message RemoveMemberRequest {
   string store_id = 1;
   string user_id = 2;
+}
+
+message RemoveMemberResponse {
+  common.v1.Status status = 1;
 }

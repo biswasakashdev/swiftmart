@@ -3,7 +3,7 @@ syntax = "proto3";
 package accounts.users.v1;
 
 import "common/v1/common.proto";
-import "types/users/v1/users.proto";
+import "types/accounts/v1/accounts.proto";
 
 option go_package = "accountsv1";
 option java_multiple_files = true;
@@ -21,16 +21,7 @@ message GetUserRequest {
 }
 
 message GetUserResponse {
-  types.users.v1.UsersProto user = 1;
-}
-
-message VerifyRequest {
-  string email = 1;
-  string password = 2;
-}
-
-message VerifyResponse {
-  types.users.v1.UsersProto user = 1;
+  types.accounts.v1.UsersProto user = 1;
 }
 
 message UpdateUserRequest {
@@ -41,7 +32,7 @@ message UpdateUserRequest {
 }
 
 message UpdateUserResponse {
-  types.users.v1.UsersProto user = 1;
+  types.accounts.v1.UsersProto user = 1;
 }
 
 message DeactivateUserRequest {

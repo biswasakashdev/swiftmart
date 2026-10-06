@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package accounts.auth.v1;
 
-import "types/users/v1/users.proto";
+import "types/accounts/v1/accounts.proto";
 
 option go_package = "accountsv1";
 option java_multiple_files = true;
@@ -27,7 +27,7 @@ message VerifyRequest {
 }
 
 message VerifyResponse {
-  types.users.v1.UsersProto user = 1;
+  types.accounts.v1.UsersProto user = 1;
 }
 
 message CreateUserRequest {
@@ -38,5 +38,5 @@ message CreateUserRequest {
 }
 
 message CreateUserResponse {
-  types.users.v1.UsersProto user = 1;
+  types.accounts.v1.UsersProto user = 1;
 }

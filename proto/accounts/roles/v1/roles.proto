@@ -3,7 +3,7 @@ syntax = "proto3";
 package accounts.roles.v1;
 
 import "common/v1/common.proto";
-import "types/roles/v1/roles.proto";
+import "types/accounts/v1/accounts.proto";
 
 option go_package = "accountsv1";
 option java_multiple_files = true;
@@ -29,7 +29,7 @@ message CreateRoleRequest {
 }
 
 message CreateRoleResponse {
-  types.roles.v1.RoleProto role = 1;
+  types.accounts.v1.RoleProto role = 1;
 }
 
 message GetRoleRequest {
@@ -38,7 +38,7 @@ message GetRoleRequest {
 }
 
 message GetRoleResponse {
-  types.roles.v1.RoleProto role = 1;
+  types.accounts.v1.RoleProto role = 1;
 }
 
 message ListRolesRequest {
@@ -47,7 +47,7 @@ message ListRolesRequest {
 }
 
 message ListRolesResponse {
-  repeated types.roles.v1.RoleProto roles = 1;
+  repeated types.accounts.v1.RoleProto roles = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -60,7 +60,7 @@ message UpdateRoleRequest {
 }
 
 message UpdateRoleResponse {
-  types.roles.v1.RoleProto role = 1;
+  types.accounts.v1.RoleProto role = 1;
 }
 
 message DeleteRoleRequest {
@@ -73,7 +73,7 @@ message ListPermissionsRequest {
 }
 
 message ListPermissionsResponse {
-  repeated types.roles.v1.PermissionProto permissions = 1;
+  repeated types.accounts.v1.PermissionProto permissions = 1;
 }
 
 message EvaluatePermissionRequest {

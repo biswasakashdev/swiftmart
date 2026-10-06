@@ -3,8 +3,7 @@ syntax = "proto3";
 package accounts.stores.v1;
 
 import "common/v1/common.proto";
-import "types/roles/v1/roles.proto";
-import "types/stores/v1/stores.proto";
+import "types/accounts/v1/accounts.proto";
 
 option go_package = "accountsv1";
 option java_multiple_files = true;
@@ -33,7 +32,7 @@ message CreateStoreRequest {
 }
 
 message CreateStoreResponse {
-  types.stores.v1.StoreProto store = 1;
+  types.accounts.v1.StoreProto store = 1;
 }
 
 message GetStoreRequest {
@@ -41,7 +40,7 @@ message GetStoreRequest {
 }
 
 message GetStoreResponse {
-  types.stores.v1.StoreProto store = 1;
+  types.accounts.v1.StoreProto store = 1;
 }
 
 message ListStoresRequest {
@@ -50,7 +49,7 @@ message ListStoresRequest {
 }
 
 message ListStoresResponse {
-  repeated types.stores.v1.StoreProto stores = 1;
+  repeated types.accounts.v1.StoreProto stores = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -59,11 +58,11 @@ message UpdateStoreRequest {
   optional string name = 2;
   optional string slug = 3;
   optional string description = 4;
-  optional types.stores.v1.StoreSettings settings = 5;
+  optional types.accounts.v1.StoreSettings settings = 5;
 }
 
 message UpdateStoreResponse {
-  types.stores.v1.StoreProto store = 1;
+  types.accounts.v1.StoreProto store = 1;
 }
 
 message DeleteStoreRequest {
@@ -81,7 +80,7 @@ message AddMemberRequest {
 }
 
 message AddMemberResponse {
-  types.roles.v1.MemberProto member = 1;
+  types.accounts.v1.MemberProto member = 1;
 }
 
 message ListMembersRequest {
@@ -90,7 +89,7 @@ message ListMembersRequest {
 }
 
 message ListMembersResponse {
-  repeated types.roles.v1.MemberProto members = 1;
+  repeated types.accounts.v1.MemberProto members = 1;
   common.v1.PageResponse page = 2;
 }
 
@@ -98,11 +97,11 @@ message UpdateMemberRequest {
   string store_id = 1;
   string user_id = 2;
   optional string role_id = 3;
-  optional types.roles.v1.MemberStatus status = 4;
+  optional types.accounts.v1.MemberStatus status = 4;
 }
 
 message UpdateMemberResponse {
-  types.roles.v1.MemberProto member = 1;
+  types.accounts.v1.MemberProto member = 1;
 }
 
 message RemoveMemberRequest {

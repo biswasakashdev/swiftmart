@@ -1,4 +1,11 @@
 version: v2
+inputs:
+  - directory: .
+    paths:
+      - proto/accounts/
+      - proto/common/
+      - proto/types/accounts/
+
 plugins:
   - remote: buf.build/community/salesforce-reactive-grpc:v1.2.4
     out: services/accounts/src/main/java

@@ -56,7 +56,7 @@ message UpdateRoleRequest {
   string role_id = 2;
   optional string name = 3;
   optional string description = 4;
-  optional repeated string permission_names = 5;
+  repeated string permission_names = 5;
 }
 
 message UpdateRoleResponse {

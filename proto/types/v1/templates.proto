@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package types.v1.templates;
+
+option go_package = "typesv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_multiple_files = true;
+
+// Template is a generated storefront definition owned by the template
+// agent. It is compiled by the template engine at runtime.
+message TemplateProto {
+  string id = 1;
+  string store_id = 2;
+  string name = 3;
+  string slug = 4;
+  string description = 5;
+  repeated PageProto pages = 6;
+  string created_at = 7;
+  string updated_at = 8;
+}
+
+message PageProto {
+  string id = 1;
+  string template_id = 2;
+  string name = 3;
+  string slug = 4; // URL path segment, e.g. "home", "products"
+  string html = 5; // compiled HTMX + TailwindCSS markup
+  repeated DataQuery data_queries = 6;
+  bool is_homepage = 7;
+}
+
+// DataQuery declares a runtime data fetch the template engine must resolve
+// before rendering a page (catalogue, inventory, search, ...).
+message DataQuery {
+  string id = 1;
+  string source = 2; // e.g. "catalogue", "inventory", "semantic_search"
+  string operation = 3; // e.g. "get_product", "list_products", "search"
+  map<string, string> params = 4;
+}

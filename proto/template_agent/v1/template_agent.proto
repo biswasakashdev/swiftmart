@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package template_agent.v1.template_agent;
+
+import "types/v1/templates.proto";
+import "common/v1/common.proto";
+
+option go_package = "template_agent";
+option java_package = "com.biswasakashdev.swiftmart.protogen.template_agent.v1";
+option java_multiple_files = true;
+
+// TemplateAgentService builds customised storefront templates from a
+// natural-language prompt using an LLM. It consumes catalogue and
+// inventory data through their gRPC contracts.
+service TemplateAgentService {
+  rpc GenerateTemplate(GenerateTemplateRequest) returns (GenerateTemplateResponse);
+  rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse);
+  rpc ListTemplates(ListTemplatesRequest) returns (ListTemplatesResponse);
+  rpc UpdateTemplate(UpdateTemplateRequest) returns (UpdateTemplateResponse);
+  rpc DeleteTemplate(DeleteTemplateRequest) returns (common.v1.Status);
+}
+
+message GenerateTemplateRequest {
+  common.v1.StoreContext context = 1;
+  string prompt = 2;
+  optional string name = 3;
+  optional string slug = 4;
+}
+
+message GenerateTemplateResponse {
+  types.v1.templates.TemplateProto template = 1;
+}
+
+message GetTemplateRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message GetTemplateResponse {
+  types.v1.templates.TemplateProto template = 1;
+}
+
+message ListTemplatesRequest {
+  common.v1.StoreContext context = 1;
+  common.v1.PageRequest page = 2;
+}
+
+message ListTemplatesResponse {
+  repeated types.v1.templates.TemplateProto templates = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message UpdateTemplateRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+  optional string name = 3;
+  optional string slug = 4;
+  optional string description = 5;
+}
+
+message UpdateTemplateResponse {
+  types.v1.templates.TemplateProto template = 1;
+}
+
+message DeleteTemplateRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}

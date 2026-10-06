@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package types.v1.payments;
+
+import "common/v1/common.proto";
+
+option go_package = "typesv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_multiple_files = true;
+
+// Payment captures the external payment-provider integration state for
+// an order. Razorpay-specific concerns live behind this boundary.
+message PaymentProto {
+  string id = 1;
+  string store_id = 2;
+  string order_id = 3;
+  string provider = 4; // e.g. "razorpay"
+  optional string provider_payment_id = 5;
+  optional string provider_order_id = 6;
+  optional string provider_signature = 7;
+  common.v1.Money amount = 8;
+  PaymentStatus status = 9;
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+enum PaymentStatus {
+  PAYMENT_STATUS_UNSPECIFIED = 0;
+  PAYMENT_STATUS_CREATED = 1;
+  PAYMENT_STATUS_AUTHORIZED = 2;
+  PAYMENT_STATUS_CAPTURED = 3;
+  PAYMENT_STATUS_FAILED = 4;
+  PAYMENT_STATUS_REFUNDED = 5;
+}

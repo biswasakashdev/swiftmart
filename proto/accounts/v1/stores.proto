@@ -3,6 +3,7 @@ syntax = "proto3";
 package accounts.v1.stores;
 
 import "types/v1/stores.proto";
+import "types/v1/roles.proto";
 import "common/v1/common.proto";
 
 option go_package = "accountsv1";

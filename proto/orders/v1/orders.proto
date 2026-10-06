@@ -1,0 +1,148 @@
+syntax = "proto3";
+
+package orders.v1.orders;
+
+import "types/v1/orders.proto";
+import "types/v1/payments.proto";
+import "common/v1/common.proto";
+
+option go_package = "orders";
+option java_package = "com.biswasakashdev.swiftmart.protogen.orders.v1";
+option java_multiple_files = true;
+
+// OrderService owns order lifecycle and payment-related order state.
+service OrderService {
+  rpc CreateOrder(CreateOrderRequest) returns (CreateOrderResponse);
+  rpc GetOrder(GetOrderRequest) returns (GetOrderResponse);
+  rpc ListOrders(ListOrdersRequest) returns (ListOrdersResponse);
+  rpc CancelOrder(CancelOrderRequest) returns (CancelOrderResponse);
+
+  // Payment integration boundary. Razorpay-specific logic lives behind
+  // these RPCs and is protected by resilience policies.
+  rpc CreatePaymentOrder(CreatePaymentOrderRequest) returns (CreatePaymentOrderResponse);
+  rpc CapturePayment(CapturePaymentRequest) returns (CapturePaymentResponse);
+  rpc RefundPayment(RefundPaymentRequest) returns (RefundPaymentResponse);
+  rpc GetPayment(GetPaymentRequest) returns (GetPaymentResponse);
+
+  // Publish a stock-changing event to Kafka. The orders service does not
+  // mutate inventory directly.
+  rpc PublishStockEvent(PublishStockEventRequest) returns (PublishStockEventResponse);
+}
+
+message LineItemInput {
+  string product_id = 1;
+  string variant_id = 2;
+  string sku = 3;
+  string title = 4;
+  int64 quantity = 5;
+  common.v1.Money unit_price = 6;
+}
+
+message CreateOrderRequest {
+  common.v1.StoreContext context = 1;
+  string customer_id = 2;
+  repeated LineItemInput items = 3;
+}
+
+message CreateOrderResponse {
+  types.v1.orders.OrderProto order = 1;
+}
+
+message GetOrderRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message GetOrderResponse {
+  types.v1.orders.OrderProto order = 1;
+}
+
+message ListOrdersRequest {
+  common.v1.StoreContext context = 1;
+  common.v1.PageRequest page = 2;
+  optional string customer_id = 3;
+  optional types.v1.orders.OrderStatus status = 4;
+}
+
+message ListOrdersResponse {
+  repeated types.v1.orders.OrderProto orders = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message CancelOrderRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message CancelOrderResponse {
+  types.v1.orders.OrderProto order = 1;
+}
+
+message CreatePaymentOrderRequest {
+  common.v1.StoreContext context = 1;
+  string order_id = 2;
+  common.v1.Money amount = 3;
+}
+
+message CreatePaymentOrderResponse {
+  types.v1.payments.PaymentProto payment = 1;
+  string provider_order_id = 2;
+}
+
+message CapturePaymentRequest {
+  common.v1.StoreContext context = 1;
+  string order_id = 2;
+  string payment_id = 3;
+  optional string provider_signature = 4;
+}
+
+message CapturePaymentResponse {
+  types.v1.payments.PaymentProto payment = 1;
+}
+
+message RefundPaymentRequest {
+  common.v1.StoreContext context = 1;
+  string order_id = 2;
+  string payment_id = 3;
+  common.v1.Money amount = 4;
+}
+
+message RefundPaymentResponse {
+  types.v1.payments.PaymentProto payment = 1;
+}
+
+message GetPaymentRequest {
+  common.v1.StoreContext context = 1;
+  string order_id = 2;
+}
+
+message GetPaymentResponse {
+  types.v1.payments.PaymentProto payment = 1;
+}
+
+message PublishStockEventRequest {
+  common.v1.StoreContext context = 1;
+  string order_id = 2;
+  string sku = 3;
+  int64 quantity_delta = 4;
+  int64 reserved_delta = 5;
+  string reason = 6;
+}
+
+message PublishStockEventResponse {
+  string event_id = 1;
+}
+
+// StockEvent is the Kafka message payload consumed by the inventory
+// service. It carries enough information to apply the mutation without
+// consulting the orders service database.
+message StockEvent {
+  string event_id = 1;
+  string store_id = 2;
+  string order_id = 3;
+  string sku = 4;
+  int64 quantity_delta = 5;
+  int64 reserved_delta = 6;
+  string reason = 7;
+  string created_at = 8;
+}

@@ -1,0 +1,116 @@
+syntax = "proto3";
+
+package inventory.v1.inventory;
+
+import "types/v1/inventory.proto";
+import "common/v1/common.proto";
+
+option go_package = "inventory";
+option java_package = "com.biswasakashdev.swiftmart.protogen.inventory.v1";
+option java_multiple_files = true;
+
+// InventoryService owns stock state and availability for a store.
+// All stock mutations must pass through this service.
+service InventoryService {
+  rpc GetStock(GetStockRequest) returns (GetStockResponse);
+  rpc ListStock(ListStockRequest) returns (ListStockResponse);
+  rpc GetAvailability(GetAvailabilityRequest) returns (GetAvailabilityResponse);
+
+  // Reserve stock for an order. Decrements quantity and increments reserved.
+  rpc ReserveStock(ReserveStockRequest) returns (ReserveStockResponse);
+  // Confirm a reservation after successful payment.
+  rpc ConfirmStock(ConfirmStockRequest) returns (ConfirmStockResponse);
+  // Release a reservation when an order is cancelled.
+  rpc ReleaseStock(ReleaseStockRequest) returns (ReleaseStockResponse);
+  // Increment stock (restock / return).
+  rpc AddStock(AddStockRequest) returns (AddStockResponse);
+
+  // Process a stock-changing event produced by the orders service over
+  // Kafka. Idempotent: duplicate events must not double-apply.
+  rpc ApplyStockEvent(ApplyStockEventRequest) returns (ApplyStockEventResponse);
+}
+
+message GetStockRequest {
+  common.v1.StoreContext context = 1;
+  string sku = 2;
+}
+
+message GetStockResponse {
+  types.v1.inventory.StockRecordProto stock = 1;
+}
+
+message ListStockRequest {
+  common.v1.StoreContext context = 1;
+  common.v1.PageRequest page = 2;
+  optional string product_id = 3;
+}
+
+message ListStockResponse {
+  repeated types.v1.inventory.StockRecordProto stock = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message GetAvailabilityRequest {
+  common.v1.StoreContext context = 1;
+  string sku = 2;
+}
+
+message GetAvailabilityResponse {
+  types.v1.inventory.StockAvailabilityProto availability = 1;
+}
+
+message ReserveStockRequest {
+  common.v1.StoreContext context = 1;
+  string sku = 2;
+  int64 quantity = 3;
+  string order_id = 4; // idempotency key
+}
+
+message ReserveStockResponse {
+  types.v1.inventory.StockRecordProto stock = 1;
+}
+
+message ConfirmStockRequest {
+  common.v1.StoreContext context = 1;
+  string sku = 2;
+  string order_id = 3;
+}
+
+message ConfirmStockResponse {
+  types.v1.inventory.StockRecordProto stock = 1;
+}
+
+message ReleaseStockRequest {
+  common.v1.StoreContext context = 1;
+  string sku = 2;
+  string order_id = 3;
+}
+
+message ReleaseStockResponse {
+  types.v1.inventory.StockRecordProto stock = 1;
+}
+
+message AddStockRequest {
+  common.v1.StoreContext context = 1;
+  string sku = 2;
+  int64 quantity = 3;
+  string reason = 4; // e.g. "restock", "return"
+}
+
+message AddStockResponse {
+  types.v1.inventory.StockRecordProto stock = 1;
+}
+
+message ApplyStockEventRequest {
+  common.v1.StoreContext context = 1;
+  string event_id = 2; // unique Kafka message id for idempotency
+  string sku = 3;
+  int64 quantity_delta = 4;
+  int64 reserved_delta = 5;
+  string reason = 6;
+  string order_id = 7;
+}
+
+message ApplyStockEventResponse {
+  types.v1.inventory.StockRecordProto stock = 1;
+}

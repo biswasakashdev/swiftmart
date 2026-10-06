@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package template_engine.v1.template_engine;
+
+import "types/v1/templates.proto";
+import "common/v1/common.proto";
+
+option go_package = "template_engine";
+option java_package = "com.biswasakashdev.swiftmart.protogen.template_engine.v1";
+option java_multiple_files = true;
+
+// TemplateEngineService compiles a stored template into a complete HTML
+// page for a given URL, resolving runtime data queries against other
+// services over gRPC.
+service TemplateEngineService {
+  rpc RenderPage(RenderPageRequest) returns (RenderPageResponse);
+  rpc GetTemplate(GetTemplateRequest) returns (GetTemplateResponse);
+  rpc InvalidateCache(InvalidateCacheRequest) returns (InvalidateCacheResponse);
+}
+
+message RenderPageRequest {
+  common.v1.StoreContext context = 1;
+  string slug = 2; // URL path segment, e.g. "home", "products"
+  string template_slug = 3;
+  map<string, string> path_params = 4;
+  map<string, string> query_params = 5;
+}
+
+message RenderPageResponse {
+  string html = 1;
+  string page_slug = 2;
+  string template_id = 3;
+}
+
+message GetTemplateRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message GetTemplateResponse {
+  types.v1.templates.TemplateProto template = 1;
+}
+
+message InvalidateCacheRequest {
+  common.v1.StoreContext context = 1;
+  optional string template_id = 2;
+  optional string page_slug = 3;
+}
+
+message InvalidateCacheResponse {
+  bool ok = 1;
+}

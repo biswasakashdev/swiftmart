@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package accounts.v1.auth;
+
+import "types/v1/users.proto";
+import "common/v1/common.proto";
+
+option go_package = "accountsv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.accounts.v1";
+option java_multiple_files = true;
+
+// AuthService owns identity verification and account upsert only.
+//
+// Token issuance, refresh, revocation, session management and the
+// Redis-backed token blacklist are owned by the gateway. Accounts
+// never generates or returns tokens; it only confirms whether a set of
+// credentials is valid and returns the authenticated user record.
+service AuthService {
+  // Verify credentials and return the authenticated user. No token is
+  // returned; the gateway issues tokens from the returned identity.
+  rpc Verify(VerifyRequest) returns (VerifyResponse);
+  // Authenticate a Google ID token and upsert the user account. No token
+  // is returned; the gateway issues tokens from the returned identity.
+  rpc GoogleAuth(GoogleAuthRequest) returns (GoogleAuthResponse);
+}
+
+message VerifyRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message VerifyResponse {
+  types.v1.users.UsersProto user = 1;
+}
+
+message GoogleAuthRequest {
+  string id_token = 1;
+  string access_token = 2;
+}
+
+message GoogleAuthResponse {
+  types.v1.users.UsersProto user = 1;
+}

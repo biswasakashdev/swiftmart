@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package types.v1.orders;
+
+import "common/v1/common.proto";
+
+option go_package = "typesv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_multiple_files = true;
+
+// Order is the orders service's core entity.
+message OrderProto {
+  string id = 1;
+  string store_id = 2;
+  string customer_id = 3;
+  OrderStatus status = 4;
+  OrderFinancialStatus financial_status = 5;
+  OrderFulfillmentStatus fulfillment_status = 6;
+  repeated OrderLineItemProto line_items = 7;
+  common.v1.Money total = 8;
+  optional string payment_id = 9;
+  string created_at = 10;
+  string updated_at = 11;
+}
+
+message OrderLineItemProto {
+  string id = 1;
+  string product_id = 2;
+  string variant_id = 3;
+  string sku = 4;
+  string title = 5;
+  int64 quantity = 6;
+  common.v1.Money unit_price = 7;
+}
+
+enum OrderStatus {
+  ORDER_STATUS_UNSPECIFIED = 0;
+  ORDER_STATUS_PENDING = 1;
+  ORDER_STATUS_CONFIRMED = 2;
+  ORDER_STATUS_CANCELLED = 3;
+  ORDER_STATUS_REFUNDED = 4;
+  ORDER_STATUS_FULFILLED = 5;
+  ORDER_STATUS_FAILED = 6;
+}
+
+enum OrderFinancialStatus {
+  ORDER_FINANCIAL_STATUS_UNSPECIFIED = 0;
+  ORDER_FINANCIAL_STATUS_PENDING = 1;
+  ORDER_FINANCIAL_STATUS_PAID = 2;
+  ORDER_FINANCIAL_STATUS_REFUNDED = 3;
+  ORDER_FINANCIAL_STATUS_FAILED = 4;
+}
+
+enum OrderFulfillmentStatus {
+  ORDER_FULFILLMENT_STATUS_UNSPECIFIED = 0;
+  ORDER_FULFILLMENT_STATUS_UNFULFILLED = 1;
+  ORDER_FULFILLMENT_STATUS_PARTIALLY_FULFILLED = 2;
+  ORDER_FULFILLMENT_STATUS_FULFILLED = 3;
+}

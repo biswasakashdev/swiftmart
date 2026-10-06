@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package types.v1.inventory;
+
+import "common/v1/common.proto";
+
+option go_package = "typesv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_multiple_files = true;
+
+// StockRecord is the inventory service's source of truth for a purchasable
+// variant within a store. `version` enables optimistic concurrency so
+// concurrent purchases cannot oversell.
+message StockRecordProto {
+  string id = 1;
+  string store_id = 2;
+  string product_id = 3;
+  string sku = 4;
+  string variant_id = 5;
+  int64 quantity = 6; // total available units
+  int64 reserved = 7; // units reserved for open orders
+  int64 version = 8; // optimistic-lock counter
+  string created_at = 9;
+  string updated_at = 10;
+}
+
+// Derived availability view returned by read operations.
+message StockAvailabilityProto {
+  string store_id = 1;
+  string product_id = 2;
+  string sku = 3;
+  string variant_id = 4;
+  int64 available = 5; // quantity - reserved
+  int64 quantity = 6;
+  int64 reserved = 7;
+}

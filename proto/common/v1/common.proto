@@ -54,3 +54,18 @@ message Status {
   bool ok = 1;
   string message = 2;
 }
+
+// StoreContext carries the tenant/store identity that must be preserved
+// across every downstream gRPC call. It is injected by the gateway and
+// validated by each domain service.
+message StoreContext {
+  string store_id = 1;
+  string store_slug = 2;
+  string user_id = 3;
+  string role_name = 4;
+  string request_id = 5; // correlation/request ID for tracing
+}
+
+// Empty is returned by acknowledgement-only RPCs where no payload is
+// needed.
+message Empty {}

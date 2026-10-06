@@ -1,0 +1,140 @@
+syntax = "proto3";
+
+package catalogue.v1.catalogue;
+
+import "types/v1/products.proto";
+import "types/v1/categories.proto";
+import "common/v1/common.proto";
+
+option go_package = "catalogue";
+option java_package = "com.biswasakashdev.swiftmart.protogen.catalogue.v1";
+option java_multiple_files = true;
+
+// CatalogueService owns product and category state for a store.
+service CatalogueService {
+  rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse);
+  rpc GetProduct(GetProductRequest) returns (GetProductResponse);
+  rpc ListProducts(ListProductsRequest) returns (ListProductsResponse);
+  rpc UpdateProduct(UpdateProductRequest) returns (UpdateProductResponse);
+  rpc DeleteProduct(DeleteProductRequest) returns (common.v1.Status);
+
+  rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse);
+  rpc GetCategory(GetCategoryRequest) returns (GetCategoryResponse);
+  rpc ListCategories(ListCategoriesRequest) returns (ListCategoriesResponse);
+  rpc UpdateCategory(UpdateCategoryRequest) returns (UpdateCategoryResponse);
+  rpc DeleteCategory(DeleteCategoryRequest) returns (common.v1.Status);
+}
+
+message CreateProductRequest {
+  common.v1.StoreContext context = 1;
+  string title = 2;
+  string description = 3;
+  string slug = 4;
+  repeated CreateVariantInput variants = 5;
+  repeated string category_ids = 6;
+}
+
+message CreateVariantInput {
+  string sku = 1;
+  common.v1.Money price = 2;
+  optional double weight = 3;
+  string title = 4;
+}
+
+message CreateProductResponse {
+  types.v1.products.ProductProto product = 1;
+}
+
+message GetProductRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message GetProductResponse {
+  types.v1.products.ProductProto product = 1;
+}
+
+message ListProductsRequest {
+  common.v1.StoreContext context = 1;
+  common.v1.PageRequest page = 2;
+  optional string query = 3;
+  optional types.v1.products.ProductStatus status = 4;
+  repeated string category_ids = 5;
+}
+
+message ListProductsResponse {
+  repeated types.v1.products.ProductProto products = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message UpdateProductRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+  optional string title = 3;
+  optional string description = 4;
+  optional string slug = 5;
+  optional types.v1.products.ProductStatus status = 6;
+  repeated string category_ids = 7;
+}
+
+message UpdateProductResponse {
+  types.v1.products.ProductProto product = 1;
+}
+
+message DeleteProductRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message CreateCategoryRequest {
+  common.v1.StoreContext context = 1;
+  string name = 2;
+  string slug = 3;
+  optional string parent_id = 4;
+  string description = 5;
+  uint32 sort_order = 6;
+}
+
+message CreateCategoryResponse {
+  types.v1.categories.CategoryProto category = 1;
+}
+
+message GetCategoryRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}
+
+message GetCategoryResponse {
+  types.v1.categories.CategoryProto category = 1;
+}
+
+message ListCategoriesRequest {
+  common.v1.StoreContext context = 1;
+  common.v1.PageRequest page = 2;
+  optional string parent_id = 3;
+}
+
+message ListCategoriesResponse {
+  repeated types.v1.categories.CategoryProto categories = 1;
+  common.v1.PageResponse page = 2;
+}
+
+message UpdateCategoryRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+  optional string name = 3;
+  optional string slug = 4;
+  optional string parent_id = 5;
+  optional string description = 6;
+  optional uint32 sort_order = 7;
+  optional bool is_active = 8;
+}
+
+message UpdateCategoryResponse {
+  types.v1.categories.CategoryProto category = 1;
+}
+
+message DeleteCategoryRequest {
+  common.v1.StoreContext context = 1;
+  string id = 2;
+}

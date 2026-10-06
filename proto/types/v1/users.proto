@@ -4,7 +4,7 @@ package types.v1.users;
 
 option go_package = "typesv1";
 option java_multiple_files = true;
-option java_package = "com.biswasakashdev.swiftmart.protogen.prototypes.v1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
 
 message UsersProto {
   string id = 1;

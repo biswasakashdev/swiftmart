@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package types.v1.products;
+
+import "common/v1/common.proto";
+
+option go_package = "typesv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_multiple_files = true;
+
+// Product is the catalogue's core entity. It owns descriptive and
+// structural metadata only; stock quantities are owned by inventory.
+message ProductProto {
+  string id = 1;
+  string store_id = 2;
+  string title = 3;
+  string description = 4;
+  string slug = 5;
+  ProductStatus status = 6;
+  repeated ProductVariantProto variants = 7;
+  repeated string category_ids = 8;
+  string created_at = 9;
+  string updated_at = 10;
+}
+
+// A purchasable configuration of a product.
+message ProductVariantProto {
+  string id = 1;
+  string product_id = 2;
+  string sku = 3;
+  common.v1.Money price = 4;
+  optional double weight = 5;
+  string title = 6;
+}
+
+enum ProductStatus {
+  PRODUCT_STATUS_UNSPECIFIED = 0;
+  PRODUCT_STATUS_DRAFT = 1;
+  PRODUCT_STATUS_ACTIVE = 2;
+  PRODUCT_STATUS_ARCHIVED = 3;
+}

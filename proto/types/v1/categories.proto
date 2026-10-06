@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package types.v1.categories;
+
+option go_package = "typesv1";
+option java_package = "com.biswasakashdev.swiftmart.protogen.types.v1";
+option java_multiple_files = true;
+
+// Category organises products within a store. Categories form a tree
+// through parent_id.
+message CategoryProto {
+  string id = 1;
+  string store_id = 2;
+  string name = 3;
+  string slug = 4;
+  optional string parent_id = 5;
+  string description = 6;
+  uint32 sort_order = 7;
+  bool is_active = 8;
+  string created_at = 9;
+}
